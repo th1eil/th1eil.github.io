@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.title }}</title>
+  <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link {% if current_path == "/" %}active{% endif %}">首页</a>
+        <a href="/blog" class="nav-link {% if current_path is starting_with("/blog") %}active{% endif %}">博客</a>
+        <a href="/tags" class="nav-link {% if current_path is starting_with("/tags") %}active{% endif %}">标签</a>
+        <a href="/about" class="nav-link {% if current_path is starting_with("/about") %}active{% endif %}">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% block content %} {% endblock %}
+  </div>
+</body>
+
+</html>

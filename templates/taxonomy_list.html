@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="taxonomy">
+    <h1>所有标签</h1>
+    <div class="taxonomy-list">
+        {% for term in terms %}
+        <div class="taxonomy-item">
+            <a href="{{ term.permalink }}" class="tag">
+                #{{ term.name }}
+                <span class="count">({{ term.pages | length }})</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %} 

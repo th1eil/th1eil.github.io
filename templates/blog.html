@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="section-header">
+    <h1>博客文章</h1>
+    <p class="section-description">记录学习与思考的地方</p>
+  </div>
+
+  <div class="posts-grid">
+    {% set section = get_section(path="blog/_index.md") %}
+    {% for page in section.pages %}
+      <article class="post-card">
+        <div class="post-card-content">
+          <div class="post-meta">
+            <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+            {% if page.taxonomies.tags %}
+              <div class="tags">
+                {% for tag in page.taxonomies.tags %}
+                  <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <h2 class="post-title">
+            <a href="{{ page.permalink }}">{{ page.title }}</a>
+          </h2>
+
+          {% if page.description %}
+            <div class="post-description">
+              {{ page.description }}
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  <div class="pagination">
+    {% if paginator.previous %}
+      <a class="prev" href="{{ paginator.previous }}">← 上一页</a>
+    {% endif %}
+    {% if paginator.next %}
+      <a class="next" href="{{ paginator.next }}">下一页 →</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
