@@ -614,35 +614,4 @@ body {
       font-size: 1rem;
     }
   }
-}
-
-/* 在现有样式文件中添加 */
-.recent-posts {
-  margin: 3rem 0;
-
-  h2 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 2rem;
-  }
-}
-
-.view-all {
-  text-align: center;
-  margin-top: 2rem;
-
-  .view-all-link {
-    display: inline-block;
-    color: var(--primary-color);
-    text-decoration: none;
-    padding: 0.8rem 1.5rem;
-    border: 2px solid var(--primary-color);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-  }
 } 

@@ -2,46 +2,43 @@
 
 {% block content %}
 <div class="content-wrapper">
-  <div class="section-header">
-    <h1>欢迎来到我的博客</h1>
-    <p class="section-description">记录学习与生活的点点滴滴</p>
+  <div class="posts">
+    {% set section = get_section(path="blog/_index.md") %}
+    {% for page in section.pages %}
+      <article class="post">
+        <h2 class="post-title">
+          <a href="{{ page.permalink }}">{{ page.title }}</a>
+        </h2>
+        
+        <div class="post-meta">
+          {{ page.date | date(format="%Y-%m-%d") }} :: 
+          {% if page.taxonomies.tags %}
+            {% for tag in page.taxonomies.tags %}
+              <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        {% if page.description %}
+          <div class="post-description">
+            {{ page.description }}
+          </div>
+        {% endif %}
+
+        <div class="read-more">
+          <a href="{{ page.permalink }}">Read more ↩︎</a>
+        </div>
+      </article>
+    {% endfor %}
   </div>
 
-  <div class="recent-posts">
-    <h2>最新文章</h2>
-    <div class="posts-grid">
-      {% set section = get_section(path="blog/_index.md") %}
-      {% for page in section.pages | slice(end=6) %}
-        <article class="post-card">
-          <div class="post-card-content">
-            <div class="post-meta">
-              <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
-              {% if page.taxonomies.tags %}
-                <div class="tags">
-                  {% for tag in page.taxonomies.tags %}
-                    <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-
-            <h2 class="post-title">
-              <a href="{{ page.permalink }}">{{ page.title }}</a>
-            </h2>
-
-            {% if page.description %}
-              <div class="post-description">
-                {{ page.description }}
-              </div>
-            {% endif %}
-          </div>
-        </article>
-      {% endfor %}
-    </div>
-
-    <div class="view-all">
-      <a href="/blog" class="view-all-link">查看所有文章 →</a>
-    </div>
+  <div class="pagination">
+    {% if paginator.previous %}
+      <a class="prev" href="{{ paginator.previous }}">← Previous</a>
+    {% endif %}
+    {% if paginator.next %}
+      <a class="next" href="{{ paginator.next }}">Next →</a>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}
