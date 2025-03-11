@@ -1,6 +1,6 @@
 +++
 title = "【Review】c复习随笔 "
-date = 2025-02-11
+date = 2025-02-25
 description = "复习c时的一些思考。"
 taxonomies = { tags = ["C"] }
 draft = false
