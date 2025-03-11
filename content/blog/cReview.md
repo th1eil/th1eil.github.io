@@ -1,10 +1,11 @@
 +++
 title = "【Review】c复习随笔 "
 date = 2025-02-25
-description = "复习c时的一些思考。"
+description = "复习c时的一点思考。"
 taxonomies = { tags = ["C"] }
 template = "blog-page.html"
 draft = false
+
 +++
 
 # c复习随笔
@@ -18,8 +19,8 @@ draft = false
 2. !  ~   -（负号） ++  --   &（取变量地址）*   （type）(强制类型)    sizeof 
 3. * / %
 4. + - 
-5. >> << 
-6. > >= < <= 
+5. << 
+6. = < <= 
 7. == != 
 8. & 
 9. ^ 
@@ -114,9 +115,9 @@ const int * const a  第一个const修饰int，第二个const修饰*，即指针
 
 arr[i] 等价于 *(arr+i);
 
-int *p=new int[40]();  在分配空间后，对每个int进行了默认的初始化操作。即p[n]的值（n的取值范围是0-39）都是为0的。 
+int *p=new int[40] ( );  在分配空间后，对每个int进行了默认的初始化操作。即p[n]的值（n的取值范围是0-39）都是为0的。 
 
-int *p=new int[40](0);  这样是起不到对数组初始化为0的效果的，而且语法是错误的。
+int *p=new int[40] (0);  这样是起不到对数组初始化为0的效果的，而且语法是错误的。
 
 正常的应该是用大括号，int *p=new int[40]{0,1,2,3,4};
 
