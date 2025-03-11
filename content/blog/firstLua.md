@@ -2,6 +2,7 @@
 title = "【Learning】lua入门 "
 date = 2025-03-01
 description = "lua基础学习笔记。"
+template = "blog-page.html"
 taxonomies = { tags = ["Lua"] }
 draft = false
 +++
