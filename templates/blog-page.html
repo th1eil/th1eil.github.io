@@ -1,31 +1,102 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
 <div class="content-wrapper">
-  <article class="post-single">
-    <header class="post-header">
-      <h1 class="post-title">{{ page.title }}</h1>
-      <div class="post-meta">
-        <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
-        {% if page.taxonomies.tags %}
-          <div class="tags">
-            {% for tag in page.taxonomies.tags %}
-              <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-    </header>
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">{{ page.title }}</h1>
+            <div class="post-meta">
+                <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+                {% if page.taxonomies.tags %}
+                    <div class="tags">
+                        {% for tag in page.taxonomies.tags %}
+                            <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </header>
 
-    <div class="post-content">
-      {{ page.content | safe }}
+        <div class="post-content">
+            {{ page.content | safe }}
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
     </div>
-  </article>
-
-  <div class="toc">
-    <h3>目录</h3>
-    <div id="toc-container"></div>
-  </div>
 </div>
 
 <script>
