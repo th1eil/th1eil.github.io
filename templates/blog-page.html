@@ -21,5 +21,57 @@
       {{ page.content | safe }}
     </div>
   </article>
+
+  <div class="toc">
+    <h3>目录</h3>
+    <div id="toc-container"></div>
+  </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        const scrollPos = window.scrollY;
+
+        headings.forEach((heading, index) => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top <= 100 && rect.bottom >= 100) {
+                tocLinks.forEach(link => link.classList.remove('active'));
+                tocLinks[index].classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', highlightToc);
+    highlightToc(); // 初始化高亮
+});
+</script>
 {% endblock content %}
