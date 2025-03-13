@@ -108,6 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const tocList = document.createElement('ul');
     tocList.className = 'toc-list';
 
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
     headings.forEach((heading, index) => {
         // 为每个标题添加ID
         if (!heading.id) {
@@ -130,19 +136,63 @@ document.addEventListener('DOMContentLoaded', function() {
     const tocLinks = document.querySelectorAll('.toc-list a');
     
     function highlightToc() {
-        const scrollPos = window.scrollY;
-
-        headings.forEach((heading, index) => {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
             const rect = heading.getBoundingClientRect();
-            if (rect.top <= 100 && rect.bottom >= 100) {
-                tocLinks.forEach(link => link.classList.remove('active'));
-                tocLinks[index].classList.add('active');
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
             }
-        });
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
     }
 
-    window.addEventListener('scroll', highlightToc);
-    highlightToc(); // 初始化高亮
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
 });
 </script>
 {% endblock content %}
