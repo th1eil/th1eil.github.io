@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Talk】Zola 主题装修日记 - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Talk】Zola 主题装修日记</h1>
+            <div class="post-meta">
+                <time>2024-03-21</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+                        
+                            <a href="https://th1eil.github.io/tags/frontend/">#Frontend</a>
+                        
+                            <a href="https://th1eil.github.io/tags/zola/">#Zola</a>
+                        
+                    </div>
+                
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h1 id="zola-zhu-ti-zhuang-xiu-ri-ji">Zola 主题装修日记</h1>
+<p>很长时间没有更新博客了，最近开始捣鼓起了 Zola，这个用 Rust 写的静态站点生成器。本文记录了我的主题装修过程。</p>
+<h2 id="zhu-ti-xuan-ze">主题选择</h2>
+<p>最开始我使用了 terminimal 主题，这是一个简约的终端风格主题。选择它的原因是：</p>
+<ol>
+<li>设计简洁</li>
+<li>加载速度快</li>
+<li>支持深色模式</li>
+<li>代码高亮优秀</li>
+</ol>
+<h2 id="zhu-ti-ding-zhi">主题定制</h2>
+<h3 id="1-bu-ju-diao-zheng">1. 布局调整</h3>
+<p>首先修改了首页的文章列表布局：</p>
+<ul>
+<li>添加了文章预览</li>
+<li>优化了标签显示</li>
+<li>改进了日期格式</li>
+</ul>
+<h3 id="2-yang-shi-mei-hua">2. 样式美化</h3>
+<ul>
+<li>调整了字体和颜色</li>
+<li>优化了移动端显示</li>
+<li>添加了一些过渡动画</li>
+</ul>
+<h2 id="hou-xu-ji-hua">后续计划</h2>
+<p>计划在后续文章中详细介绍：</p>
+<ul>
+<li>Zola 的主题制作详解</li>
+<li>Markdown 进阶用法</li>
+<li>评论系统的集成</li>
+<li>自动化部署方案</li>
+</ul>
+
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
+            }
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+</body>
+
+</html>
