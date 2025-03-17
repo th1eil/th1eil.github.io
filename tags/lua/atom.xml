@@ -1,0 +1,1633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Lua</title>
+    <link href="https://th1eil.github.io/tags/lua/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-03-01T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/lua/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Learning】lua入门 </title>
+        <published>2025-03-01T00:00:00+00:00</published>
+        <updated>2025-03-01T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/firstlua/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/firstlua/</id>
+        
+        <content type="html">&lt;h3 id=&quot;lua&quot;&gt;Lua&lt;&#x2F;h3&gt;
+&lt;p&gt;Lua 是一种轻量小巧的脚本语言，它用标准C语言编写并以源代码形式开放。这意味着什么呢？这意味着Lua虚拟机可以&lt;strong&gt;很方便的嵌入别的程序里&lt;&#x2F;strong&gt;，从而为应用程序提供灵活的扩展和定制功能。而整个Lua虚拟机编译后仅仅一百余K，经过适当的裁剪还能做到更小，十分适合嵌入式的开发。&lt;&#x2F;p&gt;
+&lt;p&gt;同时，在目前脚本引擎中，Lua的运行速度占有绝对优势。这些都决定了Lua是作为嵌入式脚本的最佳选择。&lt;&#x2F;p&gt;
+&lt;p&gt;在我们编写代码之前，需要做一下准备，就是：&lt;strong&gt;确保你输入标点符号时，用的不是中文输入法。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;di-yi-ge-lua-cheng-xu&quot;&gt;第一个 Lua 程序&lt;&#x2F;h3&gt;
+&lt;p&gt;几乎所有语言的第一行代码，都是输出&lt;code&gt;hello world&lt;&#x2F;code&gt;，本教程也不意外。&lt;&#x2F;p&gt;
+&lt;p&gt;在&lt;code&gt;Lua&lt;&#x2F;code&gt;中，打印结果只需要使用&lt;code&gt;print&lt;&#x2F;code&gt;这个&lt;code&gt;函数&lt;&#x2F;code&gt;即可。同时，如果需要使用&lt;code&gt;函数&lt;&#x2F;code&gt;，只需要在函数名后加上双括号，同时传入你想传入的值即可。&lt;&#x2F;p&gt;
+&lt;p&gt;所以，我们来执行下面的代码，打印出&lt;code&gt;hello world&lt;&#x2F;code&gt;吧！&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;hello world!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;[LuatOS 在线模拟 - lua在线测试](https:&#x2F;&#x2F;wiki.luatos.com&#x2F;_static&#x2F;luatos-emulator&#x2F;lua.html?print(&amp;quot;hello world!&amp;quot;) )&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;shu-chu-shu-ju&quot;&gt;输出数据&lt;&#x2F;h3&gt;
+&lt;p&gt;上一部分，我们知道了，在&lt;code&gt;Lua&lt;&#x2F;code&gt;中，可以使用&lt;code&gt;print&lt;&#x2F;code&gt;函数来打印你想要得到的结果。&lt;&#x2F;p&gt;
+&lt;p&gt;并且还知道了，&lt;code&gt;函数&lt;&#x2F;code&gt;是指可以实现某些功能的子程序，可以使用&lt;code&gt;函数名(参数)&lt;&#x2F;code&gt;来执行。&lt;&#x2F;p&gt;
+&lt;p&gt;让我们试着输出一些其他东西吧！使用多个print函数，输出自己想输出的数据。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;测试&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;aabcdefg&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;xxxxx&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;第二个参数&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;第三个参数&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;dai-ma-zhu-shi&quot;&gt;代码注释&lt;&#x2F;h3&gt;
+&lt;p&gt;代码&lt;code&gt;注释&lt;&#x2F;code&gt;就是在代码里，不会运行的部分。&lt;code&gt;注释&lt;&#x2F;code&gt;完全不会被运行。&lt;&#x2F;p&gt;
+&lt;p&gt;这部分是为了在查看代码时，可以更好地立即现有代码含义用的。&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以用&lt;code&gt;--&lt;&#x2F;code&gt;开头，来写一段&lt;code&gt;单行注释&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;也可以用&lt;code&gt;--[[&lt;&#x2F;code&gt;开头，&lt;code&gt;]]&lt;&#x2F;code&gt;结尾，写一段多行注释。&lt;&#x2F;p&gt;
+&lt;p&gt;下面是注释的例子：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;这段代码会运行&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--print(&amp;quot;我被注释掉了，所以不会运行&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[[
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;    我是多行注释
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;    不管我写多少行
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;    都不会影响代码运行
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;bian-liang&quot;&gt;变量&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;numberbian-liang&quot;&gt;number变量&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;变量&lt;&#x2F;code&gt;，可以看作是一个桶，在里面装你想要装的内容。这些内容可以是Lua包含的所有合法类型。&lt;&#x2F;p&gt;
+&lt;p&gt;例如：我想要新建一个桶，名叫bucket，在里面放入233这个数字，就可以像下面一样：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;bucket &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;233
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;让我们试着自己新建几个变量吧！&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建变量year，并将变量的值设置为1926&lt;&#x2F;li&gt;
+&lt;li&gt;新建变量month，并将变量的值设置为8&lt;&#x2F;li&gt;
+&lt;li&gt;新建变量day，并将变量的值设置为7&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--新建三个变量，并赋值
+&lt;&#x2F;span&gt;&lt;span&gt;year &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1926
+&lt;&#x2F;span&gt;&lt;span&gt;month &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;8
+&lt;&#x2F;span&gt;&lt;span&gt;day &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;7
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--打印出三个变量的值
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(year,month,day)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;liao-jie-nil&quot;&gt;了解nil&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;nil`类型表示没有任何有效值，只要是没有声明的值，它就是`nil
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;比如我打印一个没有声明的值，便会输出&lt;code&gt;nil&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;rei &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0905
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(rei)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(asuka)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:02:11] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:02:11] 905
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:02:11] nil
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:02:11] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;这里需要你思考一下，运行以下代码，将会输出什么结果？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;2&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b,c,d)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- out 1	2	1	nil
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;fu-zhi-yu-ju&quot;&gt;赋值语句&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;赋值&lt;&#x2F;code&gt;是改变一个变量值的最基本的方法。&lt;&#x2F;p&gt;
+&lt;p&gt;如下面一样，使用&lt;code&gt;等号&lt;&#x2F;code&gt;对&lt;code&gt;左边&lt;&#x2F;code&gt;的&lt;code&gt;变量&lt;&#x2F;code&gt;进行赋值&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2
+&lt;&#x2F;span&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3
+&lt;&#x2F;span&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;n
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;Lua&lt;&#x2F;code&gt;可以对多个变量同时赋值，变量用&lt;code&gt;逗号&lt;&#x2F;code&gt;分开，&lt;code&gt;赋值&lt;&#x2F;code&gt;语句&lt;code&gt;右边的值&lt;&#x2F;code&gt;会依次赋给&lt;code&gt;左边的变量&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;a, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;n
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;当左右值的数量不一致时，Lua会进行下面的设定：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;变量个数 &amp;gt; 值的个数：按变量个数补足nil&lt;&#x2F;li&gt;
+&lt;li&gt;变量个数 &amp;lt; 值的个数：多余的值会被忽略&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;下面的例子可以展示这种设定：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a, b, c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b,c)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--输出0   1   nil
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;a, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, b&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, b&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--输出1   2
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;a, b, c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b,c)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--输出0   nil   nil
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;这里需要你思考一下，运行以下代码，将会输出什么结果？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a,b,c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3
+&lt;&#x2F;span&gt;&lt;span&gt;a,c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,b
+&lt;&#x2F;span&gt;&lt;span&gt;d &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;c,b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b,c,d)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- 2 2 2 2
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;jiao-huan-bian-liang&quot;&gt;交换变量&lt;&#x2F;h3&gt;
+&lt;p&gt;这部分需要你自己完成一个任务：&lt;&#x2F;p&gt;
+&lt;p&gt;已知下面的代码，并且已知&lt;code&gt;a&lt;&#x2F;code&gt;和&lt;code&gt;b&lt;&#x2F;code&gt;的值，请在交换他们的值，使打印输出&lt;code&gt;12 34&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;34
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;12
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a
+&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;c
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(a,b)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:04:15] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:04:15] 12	34
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:04:15] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;shu-chu-bian-liang&quot;&gt;输出变量&lt;&#x2F;h3&gt;
+&lt;p&gt;我们已经知道了，在Lua中，可以使用print函数来打印你想要得到的结果。&lt;&#x2F;p&gt;
+&lt;p&gt;同时在上一节，我们学会了新建变量和设置变量的值。&lt;&#x2F;p&gt;
+&lt;p&gt;让我们试着输出某个变量吧！使用&lt;code&gt;print函数&lt;&#x2F;code&gt;，输出已知变量。 我们已知变量&lt;code&gt;num&lt;&#x2F;code&gt;为某个数字，试着输出它的值吧！&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;num &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(num)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;suan-shu-yun-suan-fu&quot;&gt;算数运算符&lt;&#x2F;h3&gt;
+&lt;p&gt;运算符是一个特殊的符号，用于告诉解释器执行特定的数学或逻辑运算。&lt;&#x2F;p&gt;
+&lt;p&gt;上一节中，新建的数字变量，我们称之为&lt;code&gt;number&lt;&#x2F;code&gt;类型的变量。&lt;&#x2F;p&gt;
+&lt;p&gt;本节我们来学习使用&lt;code&gt;算术运算符&lt;&#x2F;code&gt;，如下所示：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; 加法
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; 减法
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; 乘法
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt; 除法
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;%&lt;&#x2F;span&gt;&lt;span&gt; 取余，求出除法的余数
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; 乘幂，计算次方
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; 负号，取负值
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们可以通过以下实例来理解算术运算符的应用：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;21
+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;10
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a + b 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a - b 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a * b 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&#x2F; &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a &#x2F; b 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;% &lt;&#x2F;span&gt;&lt;span&gt;b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a % b 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a^2 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span&gt;a
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;-a 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;span&gt;c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span&gt;(b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span&gt;a)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;a * (b - a) 的值为 &amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, c )
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;你需要完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知，一个长方体的长宽高分别为a、b、c（单位米），且这个物体重量为m（单位克）&lt;&#x2F;p&gt;
+&lt;p&gt;请打印出物体的密度（单位g&#x2F;m³）&lt;&#x2F;p&gt;
+&lt;p&gt;注：密度计算公式 密度 = 质量 &#x2F; 体积&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;a,b,c &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--长宽高
+&lt;&#x2F;span&gt;&lt;span&gt;m &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;10        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--重量
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--请打印出物体的密度
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(m&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;(a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;b&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;c))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;zi-fu-chuan&quot;&gt;字符串&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;stringlei-xing-bian-liang&quot;&gt;string类型变量&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;字符串&lt;&#x2F;code&gt;（即&lt;code&gt;string&lt;&#x2F;code&gt;），就是一串文本数据，可以存储你要的文本。&lt;&#x2F;p&gt;
+&lt;p&gt;在第二节中，&lt;code&gt;print&lt;&#x2F;code&gt;出的数据就是一个字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;Lua 语言中字符串可以使用以下三种方式来表示：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;单引号间的一串字符&lt;&#x2F;li&gt;
+&lt;li&gt;双引号间的一串字符&lt;&#x2F;li&gt;
+&lt;li&gt;[[和]]间的一串字符&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;你可以参考下面的例子来深入理解：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--双引号间的一串字符
+&lt;&#x2F;span&gt;&lt;span&gt;str1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Lua&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--单引号间的一串字符
+&lt;&#x2F;span&gt;&lt;span&gt;str2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;Lua&amp;#39;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[[和]]--间的一串字符
+&lt;&#x2F;span&gt;&lt;span&gt;str3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;[[Lua]]
+&lt;&#x2F;span&gt;&lt;span&gt;str4 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;[[使用双括号时，甚至能包含换行数据
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;换行了
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;最后一行]]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--输出所有字符串
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str2)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str4)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;接下来你需要完成下面的练习：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;新建三个变量&lt;code&gt;s1&lt;&#x2F;code&gt;、&lt;code&gt;s2&lt;&#x2F;code&gt;、&lt;code&gt;s3&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;分别存入字符串数据：&lt;code&gt;rei&lt;&#x2F;code&gt;、&lt;code&gt;asuka&lt;&#x2F;code&gt;、&lt;code&gt;233&lt;&#x2F;code&gt;，使输出打印正确&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;s1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;rei&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;s2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;asuka&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;s3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;233&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;s1,s2,s3的值：&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,s1,s2,s3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;s1,s2,s3的类型：&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;(s1),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;(s2),&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;(s3))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:07:46] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:07:46] s1,s2,s3的值：	rei	asuka	233
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:07:46] s1,s2,s3的类型：	string	string	string
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:07:46] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;zhuan-yi-zi-fu&quot;&gt;转义字符&lt;&#x2F;h3&gt;
+&lt;p&gt;在上一节中，我们学习了如何声明字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;但是我们有时候会遇到一些特殊的问题，如：&lt;strong&gt;如何输出单引号和双引号？如何输出回车换行？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;也许我们可以用下面的方式简单规避，输出单引号时，声明字符串用双引号括起来，像下面这样&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&amp;#39;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;同理，输出双引号时，声明字符串用单引号括起来，像下面这样&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;&amp;quot;&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;但是，这样会出现一个问题：如何同时显示单引号和双引号？这里就需要&lt;code&gt;转义字符&lt;&#x2F;code&gt;登场了。&lt;&#x2F;p&gt;
+&lt;p&gt;转义字符用于表示不能直接显示的字符，比如后退键、回车键、等。&lt;&#x2F;p&gt;
+&lt;p&gt;以 &lt;code&gt;\&lt;&#x2F;code&gt; 开头的都是转义字符，下面时常用的转义字符格式：&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;转义字符&lt;&#x2F;th&gt;&lt;th&gt;含义&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;\n&lt;&#x2F;td&gt;&lt;td&gt;换行(LF),将当前位置移到下一行开头&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;\r&lt;&#x2F;td&gt;&lt;td&gt;回车(CR),将当前位置移到本行开头&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;|反斜杠字符\&lt;&#x2F;td&gt;&lt;td&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;‘&lt;&#x2F;td&gt;&lt;td&gt;单引号&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;“&lt;&#x2F;td&gt;&lt;td&gt;双引号&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;\0&lt;&#x2F;td&gt;&lt;td&gt;空字符(NULL)&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;\ddd&lt;&#x2F;td&gt;&lt;td&gt;1到3位八进制数所代表的任意字符&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;\xhh&lt;&#x2F;td&gt;&lt;td&gt;1到2位十六进制所代表的任意字符&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;例如，如果我们想给str赋值一个单引号，一个双引号（’”），那么我们可以这样写：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\&amp;#39;\&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面需要你来完成一个简单的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;新建一个变量&lt;code&gt;str&lt;&#x2F;code&gt;，给str赋值为&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;ab\cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;ef&amp;#39;g&lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#f92672;color:#f8f8f0;&quot;&gt;\h&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;]]&lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#f92672;color:#f8f8f0;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;并打印出来&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--输出应为ab\cd&amp;quot;ef&amp;#39;g\h]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;stringpin-jie&quot;&gt;string拼接&lt;&#x2F;h3&gt;
+&lt;p&gt;字符串和字符串可以相加吗？可以！我们可以用拼接符号来将两个独立的字符串拼起来。&lt;&#x2F;p&gt;
+&lt;p&gt;我们使用&lt;code&gt;..&lt;&#x2F;code&gt;来表示字符串拼接符号，如下面的示例代码：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;abc&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;def&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;str1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;luv&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;str2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;rei&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;str3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;4ever&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(str1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;str2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;str3)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:11:03] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:11:03] abcdef
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:11:03] luvrei4ever
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;-- [21:11:03] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你要完成这个任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知三个字符串变量&lt;code&gt;s1&lt;&#x2F;code&gt;、&lt;code&gt;s2&lt;&#x2F;code&gt;、&lt;code&gt;s3&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;请将他们按顺序拼接起来，存入&lt;code&gt;all&lt;&#x2F;code&gt;，并使用print输出结果&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;s1,s2,s3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;aaa&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;bbb&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;ccc&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;all &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;s1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;s2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;s3
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(all)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:01] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:01] aaabbbccc
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:01] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;numberzhuan-string&quot;&gt;number转string&lt;&#x2F;h3&gt;
+&lt;p&gt;上面一节学习了如何拼接字符串，这个方法固然很好用，但是有时候我们会遇到一个需求，那就是把&lt;code&gt;number&lt;&#x2F;code&gt;类型的变量和&lt;code&gt;string&lt;&#x2F;code&gt;类型的变量拼接起来，组成一个新的&lt;code&gt;string&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;比如下面的变量&lt;code&gt;n&lt;&#x2F;code&gt;和&lt;code&gt;s&lt;&#x2F;code&gt;，如何拼接起来呢？&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 123
+&lt;&#x2F;span&gt;&lt;span&gt;s = &amp;#39;m&#x2F;s&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们可以直接将&lt;code&gt;number&lt;&#x2F;code&gt;类型的变量&lt;code&gt;n&lt;&#x2F;code&gt;转换成&lt;code&gt;string&lt;&#x2F;code&gt;类型的值，这样就可以拼接了&lt;&#x2F;p&gt;
+&lt;p&gt;使用&lt;code&gt;tostring(value)&lt;&#x2F;code&gt;函数即可实现这一操作：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123
+&lt;&#x2F;span&gt;&lt;span&gt;s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;m&#x2F;s&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;tostring&lt;&#x2F;span&gt;&lt;span&gt;(n)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;s
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(result)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:22] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:22] 123m&#x2F;s
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:22] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你要完成这个任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知三个变量&lt;code&gt;n1&lt;&#x2F;code&gt;、&lt;code&gt;s&lt;&#x2F;code&gt;、&lt;code&gt;n2&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;然后将他们按顺序拼接起来，存入变量&lt;code&gt;result&lt;&#x2F;code&gt;，使输出结果正确&lt;&#x2F;p&gt;
+&lt;p&gt;小提示：在某些情况下，Lua会自动将number类型转换成string类型&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n1,s,n2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;abc&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2
+&lt;&#x2F;span&gt;&lt;span&gt;result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;n1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span&gt;n2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(result)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:55] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:55] 1abc2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:12:55] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;stringzhuan-number&quot;&gt;string转number&lt;&#x2F;h3&gt;
+&lt;p&gt;上面一节学习了如何将number转成string，这一节我们来学习如何将string转成number&lt;&#x2F;p&gt;
+&lt;p&gt;比如下面的变量&lt;code&gt;s&lt;&#x2F;code&gt;，存储的内容是一个字符串，但是代表了一个数字，如何转成number再与n相加计算呢？&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123
+&lt;&#x2F;span&gt;&lt;span&gt;s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;2333&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们可以直接将&lt;code&gt;string&lt;&#x2F;code&gt;类型的变量&lt;code&gt;s&lt;&#x2F;code&gt;转换成&lt;code&gt;number&lt;&#x2F;code&gt;类型的值，这样就可以计算了&lt;&#x2F;p&gt;
+&lt;p&gt;使用&lt;code&gt;tonumber(value)&lt;&#x2F;code&gt;函数即可实现这一操作：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123
+&lt;&#x2F;span&gt;&lt;span&gt;s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;2333&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;tonumber&lt;&#x2F;span&gt;&lt;span&gt;(s) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;n
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(result)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:13:47] 虚拟机初始化完毕
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:13:47] 2456
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--[21:13:47] 虚拟机已停止运行
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你要完成这个任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知三个字符串变量&lt;code&gt;s1&lt;&#x2F;code&gt;、&lt;code&gt;s2&lt;&#x2F;code&gt;、&lt;code&gt;s3&lt;&#x2F;code&gt;，其内容均为纯数字&lt;&#x2F;p&gt;
+&lt;p&gt;请计算他们的算术和，赋值给新建的变量&lt;code&gt;result&lt;&#x2F;code&gt;，使下面代码输出正确结果&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s1,s2,s3 = &amp;quot;11&amp;quot;,&amp;quot;12&amp;quot;,&amp;quot;100&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;result = --请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;luo-ji-yun-suan&quot;&gt;逻辑运算&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;bu-er-xing-he-bi-jiao-yun-suan&quot;&gt;布尔型和比较运算&lt;&#x2F;h3&gt;
+&lt;p&gt;布尔型（boolean）只有两个可选值：&lt;code&gt;true&lt;&#x2F;code&gt;（真） 和 &lt;code&gt;false&lt;&#x2F;code&gt;（假）&lt;&#x2F;p&gt;
+&lt;p&gt;Lua 把 false 和 nil 看作是&lt;code&gt;false&lt;&#x2F;code&gt;，其他的都为true（包括0这个值，也是相当于&lt;code&gt;true&lt;&#x2F;code&gt;）&lt;&#x2F;p&gt;
+&lt;p&gt;Lua 中也有许多的&lt;code&gt;关系运算符&lt;&#x2F;code&gt;，用于比较大小或比较是否相等，符号及其含义如下表：&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;符号&lt;&#x2F;th&gt;&lt;th&gt;含义&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;==&lt;&#x2F;td&gt;&lt;td&gt;等于，检测两个值是否相等，相等返回 true，否则返回 false&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;~=&lt;&#x2F;td&gt;&lt;td&gt;不等于，检测两个值是否相等，相等返回 false，否则返回 true&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&amp;gt;&lt;&#x2F;td&gt;&lt;td&gt;大于，如果左边的值大于右边的值，返回 true，否则返回 false&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&amp;lt;&lt;&#x2F;td&gt;&lt;td&gt;小于，如果左边的值大于右边的值，返回 false，否则返回 true&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&amp;gt;=&lt;&#x2F;td&gt;&lt;td&gt;大于等于，如果左边的值大于等于右边的值，返回 true，否则返回 false&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&amp;lt;=&lt;&#x2F;td&gt;&lt;td&gt;小于等于， 如果左边的值小于等于右边的值，返回 true，否则返回 false&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;我们可以通过以下实例来更加透彻的理解关系运算符的应用：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 21
+&lt;&#x2F;span&gt;&lt;span&gt;b = 10
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;==的结果&amp;#39;,a==b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;~=的结果&amp;#39;,a~=b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;&amp;gt;的结果&amp;#39;,a&amp;gt;b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;&amp;lt;的结果&amp;#39;,a&amp;lt;b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;&amp;gt;=的结果&amp;#39;,a&amp;gt;=b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;#39;&amp;lt;=的结果&amp;#39;,a&amp;lt;=b)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面问题来了，运行以下代码，将会输出什么结果？请自行思考&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;b = &amp;#39;1&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;c = a
+&lt;&#x2F;span&gt;&lt;span&gt;d = 2
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(a == b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(c == a)
+&lt;&#x2F;span&gt;&lt;span&gt;print(a ~= b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(d &amp;lt;= c)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;luo-ji-yun-suan-fu&quot;&gt;逻辑运算符&lt;&#x2F;h3&gt;
+&lt;p&gt;逻辑运算符基于布尔型的值来进行计算，并给出结果，下表列出了 Lua 语言中的常用逻辑运算符：&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;符号&lt;&#x2F;th&gt;&lt;th&gt;含义&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;and&lt;&#x2F;td&gt;&lt;td&gt;逻辑与操作符。 若 A 为 false，则返回 A，否则返回 B&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;or&lt;&#x2F;td&gt;&lt;td&gt;逻辑或操作符。 若 A 为 true，则返回 A，否则返回 B&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;not&lt;&#x2F;td&gt;&lt;td&gt;逻辑非操作符。与逻辑运算结果相反，如果条件为 true，逻辑非为 false&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;我们可以通过以下实例来更加透彻的理解逻辑运算符的应用：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;true and false的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;true or false的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;or &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;true and true的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;false or false的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;false &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;or &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;not false的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;not &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;123 and 345的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;345&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;#39;nil and true的结果&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;nil &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面问题来了，运行以下代码，将会输出什么结果？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;b = &amp;#39;1&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;c = 0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(a and b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(c or a)
+&lt;&#x2F;span&gt;&lt;span&gt;print(not b)
+&lt;&#x2F;span&gt;&lt;span&gt;print(d and c)
+&lt;&#x2F;span&gt;&lt;span&gt;print(1 &amp;lt; 2 and 3 &amp;gt; 2)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;jian-yan-da-xiao-zi-ce-ti&quot;&gt;检验大小（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;题目：如果已知number变量&lt;code&gt;n&lt;&#x2F;code&gt;，那么如果需要判断n是否符合下面的条件：&lt;&#x2F;p&gt;
+&lt;p&gt;3&amp;lt;n≤10&lt;&#x2F;p&gt;
+&lt;p&gt;以下四行判断代码，正确的是？&lt;&#x2F;p&gt;
+&lt;p&gt;（返回true即表示变量&lt;code&gt;n&lt;&#x2F;code&gt;符合要求）&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 1--这个数可能是任意数字
+&lt;&#x2F;span&gt;&lt;span&gt;print(n &amp;gt; 10 or n &amp;lt;= 3)
+&lt;&#x2F;span&gt;&lt;span&gt;print(n &amp;lt;= 10 or n &amp;gt; 3)
+&lt;&#x2F;span&gt;&lt;span&gt;print(n &amp;lt; 3 and n &amp;gt;= 10)
+&lt;&#x2F;span&gt;&lt;span&gt;print(n &amp;lt;= 10 or n &amp;gt; 3)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;fen-zhi-pan-duan&quot;&gt;分支判断&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;tiao-jian-pan-duan&quot;&gt;条件判断&lt;&#x2F;h3&gt;
+&lt;p&gt;上面一节学习了布尔类型，那么这个需要用到哪里呢？我们需要用它来进行某些判断。&lt;&#x2F;p&gt;
+&lt;p&gt;在Lua中，可以使用&lt;code&gt;if&lt;&#x2F;code&gt;语句来进行判断，如下面所举例的代码，可以判断&lt;code&gt;n是否为小于10的数&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 5
+&lt;&#x2F;span&gt;&lt;span&gt;if n &amp;lt; 10 then
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;n小于10&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们整理一下，实际上if语句就是如下结构：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;if 条件 then
+&lt;&#x2F;span&gt;&lt;span&gt;    符合条件的代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面是你需要完成的事：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知变量&lt;code&gt;n&lt;&#x2F;code&gt;，请判断&lt;code&gt;n&lt;&#x2F;code&gt;是否为奇数，如果是，请给&lt;code&gt;n&lt;&#x2F;code&gt;的值加上1&lt;&#x2F;p&gt;
+&lt;p&gt;如果你觉得有难度，请查看下面的提示：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;求出&lt;code&gt;n&lt;&#x2F;code&gt;除以2的余数：n % 2&lt;&#x2F;li&gt;
+&lt;li&gt;给&lt;code&gt;n&lt;&#x2F;code&gt;的值加上1：n = n + 1&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--已知一个number变量n
+&lt;&#x2F;span&gt;&lt;span&gt;n = 5   --这个数字是几都有可能
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;n在判断前的值&amp;quot;,n)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;if 你的条件 then
+&lt;&#x2F;span&gt;&lt;span&gt;    要做的事
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;n在判断后的值&amp;quot;,n)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;duo-tiao-jian-pan-duan&quot;&gt;多条件判断&lt;&#x2F;h3&gt;
+&lt;p&gt;上面一节学习了简单的if语句写法，这一节我们来学习多条件分支语句&lt;&#x2F;p&gt;
+&lt;p&gt;在Lua中，可以使用&lt;code&gt;if&lt;&#x2F;code&gt;语句来进行判断，同时可以使用&lt;code&gt;else&lt;&#x2F;code&gt;语句，表示多个分支判断&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;if 条件1 then
+&lt;&#x2F;span&gt;&lt;span&gt;    满足条件1
+&lt;&#x2F;span&gt;&lt;span&gt;elseif 条件2 then
+&lt;&#x2F;span&gt;&lt;span&gt;    不满足条件1，但是满足条件2
+&lt;&#x2F;span&gt;&lt;span&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;    前面条件全都不满足
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;举个例子，比如有一个&lt;code&gt;数字n&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;当它大于等于0、小于5时，输出&lt;code&gt;太小&lt;&#x2F;code&gt;，&lt;&#x2F;li&gt;
+&lt;li&gt;当它大于等于5、小于10时，输出&lt;code&gt;适中&lt;&#x2F;code&gt;，&lt;&#x2F;li&gt;
+&lt;li&gt;当它大于等于10时，输出&lt;code&gt;太大&lt;&#x2F;code&gt;，&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;那么代码就像如下这样：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 1--更改这个数多运行几次试试
+&lt;&#x2F;span&gt;&lt;span&gt;if n &amp;gt;= 0 and n &amp;lt; 5 then
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;太小&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;elseif n &amp;gt;= 5 and n &amp;lt; 10 then
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;适中&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;elseif n &amp;gt;= 10 then
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;太大&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;注意：&lt;code&gt;else&lt;&#x2F;code&gt;和&lt;code&gt;elseif&lt;&#x2F;code&gt;都是可选的，可有可无，但是&lt;code&gt;end&lt;&#x2F;code&gt;不能省略&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;下面是你需要完成的事：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知变量&lt;code&gt;n&lt;&#x2F;code&gt;，请判断&lt;code&gt;n&lt;&#x2F;code&gt;是否为奇数，&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果是，请给&lt;code&gt;n&lt;&#x2F;code&gt;的值加上1&lt;&#x2F;li&gt;
+&lt;li&gt;如果不是，请将&lt;code&gt;n&lt;&#x2F;code&gt;的值改为原来的两倍&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--已知一个number变量n
+&lt;&#x2F;span&gt;&lt;span&gt;n = 5   --这个数字是几都有可能
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;n在判断前的值&amp;quot;,n)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;if 你的条件 then
+&lt;&#x2F;span&gt;&lt;span&gt;    要做的事
+&lt;&#x2F;span&gt;&lt;span&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;    要做的事
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;n在判断后的值&amp;quot;,n)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;pan-duan-san-jiao-xing-he-fa-xing-zi-ce-ti&quot;&gt;判断三角形合法性（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;你需要使用前面几章的知识，来完成下面的题目&lt;&#x2F;p&gt;
+&lt;p&gt;已知三个number类型的变量a、b、c，分别代表三根木棒的长度&lt;&#x2F;p&gt;
+&lt;p&gt;请判断，使用这三根木棒，是否可以组成一个三角形（两短边之和大于第三边）&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果可以组成，就打印出true&lt;&#x2F;li&gt;
+&lt;li&gt;如果不可以，就打印false&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a,b,c = 1,2,3--多改几个数值自行测试
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;ifde-pan-duan-yi-ju-zi-ce-ti&quot;&gt;if的判断依据（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;我们在前面了解到，Lua 把 &lt;code&gt;false&lt;&#x2F;code&gt; 和 &lt;code&gt;nil&lt;&#x2F;code&gt; 看作是&lt;code&gt;false&lt;&#x2F;code&gt;，其他的都为&lt;code&gt;true&lt;&#x2F;code&gt;（包括&lt;code&gt;0&lt;&#x2F;code&gt;这个值，也是相当于&lt;code&gt;true&lt;&#x2F;code&gt;）&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;那么问题来了，执行下面的代码，将会输出什么？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;result = &amp;#39;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;if 0 then
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result..&amp;#39;T,&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result..&amp;#39;F,&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;if a then
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result..&amp;#39;T&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result..&amp;#39;F&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;han-shu&quot;&gt;函数&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;chu-shi-han-shu&quot;&gt;初识函数&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;函数&lt;&#x2F;code&gt;是指一段在一起的、可以做某一件事儿的程序，也叫做子程序。&lt;&#x2F;p&gt;
+&lt;p&gt;在前面的内容中，我们已经接触过了函数的调用，这个函数就是前面用到了很多次的&lt;code&gt;print(...)&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;调用函数只需要按下面的格式即可：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;函数名(参数1,参数2,参数3,......)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;为何要使用函数？因为很多事情都是重复性操作，我们使用函数，可以快速完成这些操作&lt;&#x2F;p&gt;
+&lt;p&gt;下面我们举一个最简单的函数例子，这个函数没有传入参数、没有返回值&lt;&#x2F;p&gt;
+&lt;p&gt;它实现了一个简单的功能，就是输出&lt;code&gt;Hello world!&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function hello()
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;Hello world!&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这个函数名为&lt;code&gt;hello&lt;&#x2F;code&gt;，我们可以按下面的方法进行调用（执行）：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function hello()
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;Hello world!&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;hello()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这行代码会输出&lt;code&gt;Hello world!&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;同时，在Lua中，函数也是一种变量类型，也就是说，&lt;code&gt;hello&lt;&#x2F;code&gt;实际上也是一个变量，里面存储的是一个函数，我们可以用下面的代码来理解：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function hello()
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;Hello world!&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;a = hello
+&lt;&#x2F;span&gt;&lt;span&gt;--把hello函数同时赋值给a变量
+&lt;&#x2F;span&gt;&lt;span&gt;a()
+&lt;&#x2F;span&gt;&lt;span&gt;hello()
+&lt;&#x2F;span&gt;&lt;span&gt;--a和hello变量指向同一个函数
+&lt;&#x2F;span&gt;&lt;span&gt;--所以执行结果和hello()相同
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;因为函数只是个变量，你甚至在一开始可以这样声明&lt;code&gt;hello&lt;&#x2F;code&gt;函数：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;hello = function()
+&lt;&#x2F;span&gt;&lt;span&gt;    print(&amp;#39;Hello world!&amp;#39;)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;hello()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你需要做一件简单的事情：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建一个函数变量&lt;code&gt;biu&lt;&#x2F;code&gt;，使其执行后会打印&lt;code&gt;biubiubiu&lt;&#x2F;code&gt;这个字符串，&lt;&#x2F;li&gt;
+&lt;li&gt;新建一个函数变量&lt;code&gt;pong&lt;&#x2F;code&gt;，使其与&lt;code&gt;biu&lt;&#x2F;code&gt;指向的函数相同&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--请在此处补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--请使下面的调用可以正常打印出biubiubiu
+&lt;&#x2F;span&gt;&lt;span&gt;biu()
+&lt;&#x2F;span&gt;&lt;span&gt;pong()
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;biu和pong相等吗？&amp;quot;,biu==pong)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;localbian-liang&quot;&gt;local变量&lt;&#x2F;h3&gt;
+&lt;p&gt;之前我们创建的变量，都是全局变量，这种变量在代码运行周期从头到尾，都不会被销毁，而且随处都可调用。&lt;&#x2F;p&gt;
+&lt;p&gt;但是当我们代码量增加，很多时候大量新建全局变量会导致内存激增，我们需要一种可以临时使用、并且可以自动销毁释放内存资源的变量，要怎么解决呢？&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以使用&lt;code&gt;local&lt;&#x2F;code&gt;标志来新建临时变量，使用&lt;code&gt;local&lt;&#x2F;code&gt;创建一个局部变量，与全局变量不同，局部变量只在被声明的那个代码块内有效。&lt;&#x2F;p&gt;
+&lt;p&gt;参考下面的代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 123
+&lt;&#x2F;span&gt;&lt;span&gt;function add()
+&lt;&#x2F;span&gt;&lt;span&gt;    local n = a+2
+&lt;&#x2F;span&gt;&lt;span&gt;    print(n)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;add()
+&lt;&#x2F;span&gt;&lt;span&gt;print(n)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;上面的代码中，&lt;code&gt;n&lt;&#x2F;code&gt;就是一个局部变量，它只在&lt;code&gt;这个funcion&lt;&#x2F;code&gt;中有效，并且函数运行完后会自动回收这部分的内存。&lt;&#x2F;p&gt;
+&lt;p&gt;我们应该尽可能的使用局部变量，以方便lua虚拟机自动回收内存空间，同时减少资源占用提高运行速度。&lt;&#x2F;p&gt;
+&lt;p&gt;下面请阅读以下代码，思考一下，正确的输出结果是什么：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;str = &amp;#39;abc&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;function connect()
+&lt;&#x2F;span&gt;&lt;span&gt;    local s = str..&amp;#39;def&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;print(s,str)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;han-shu-can-shu&quot;&gt;函数参数&lt;&#x2F;h3&gt;
+&lt;p&gt;在前几章的使用中，我们知道函数是可以传入参数的，如&lt;code&gt;print(123)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;那么，我们如何编写可以传入参数的函数呢？可以按下面的模板来写&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function 函数名(参数1,参数2,...)
+&lt;&#x2F;span&gt;&lt;span&gt;    代码内容
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这里传入的参数，等价于在函数内部新建了一个&lt;code&gt;local&lt;&#x2F;code&gt;的变量，修改这些数据不会影响外部的数据（除了后面还没有讲到的&lt;code&gt;table&lt;&#x2F;code&gt;等类型）&lt;&#x2F;p&gt;
+&lt;p&gt;举个例子，比如下面的函数，可以实现打印出两个传入值的和：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function add(a,b)
+&lt;&#x2F;span&gt;&lt;span&gt;    print(a+b)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;add(1,2)
+&lt;&#x2F;span&gt;&lt;span&gt;--会输出3
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这段代码其实等价于：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function add()
+&lt;&#x2F;span&gt;&lt;span&gt;    local a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;    local b = 2
+&lt;&#x2F;span&gt;&lt;span&gt;    print(a+b)
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;add()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;下面问题来了，请设计一个函数&lt;code&gt;p&lt;&#x2F;code&gt;，可以按下面的调用方式来打印出物体的密度：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--补全这个函数的代码，满足题目要求
+&lt;&#x2F;span&gt;&lt;span&gt;function p(a,b,c,m)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    print()
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--一个长方体的长宽高分别为a、b、c（单位米）
+&lt;&#x2F;span&gt;&lt;span&gt;a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;b = 2
+&lt;&#x2F;span&gt;&lt;span&gt;c = 3
+&lt;&#x2F;span&gt;&lt;span&gt;--这个物体重量为m（单位克）
+&lt;&#x2F;span&gt;&lt;span&gt;m = 230
+&lt;&#x2F;span&gt;&lt;span&gt;--下面打印出密度
+&lt;&#x2F;span&gt;&lt;span&gt;--注：密度计算公式 密度 = 质量 &#x2F; 体积
+&lt;&#x2F;span&gt;&lt;span&gt;p(a,b,c,m)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;han-shu-fan-hui-zhi&quot;&gt;函数返回值&lt;&#x2F;h3&gt;
+&lt;p&gt;在前面的代码中，我们实现了一个函数，输入变量&lt;code&gt;a&lt;&#x2F;code&gt;、&lt;code&gt;b&lt;&#x2F;code&gt;，函数会自动输出两个数值的和。&lt;&#x2F;p&gt;
+&lt;p&gt;但是一般来说，我们的需求远远不止这些，我们可能需要一个如下功能的函数：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;执行函数，输入两个值，获取这两个值的和
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;如果还是按上面几节的内容，我们只会输出这个值，并不能把这个值传递给其他的变量进行后续使用，如何解决这个需求呢？&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以使用函数的返回值来实现这个需求，结合上面的需求，我们可以用下面的代码实现：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function add(a,b)
+&lt;&#x2F;span&gt;&lt;span&gt;    return a+b
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;all = add(1,2)
+&lt;&#x2F;span&gt;&lt;span&gt;--这里all的值就是3了
+&lt;&#x2F;span&gt;&lt;span&gt;print(all)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这里的&lt;code&gt;return&lt;&#x2F;code&gt;表示返回一个值，&lt;code&gt;并且立刻结束这个函数的运行&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;同时，和输入值可以有多个一样，返回值也可以有多个&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function add(a,b)
+&lt;&#x2F;span&gt;&lt;span&gt;    return a+b,&amp;quot;ok&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;all, result = add(1,2)
+&lt;&#x2F;span&gt;&lt;span&gt;--这里all的值就是3了
+&lt;&#x2F;span&gt;&lt;span&gt;--这里result的值就是string &amp;quot;ok&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(all,result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;下面问题来了，请设计一个函数&lt;code&gt;p&lt;&#x2F;code&gt;，可以按下面的调用方式来返回出物体的密度，返回值为&lt;code&gt;number&lt;&#x2F;code&gt;类型：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function p(a,b,c,m)
+&lt;&#x2F;span&gt;&lt;span&gt;    --请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--一个长方体的长宽高分别为a、b、c（单位米）
+&lt;&#x2F;span&gt;&lt;span&gt;a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;b = 2
+&lt;&#x2F;span&gt;&lt;span&gt;c = 3
+&lt;&#x2F;span&gt;&lt;span&gt;--这个物体重量为m（单位克）
+&lt;&#x2F;span&gt;&lt;span&gt;m = 230
+&lt;&#x2F;span&gt;&lt;span&gt;--下面返回密度值
+&lt;&#x2F;span&gt;&lt;span&gt;--注：密度计算公式 密度 = 质量 &#x2F; 体积
+&lt;&#x2F;span&gt;&lt;span&gt;result = p(a,b,c,m)
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;pan-duan-san-jiao-xing-he-fa-xing-2-zi-ce-ti&quot;&gt;判断三角形合法性2（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;你需要使用前面几章的知识，来完成下面的题目&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知三个number类型的变量，分别代表三根木棒的长度&lt;&#x2F;li&gt;
+&lt;li&gt;请判断，使用这三根木棒，是否可以组成一个三角形（两短边之和大于第三边）&lt;&#x2F;li&gt;
+&lt;li&gt;请新建一个函数triangle，并可以用如下形式调用（如果可以组成，就返回true）：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function triangle(a,b,c)
+&lt;&#x2F;span&gt;&lt;span&gt;    --请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;result = triangle(1,2,3)--传入值为三边长度，多改几个测试下
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;fan-hui-duo-ge-zhi-zi-ce-ti&quot;&gt;返回多个值（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;你需要使用前面几章的知识，来完成下面的题目&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知2个number类型的变量，分别代表一个长方体的长和宽&lt;&#x2F;li&gt;
+&lt;li&gt;请计算这个长方形的周长和面积&lt;&#x2F;li&gt;
+&lt;li&gt;请新建一个函数&lt;code&gt;rectangle&lt;&#x2F;code&gt;，并可以用如下形式调用：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;function rectangle(a,b)
+&lt;&#x2F;span&gt;&lt;span&gt;    --补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;area,len = rectangle(1,2)
+&lt;&#x2F;span&gt;&lt;span&gt;--结果：
+&lt;&#x2F;span&gt;&lt;span&gt;--面积area为2
+&lt;&#x2F;span&gt;&lt;span&gt;--周长len为6
+&lt;&#x2F;span&gt;&lt;span&gt;print(area,len)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;table&quot;&gt;table&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;ren-shi-shu-zu&quot;&gt;认识数组&lt;&#x2F;h3&gt;
+&lt;p&gt;数组，使用一个变量名，存储一系列的值&lt;&#x2F;p&gt;
+&lt;p&gt;很多语言中都有数组这个概念，在Lua中，我们可以使用&lt;code&gt;table&lt;&#x2F;code&gt;（表）来实现这个功能&lt;&#x2F;p&gt;
+&lt;p&gt;在Lua中，table是一个一系列元素的集合，使用大括号进行表示，其中的元素之间以逗号分隔，类似下面的代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {1,3,8,5,4}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们可以直接使用&lt;code&gt;元素&lt;&#x2F;code&gt;的&lt;code&gt;下标&lt;&#x2F;code&gt;，来访问、或者对该&lt;code&gt;元素&lt;&#x2F;code&gt;进行赋值操作。&lt;&#x2F;p&gt;
+&lt;p&gt;在上面的&lt;code&gt;table&lt;&#x2F;code&gt;变量&lt;code&gt;t&lt;&#x2F;code&gt;中，第一个元素的下标是&lt;code&gt;1&lt;&#x2F;code&gt;，第二个是&lt;code&gt;2&lt;&#x2F;code&gt;，以此类推。&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以用&lt;code&gt;变量名&lt;&#x2F;code&gt;+&lt;code&gt;中括号&lt;&#x2F;code&gt;，中括号里加上&lt;code&gt;下标&lt;&#x2F;code&gt;，来访问或更改这个&lt;code&gt;元素&lt;&#x2F;code&gt;，如下面的例子：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {1,3,8,5,4}
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[1]) --打印1
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[3]) --打印8
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;t[2] = 99 --更改第二个元素的值
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[2]) --打印99
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;t[6] = 2 --凭空新建第六个元素并赋值
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[6]) --打印2
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[10])
+&lt;&#x2F;span&gt;&lt;span&gt;--因为不存在，打印nil
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;以上就是table最简单的一个例子了，就是当作数组来用（注意，一般语言中的数组基本都为不可变长度，这里的table为可变长度）&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;下面你需要完成：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建一个table，名为cards，存入1-10十个数字&lt;&#x2F;li&gt;
+&lt;li&gt;将第3个元素与第7个元素交换&lt;&#x2F;li&gt;
+&lt;li&gt;将第9个元素与第2个元素交换&lt;&#x2F;li&gt;
+&lt;li&gt;增加第11个变量，值为23&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;cards =
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;jian-dan-table&quot;&gt;简单table&lt;&#x2F;h3&gt;
+&lt;p&gt;上一节里，我们将&lt;code&gt;table&lt;&#x2F;code&gt;来表示&lt;code&gt;数组&lt;&#x2F;code&gt;，实际上，&lt;code&gt;table&lt;&#x2F;code&gt;中可以包括&lt;code&gt;任意类型的数据&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;比如我们可以在&lt;code&gt;table&lt;&#x2F;code&gt;中放置&lt;code&gt;number&lt;&#x2F;code&gt;和&lt;code&gt;string&lt;&#x2F;code&gt;数据，类似下面的代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {&amp;quot;abc&amp;quot;,223,&amp;quot;,..a&amp;quot;,123123}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们甚至能在里面放&lt;code&gt;function&lt;&#x2F;code&gt;变量&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;t &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;123 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;abc&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;hello world&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;t[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;]()
+&lt;&#x2F;span&gt;&lt;span&gt;t[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;]()
+&lt;&#x2F;span&gt;&lt;span&gt;t[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;](&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;t[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;]()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;这些&lt;code&gt;table&lt;&#x2F;code&gt;访问每个元素的方式仍然是直接用下标，并且也能用下标来进行修改&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;下面你需要完成：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建一个&lt;code&gt;table&lt;&#x2F;code&gt;，名为&lt;code&gt;funcList&lt;&#x2F;code&gt;，并实现以下功能&lt;&#x2F;li&gt;
+&lt;li&gt;调用&lt;code&gt;funcList[1](a,b)&lt;&#x2F;code&gt;，返回a和b的乘积&lt;&#x2F;li&gt;
+&lt;li&gt;调用&lt;code&gt;funcList[2](a,b)&lt;&#x2F;code&gt;，返回a减b的差&lt;&#x2F;li&gt;
+&lt;li&gt;调用&lt;code&gt;funcList[3](a)&lt;&#x2F;code&gt;，返回a的相反数（-a）&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;funcList &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;a,b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--提供两个数
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;a,b值为&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,a,b)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;a和b的乘积：&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,funcList[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;](a,b))
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;a和b的差：&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,funcList[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;](a,b))
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;a和相反数：&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,funcList[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;](a))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;tablexia-biao&quot;&gt;table下标&lt;&#x2F;h3&gt;
+&lt;p&gt;在前两节，我们的&lt;code&gt;table&lt;&#x2F;code&gt;都只是一些简单的List（列表），每个元素的&lt;code&gt;下标&lt;&#x2F;code&gt;都是自动从1排列的&lt;&#x2F;p&gt;
+&lt;p&gt;实际上，Lua中，下标可以直接在声明时进行指定，像下面这样：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {6,7,8,9}
+&lt;&#x2F;span&gt;&lt;span&gt;--上面和下面的代码等价
+&lt;&#x2F;span&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;    [1] = 6,
+&lt;&#x2F;span&gt;&lt;span&gt;    [2] = 7,
+&lt;&#x2F;span&gt;&lt;span&gt;    [3] = 8,
+&lt;&#x2F;span&gt;&lt;span&gt;    [4] = 9,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--甚至你可以跳过某些下标
+&lt;&#x2F;span&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;    [1] = 6,
+&lt;&#x2F;span&gt;&lt;span&gt;    [3] = 7,
+&lt;&#x2F;span&gt;&lt;span&gt;    [5] = 8,
+&lt;&#x2F;span&gt;&lt;span&gt;    [7] = 9,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[7])
+&lt;&#x2F;span&gt;&lt;span&gt;--输出9
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--在声明后赋予元素值也是可以的
+&lt;&#x2F;span&gt;&lt;span&gt;t = {}--空的table
+&lt;&#x2F;span&gt;&lt;span&gt;t[101] = 10
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[101])
+&lt;&#x2F;span&gt;&lt;span&gt;--输出10
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你需要：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建一个变量&lt;code&gt;t&lt;&#x2F;code&gt;，并按下面的格式声明&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;1&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;123&lt;&#x2F;code&gt;（number）&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;13&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;&amp;quot;abc&amp;quot;&lt;&#x2F;code&gt;（string）&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;666&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;&amp;quot;666&amp;quot;&lt;&#x2F;code&gt;（string）&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为1的元素：&amp;quot;,t[1],type(t[1]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为13的元素：&amp;quot;,t[13],type(t[13]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为666的元素：&amp;quot;,t[666],type(t[666]))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;xia-biao-jin-jie&quot;&gt;下标进阶&lt;&#x2F;h3&gt;
+&lt;p&gt;在上一节，我们学习了如何自定义下标，其实在Lua中，下标也可以是字符串，如下面的例子&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;    [&amp;quot;apple&amp;quot;] = 10,
+&lt;&#x2F;span&gt;&lt;span&gt;    banana = 12,
+&lt;&#x2F;span&gt;&lt;span&gt;    pear = 6,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;--使用[&amp;quot;下标&amp;quot;] = 值
+&lt;&#x2F;span&gt;&lt;span&gt;--和  下标 = 值
+&lt;&#x2F;span&gt;&lt;span&gt;--都是正确写法
+&lt;&#x2F;span&gt;&lt;span&gt;--当第二种方式有歧义时，应该用第一种方式
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--可以用下面两种方式访问：
+&lt;&#x2F;span&gt;&lt;span&gt;print(t[&amp;quot;apple&amp;quot;])
+&lt;&#x2F;span&gt;&lt;span&gt;--输出10
+&lt;&#x2F;span&gt;&lt;span&gt;print(t.apple)
+&lt;&#x2F;span&gt;&lt;span&gt;--输出10
+&lt;&#x2F;span&gt;&lt;span&gt;--当第二种方式有歧义时，应该用第一种方式
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;可见，在使用&lt;code&gt;string&lt;&#x2F;code&gt;作为下标时，&lt;code&gt;table&lt;&#x2F;code&gt;的灵活性提升了一个数量级。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;string&lt;&#x2F;code&gt;作为下标时，也可以动态赋值：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {} -- 空table
+&lt;&#x2F;span&gt;&lt;span&gt;t[&amp;quot;new&amp;quot;] = &amp;quot;新的值&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(t.new)
+&lt;&#x2F;span&gt;&lt;span&gt;--输出 新的值
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;下面你需要完成：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建&lt;code&gt;table&lt;&#x2F;code&gt;变量&lt;code&gt;t&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;apple&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;123&lt;&#x2F;code&gt;（number）&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;banana&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;&amp;quot;abc&amp;quot;&lt;&#x2F;code&gt;（string）&lt;&#x2F;li&gt;
+&lt;li&gt;下标为&lt;code&gt;1@1&lt;&#x2F;code&gt;的元素，值为&lt;code&gt;&amp;quot;666&amp;quot;&lt;&#x2F;code&gt;（string）&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为apple的元素：&amp;quot;,t[&amp;quot;apple&amp;quot;],type(t[&amp;quot;apple&amp;quot;]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为banana的元素：&amp;quot;,t[&amp;quot;banana&amp;quot;],type(t[&amp;quot;banana&amp;quot;]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;下标为1@1的元素：&amp;quot;,t[&amp;quot;1@1&amp;quot;],type(t[&amp;quot;1@1&amp;quot;]))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;tablexiao-ce-yan&quot;&gt;table小测验&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;下面的代码，将会打印什么？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;    apple = {
+&lt;&#x2F;span&gt;&lt;span&gt;        price = 7.52,
+&lt;&#x2F;span&gt;&lt;span&gt;        weight = 2.1,
+&lt;&#x2F;span&gt;&lt;span&gt;    },
+&lt;&#x2F;span&gt;&lt;span&gt;    banana = {
+&lt;&#x2F;span&gt;&lt;span&gt;        price = 8.31,
+&lt;&#x2F;span&gt;&lt;span&gt;        weight = 1.4,
+&lt;&#x2F;span&gt;&lt;span&gt;        year = &amp;#39;2018&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    },
+&lt;&#x2F;span&gt;&lt;span&gt;    year = &amp;#39;2019&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;print(
+&lt;&#x2F;span&gt;&lt;span&gt;    t.price,
+&lt;&#x2F;span&gt;&lt;span&gt;    t.apple.price,
+&lt;&#x2F;span&gt;&lt;span&gt;    t.banana.weight,
+&lt;&#x2F;span&gt;&lt;span&gt;    t.year
+&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;tablexiao-ce-yan-2&quot;&gt;table小测验2&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;下面的代码，将会打印什么？&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        price = 7.52,
+&lt;&#x2F;span&gt;&lt;span&gt;        weight = 2.1,
+&lt;&#x2F;span&gt;&lt;span&gt;    },
+&lt;&#x2F;span&gt;&lt;span&gt;    {
+&lt;&#x2F;span&gt;&lt;span&gt;        price = 8.31,
+&lt;&#x2F;span&gt;&lt;span&gt;        weight = 1.4,
+&lt;&#x2F;span&gt;&lt;span&gt;        year = &amp;#39;2018&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    },
+&lt;&#x2F;span&gt;&lt;span&gt;    year = &amp;#39;2019&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;print(
+&lt;&#x2F;span&gt;&lt;span&gt;    t[&amp;quot;price&amp;quot;],
+&lt;&#x2F;span&gt;&lt;span&gt;    t[1].price,
+&lt;&#x2F;span&gt;&lt;span&gt;    t[2].weight,
+&lt;&#x2F;span&gt;&lt;span&gt;    t[&amp;quot;year&amp;quot;]
+&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;luaquan-ju-bian-liang-yu-table&quot;&gt;Lua全局变量与table&lt;&#x2F;h3&gt;
+&lt;p&gt;在前面我们知道了，在&lt;code&gt;table&lt;&#x2F;code&gt;中，可以直接用&lt;code&gt;table名[下标]&lt;&#x2F;code&gt;或&lt;code&gt;table名.string下标&lt;&#x2F;code&gt;来访问元素&lt;&#x2F;p&gt;
+&lt;p&gt;实际上，在Lua中，所有的全局变量全部被存放在了一个大&lt;code&gt;table&lt;&#x2F;code&gt;中，这个&lt;code&gt;table&lt;&#x2F;code&gt;名为：&lt;code&gt;_G&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以用下面的例子来示范：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 123--新建变量
+&lt;&#x2F;span&gt;&lt;span&gt;print(n)--输出123
+&lt;&#x2F;span&gt;&lt;span&gt;print(_G.n)--输出123
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;_G.abc = 1--相当于新建全局变量
+&lt;&#x2F;span&gt;&lt;span&gt;print(abc)--输出1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;_G[&amp;quot;def&amp;quot;] = 23--相当于新建全局变量
+&lt;&#x2F;span&gt;&lt;span&gt;print(def)--输出23
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--甚至你可以像下面这样
+&lt;&#x2F;span&gt;&lt;span&gt;_G.print(&amp;quot;hello&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;_G[&amp;quot;print&amp;quot;](&amp;quot;world&amp;quot;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;现在，你明白为什么说&lt;code&gt;万物基于table&lt;&#x2F;code&gt;了吧？&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;你需要完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知有一个全局变量，名为&lt;code&gt;@#$&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;请新建一个变量&lt;code&gt;result&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;将&lt;code&gt;@#$&lt;&#x2F;code&gt;变量里的值赋值给&lt;code&gt;result&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;_G[&amp;quot;@#$&amp;quot;] = 123
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;result = --请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;result值为&amp;quot;,result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;tablexiao-ce-shi-3&quot;&gt;table小测试3&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;请新建一个名为t的table，满足以下要求&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;t[10]&lt;&#x2F;code&gt;可获得&lt;code&gt;number&lt;&#x2F;code&gt;类型数据&lt;code&gt;100&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;t.num&lt;&#x2F;code&gt;可获得&lt;code&gt;number&lt;&#x2F;code&gt;类型数据&lt;code&gt;12&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;t.abc[3]&lt;&#x2F;code&gt;可获得&lt;code&gt;string&lt;&#x2F;code&gt;类型数据&lt;code&gt;abcd&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;t.a.b.c&lt;&#x2F;code&gt;可获得&lt;code&gt;number&lt;&#x2F;code&gt;类型数据&lt;code&gt;789&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;t = {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;t[10]可获得number类型数据100:&amp;quot;,t[10],type(t[10]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;t.num可获得number类型数据12:&amp;quot;,t.num,type(t.num))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;t.abc[3]可获得string类型数据abcd:&amp;quot;,t.abc[3],type(t.abc[3]))
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;t.a.b.c可获得number类型数据789:&amp;quot;,t.a.b.c,type(t.a.b.c))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;table-concat&quot;&gt;table.concat&lt;&#x2F;h3&gt;
+&lt;p&gt;table.concat (table [, sep [, i [, j ] ] ])&lt;&#x2F;p&gt;
+&lt;p&gt;将元素是&lt;code&gt;string&lt;&#x2F;code&gt;或者&lt;code&gt;number&lt;&#x2F;code&gt;类型的&lt;code&gt;table&lt;&#x2F;code&gt;，每个元素连接起来变成字符串并返回。&lt;&#x2F;p&gt;
+&lt;p&gt;可选参数&lt;code&gt;sep&lt;&#x2F;code&gt;，表示连接间隔符，默认为空。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;i&lt;&#x2F;code&gt;和&lt;code&gt;j&lt;&#x2F;code&gt;表示元素起始和结束的下标。&lt;&#x2F;p&gt;
+&lt;p&gt;下面是例子：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;local a = {1, 3, 5, &amp;quot;hello&amp;quot; }
+&lt;&#x2F;span&gt;&lt;span&gt;print(table.concat(a))
+&lt;&#x2F;span&gt;&lt;span&gt;print(table.concat(a, &amp;quot;|&amp;quot;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;打印的结果：
+&lt;&#x2F;span&gt;&lt;span&gt;--135hello
+&lt;&#x2F;span&gt;&lt;span&gt;--1|3|5|hello
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知table变量t，&lt;&#x2F;li&gt;
+&lt;li&gt;将t中的结果全部连起来&lt;&#x2F;li&gt;
+&lt;li&gt;间隔符使用&lt;code&gt;,&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;并使用print打印出来&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {&amp;quot;a&amp;quot;,&amp;quot;b&amp;quot;,&amp;quot;c&amp;quot;,&amp;quot;d&amp;quot;}
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;连接结果：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;tableshan-jian&quot;&gt;table删减&lt;&#x2F;h3&gt;
+&lt;p&gt;table.insert (table, [pos ,] value)&lt;&#x2F;p&gt;
+&lt;p&gt;在（数组型）表 table 的 pos 索引位置插入 value，其它元素向后移动到空的地方。pos 的默认值是表的长度加一，即默认是插在表的最后。&lt;&#x2F;p&gt;
+&lt;p&gt;table.remove (table [, pos])&lt;&#x2F;p&gt;
+&lt;p&gt;在表 table 中删除索引为 pos（pos 只能是 number 型）的元素，并返回这个被删除的元素，它后面所有元素的索引值都会减一。pos 的默认值是表的长度，即默认是删除表的最后一个元素。&lt;&#x2F;p&gt;
+&lt;p&gt;下面是例子：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;local a = {1, 8}             --a[1] = 1,a[2] = 8
+&lt;&#x2F;span&gt;&lt;span&gt;table.insert(a, 1, 3)   --在表索引为1处插入3
+&lt;&#x2F;span&gt;&lt;span&gt;print(a[1], a[2], a[3])
+&lt;&#x2F;span&gt;&lt;span&gt;table.insert(a, 10)    --在表的最后插入10
+&lt;&#x2F;span&gt;&lt;span&gt;print(a[1], a[2], a[3], a[4])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;打印的结果：
+&lt;&#x2F;span&gt;&lt;span&gt;--3    1    8
+&lt;&#x2F;span&gt;&lt;span&gt;--3    1    8    10
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;local a = { 1, 2, 3, 4}
+&lt;&#x2F;span&gt;&lt;span&gt;print(table.remove(a, 1)) --删除速索引为1的元素
+&lt;&#x2F;span&gt;&lt;span&gt;print(a[1], a[2], a[3], a[4])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(table.remove(a))   --删除最后一个元素
+&lt;&#x2F;span&gt;&lt;span&gt;print(a[1], a[2], a[3], a[4])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;打印的结果：
+&lt;&#x2F;span&gt;&lt;span&gt;--1
+&lt;&#x2F;span&gt;&lt;span&gt;--2    3    4    nil
+&lt;&#x2F;span&gt;&lt;span&gt;--4
+&lt;&#x2F;span&gt;&lt;span&gt;--2    3    nil    nil
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知table变量&lt;code&gt;t&lt;&#x2F;code&gt;，&lt;&#x2F;li&gt;
+&lt;li&gt;去除t中的第一个元素&lt;&#x2F;li&gt;
+&lt;li&gt;然后这时，在t的第三个元素前，加上一个number变量，值为810&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {1,2,3,4,5,6,7,8,9}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;第一个元素应为2：&amp;quot;,t[1])
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;第三个元素应为810：&amp;quot;,t[3])
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;xun-huan&quot;&gt;循环&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;whilexun-huan&quot;&gt;while循环&lt;&#x2F;h3&gt;
+&lt;p&gt;在实际功能实现中，经常会遇到需要循环运行的代码，比如从1到100填充table数据，我们可以直接用循环语句来实现&lt;&#x2F;p&gt;
+&lt;p&gt;我们首先来学习&lt;code&gt;while&lt;&#x2F;code&gt;这个循环语法，整体的格式如下：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;while 继续循环判断依据 do
+&lt;&#x2F;span&gt;&lt;span&gt;    执行的代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;下面举一个例子，我们计算从1加到100的结果：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;local result = 0
+&lt;&#x2F;span&gt;&lt;span&gt;local num = 1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;while num &amp;lt;= 100 do
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result + num
+&lt;&#x2F;span&gt;&lt;span&gt;    num = num + 1
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;上面的代码，就是当num≤100时，result不断地加num，并且num每次循环后自己加1&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;理解了上面的代码，我们来完成下面一个简单的任务吧：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知两个number类型的变量&lt;code&gt;min&lt;&#x2F;code&gt;和&lt;code&gt;max&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;请计算从&lt;code&gt;min&lt;&#x2F;code&gt;与&lt;code&gt;max&lt;&#x2F;code&gt;之间，所有&lt;code&gt;3的倍数&lt;&#x2F;code&gt;的和&lt;&#x2F;li&gt;
+&lt;li&gt;打印出结果&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;min,max = 114,514 --这个结果应为42009
+&lt;&#x2F;span&gt;&lt;span&gt;result = 0--结果存放到这个变量
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;while 请完善 do
+&lt;&#x2F;span&gt;&lt;span&gt;    --补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;结果：&amp;quot;,result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;forxun-huan&quot;&gt;for循环&lt;&#x2F;h3&gt;
+&lt;p&gt;for循环在某些程度上，和while循环很相似，但是for循环可以更加简洁地表达中间累积的量&lt;&#x2F;p&gt;
+&lt;p&gt;我们首先来学习&lt;code&gt;for&lt;&#x2F;code&gt;这个循环语法，整体的格式如下：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;for 临时变量名=开始值,结束值,步长 do
+&lt;&#x2F;span&gt;&lt;span&gt;    循环的代码
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;其中，&lt;code&gt;步长&lt;&#x2F;code&gt;可以省略，默认为1&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;临时变量名&lt;&#x2F;code&gt;可以直接在代码区域使用（但不可更改），每次循环会自动加&lt;code&gt;步长值&lt;&#x2F;code&gt;，并且在到达&lt;code&gt;结束值&lt;&#x2F;code&gt;后停止循环&lt;&#x2F;p&gt;
+&lt;p&gt;下面举一个例子，我们计算从1加到100的结果：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;local result = 0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for i=1,100 do
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result + i
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;上面的代码，就是当i≤100时，result不断地加i，并且i每次循环后增加1&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;理解了上面的代码，我们来完成下面一个简单的任务吧：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知两个number类型的变量&lt;code&gt;min&lt;&#x2F;code&gt;和&lt;code&gt;max&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;请计算从&lt;code&gt;min&lt;&#x2F;code&gt;与&lt;code&gt;max&lt;&#x2F;code&gt;之间，所有7的倍数的和&lt;&#x2F;li&gt;
+&lt;li&gt;打印出结果&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;min,max = 114,514 --这个结果应为17955
+&lt;&#x2F;span&gt;&lt;span&gt;result = 0--结果存放到这个变量
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;结果：&amp;quot;,result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;zhong-duan-xun-huan&quot;&gt;中断循环&lt;&#x2F;h3&gt;
+&lt;p&gt;前面我们学习了循环语句，有些时候循环运行到一半，我们不想再继续运行了，怎么办呢？&lt;&#x2F;p&gt;
+&lt;p&gt;我们可以在一个循环体中使用&lt;code&gt;break&lt;&#x2F;code&gt;，来立即结束本次循环，继续运行下面的代码&lt;&#x2F;p&gt;
+&lt;p&gt;比如像下面这样，计算1-100相加途中，&lt;code&gt;小于100&lt;&#x2F;code&gt;的&lt;code&gt;最大的和&lt;&#x2F;code&gt;：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;result = 0
+&lt;&#x2F;span&gt;&lt;span&gt;for i=1,100 do
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result + i
+&lt;&#x2F;span&gt;&lt;span&gt;    if result &amp;gt; 100 then
+&lt;&#x2F;span&gt;&lt;span&gt;        result = result - i
+&lt;&#x2F;span&gt;&lt;span&gt;        break
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;可以看见，当发现和大于100后，代码立即把&lt;code&gt;result&lt;&#x2F;code&gt;的值还原到了加上当前数字之前的状态，并且调用&lt;code&gt;break&lt;&#x2F;code&gt;语句，立即退出了本次循环&lt;&#x2F;p&gt;
+&lt;p&gt;在&lt;code&gt;while&lt;&#x2F;code&gt;中，我们也可以使用&lt;code&gt;break&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;result = 0
+&lt;&#x2F;span&gt;&lt;span&gt;c = 1
+&lt;&#x2F;span&gt;&lt;span&gt;while true do
+&lt;&#x2F;span&gt;&lt;span&gt;    result = result + c
+&lt;&#x2F;span&gt;&lt;span&gt;    if result &amp;gt; 100 then
+&lt;&#x2F;span&gt;&lt;span&gt;        result = result - c  
+&lt;&#x2F;span&gt;&lt;span&gt;        break
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span&gt;    c = c + 1
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们在这里直接使用了死循环（因为&lt;code&gt;while&lt;&#x2F;code&gt;的继续运行判断依据始终为&lt;code&gt;true&lt;&#x2F;code&gt;），整体逻辑也和之前for的代码一致，当发现和大于100后，代码立即把&lt;code&gt;result&lt;&#x2F;code&gt;的值还原到了加上当前数字之前的状态，并且调用&lt;code&gt;break&lt;&#x2F;code&gt;语句，立即退出了本次循环&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;现在你需要完成一项任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;请求出小于变量max的13的倍数的最大值（max大于0）&lt;&#x2F;li&gt;
+&lt;li&gt;并将结果打印出来&lt;&#x2F;li&gt;
+&lt;li&gt;本题理论上不用循环就能实现，但是为了练习一下技巧，请用for循环来实现&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;max = 810 --结果应为806
+&lt;&#x2F;span&gt;&lt;span&gt;result = 0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --请补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(result)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;xun-huan-ce-shi-ti-1-zi-ce-ti&quot;&gt;循环测试题1（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;前面我们学习了循环语句，我们需要完成下面的任务&lt;&#x2F;p&gt;
+&lt;p&gt;我们知道，&lt;code&gt;print&lt;&#x2F;code&gt;函数可以打印一行完整的输出&lt;&#x2F;p&gt;
+&lt;p&gt;那么，已知变量a，请打印出下面的结果：&lt;&#x2F;p&gt;
+&lt;p&gt;（a为大于0的整数，且需要输出a行数据，数据从1开始，每行与上一行的差为2）&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;3
+&lt;&#x2F;span&gt;&lt;span&gt;5
+&lt;&#x2F;span&gt;&lt;span&gt;7
+&lt;&#x2F;span&gt;&lt;span&gt;9
+&lt;&#x2F;span&gt;&lt;span&gt;（上面例子为当a为5的情况）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;做题区域：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 10
+&lt;&#x2F;span&gt;&lt;span&gt;--需要用print输出要求的结果
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;输出结果：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --请补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;xun-huan-ce-shi-ti-2-zi-ce-ti&quot;&gt;循环测试题2（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;我们需要完成下面的任务&lt;&#x2F;p&gt;
+&lt;p&gt;那么，已知变量a，请打印出下面的结果：&lt;&#x2F;p&gt;
+&lt;p&gt;（a为大于0的整数，且需要输出a行数据，第一行为一个*，后面每行多一个*）&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;*
+&lt;&#x2F;span&gt;&lt;span&gt;**
+&lt;&#x2F;span&gt;&lt;span&gt;***
+&lt;&#x2F;span&gt;&lt;span&gt;****
+&lt;&#x2F;span&gt;&lt;span&gt;*****
+&lt;&#x2F;span&gt;&lt;span&gt;（上面例子为当a为5的情况）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;做题区域：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 10
+&lt;&#x2F;span&gt;&lt;span&gt;--需要用print输出要求的结果
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;输出结果：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --请补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;xun-huan-ce-shi-ti-3-zi-ce-ti&quot;&gt;循环测试题3（自测题）&lt;&#x2F;h3&gt;
+&lt;p&gt;我们需要完成下面的任务&lt;&#x2F;p&gt;
+&lt;p&gt;那么，已知变量a，请打印出下面的结果：&lt;&#x2F;p&gt;
+&lt;p&gt;（a为大于0的整数，且需要输出a行数据，按图示规律输出）&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;12
+&lt;&#x2F;span&gt;&lt;span&gt;123
+&lt;&#x2F;span&gt;&lt;span&gt;1234
+&lt;&#x2F;span&gt;&lt;span&gt;12345
+&lt;&#x2F;span&gt;&lt;span&gt;123456
+&lt;&#x2F;span&gt;&lt;span&gt;1234567
+&lt;&#x2F;span&gt;&lt;span&gt;12345678
+&lt;&#x2F;span&gt;&lt;span&gt;123456789
+&lt;&#x2F;span&gt;&lt;span&gt;12345678910
+&lt;&#x2F;span&gt;&lt;span&gt;1234567891011
+&lt;&#x2F;span&gt;&lt;span&gt;（上面例子为当a为11的情况）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;做题区域：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 20
+&lt;&#x2F;span&gt;&lt;span&gt;--需要用print输出要求的结果
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;输出结果：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --请补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;xun-huan-ce-shi-ti-4-zi-ce-ti&quot;&gt;循环测试题4（自测题）&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;有一只猴子，第一天摘了若干个桃子 ，当即吃了一半，但还觉得不过瘾 ，就又多吃了一个。&lt;&#x2F;li&gt;
+&lt;li&gt;第2天早上又将剩下的桃子吃掉一半，还是觉得不过瘾，就又多吃了两个。&lt;&#x2F;li&gt;
+&lt;li&gt;以后每天早上都吃了前一天剩下的一半加天数个（例如，第5天吃了前一天剩下的一半加5个）。&lt;&#x2F;li&gt;
+&lt;li&gt;到第n天早上再想吃的时候，就只剩下一个桃子了。&lt;&#x2F;li&gt;
+&lt;li&gt;那么，已知变量a为最后一天的天数，请打印出第一天的桃子数。&lt;&#x2F;li&gt;
+&lt;li&gt;如：a为5时，输出114&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;做题区域：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;a = 6
+&lt;&#x2F;span&gt;&lt;span&gt;--需要用print输出要求的结果
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;输出结果：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;for --请补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;xiang-jie-stringku&quot;&gt;详解string库&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;string-sub&quot;&gt;string.sub&lt;&#x2F;h3&gt;
+&lt;p&gt;接下来几节会讲解string库的各种接口&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;string.sub(s, i [, j])
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;返回字符串 &lt;code&gt;s&lt;&#x2F;code&gt; 中，从索引 &lt;code&gt;i&lt;&#x2F;code&gt; 到索引 &lt;code&gt;j&lt;&#x2F;code&gt; 之间的子字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;i 可以为负数，表示倒数第几个字符。&lt;&#x2F;p&gt;
+&lt;p&gt;当 j 缺省时，默认为 -1，也就是字符串 s 的最后位置。&lt;&#x2F;p&gt;
+&lt;p&gt;当索引 i 在字符串 s 的位置在索引 j 的后面时，将返回一个空字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;下面是例子：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;print(string.sub(&amp;quot;Hello Lua&amp;quot;, 4, 7))
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.sub(&amp;quot;Hello Lua&amp;quot;, 2))
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.sub(&amp;quot;Hello Lua&amp;quot;, 2, 1))
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.sub(&amp;quot;Hello Lua&amp;quot;, -3, -1))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;打印的结果：
+&lt;&#x2F;span&gt;&lt;span&gt;lo L
+&lt;&#x2F;span&gt;&lt;span&gt;ello Lua
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Lua
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;值得注意的是，我们可以使用冒号来简化语法，像下面这样：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;12345&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;s1 = string.sub(s, 4, 7)
+&lt;&#x2F;span&gt;&lt;span&gt;s2 = s:sub(4, 7)
+&lt;&#x2F;span&gt;&lt;span&gt;--两种写法是等价关系
+&lt;&#x2F;span&gt;&lt;span&gt;print(s1,s2)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知字符串变量&lt;code&gt;s&lt;&#x2F;code&gt;，请分别打印出（每种一行）：&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;s&lt;&#x2F;code&gt;从&lt;code&gt;第4个字符开始，到最后&lt;&#x2F;code&gt;的值&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;s&lt;&#x2F;code&gt;从&lt;code&gt;第1个字符开始，到倒数第3个字符&lt;&#x2F;code&gt;的值&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;s&lt;&#x2F;code&gt;从&lt;code&gt;倒数第5个字符开始，到倒数第2个字符&lt;&#x2F;code&gt;的值&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span&gt;s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;1919810&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-rep&quot;&gt;string.rep&lt;&#x2F;h3&gt;
+&lt;p&gt;string.rep(s, n)&lt;&#x2F;p&gt;
+&lt;p&gt;返回字符串 s 的 n 次拷贝。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;print(string.rep(&amp;quot;abc&amp;quot;, 3))
+&lt;&#x2F;span&gt;&lt;span&gt;--输出结果：
+&lt;&#x2F;span&gt;&lt;span&gt;--abcabcabc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;打印一行数据，数据内容为810个114514&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;print()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-len&quot;&gt;string.len&lt;&#x2F;h3&gt;
+&lt;p&gt;string.len(s)&lt;&#x2F;p&gt;
+&lt;p&gt;接收一个字符串，返回它的长度。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;hello lua&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.len(s))
+&lt;&#x2F;span&gt;&lt;span&gt;--输出结果：
+&lt;&#x2F;span&gt;&lt;span&gt;9
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--同时也可以使用简便语法
+&lt;&#x2F;span&gt;&lt;span&gt;print(s:len())
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;新建一个变量s，使数据内容为810个114514&lt;&#x2F;li&gt;
+&lt;li&gt;并打印出字符串s的长度&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = --补全代码
+&lt;&#x2F;span&gt;&lt;span&gt;print()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;da-xiao-xie-zhuan-huan&quot;&gt;大小写转换&lt;&#x2F;h3&gt;
+&lt;p&gt;string.lower(s)&lt;&#x2F;p&gt;
+&lt;p&gt;接收一个字符串 s，返回一个把所有大写字母变成小写字母的字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;string.upper(s)&lt;&#x2F;p&gt;
+&lt;p&gt;接收一个字符串 s，返回一个把所有小写字母变成大写字母的字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;hello lua&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.upper(s))
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.lower(s))
+&lt;&#x2F;span&gt;&lt;span&gt;--输出结果：
+&lt;&#x2F;span&gt;&lt;span&gt;HELLO LUA
+&lt;&#x2F;span&gt;&lt;span&gt;hello lua
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--同时也可以使用简便语法
+&lt;&#x2F;span&gt;&lt;span&gt;print(s:upper())
+&lt;&#x2F;span&gt;&lt;span&gt;print(s:lower())
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;已知一个变量&lt;code&gt;s&lt;&#x2F;code&gt;，打印出全是大写字母的s字符串&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;asd8938KJjsidiajdl;(()k)&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print --补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-format&quot;&gt;string.format&lt;&#x2F;h3&gt;
+&lt;p&gt;string.format(formatstring, …)&lt;&#x2F;p&gt;
+&lt;p&gt;按照格式化参数&lt;code&gt;formatstring&lt;&#x2F;code&gt;，返回后面&lt;code&gt;...&lt;&#x2F;code&gt;内容的格式化版本。&lt;&#x2F;p&gt;
+&lt;p&gt;编写格式化字符串的规则与标准 c 语言中 printf 函数的规则基本相同：&lt;&#x2F;p&gt;
+&lt;p&gt;它由常规文本和指示组成，这些指示控制了每个参数应放到格式化结果的什么位置，及如何放入它们。&lt;&#x2F;p&gt;
+&lt;p&gt;一个指示由字符&lt;code&gt;%&lt;&#x2F;code&gt;加上一个字母组成，这些字母指定了如何格式化参数，例如&lt;code&gt;d&lt;&#x2F;code&gt;用于十进制数、&lt;code&gt;x&lt;&#x2F;code&gt;用于十六进制数、&lt;code&gt;o&lt;&#x2F;code&gt;用于八进制数、&lt;code&gt;f&lt;&#x2F;code&gt;用于浮点数、&lt;code&gt;s&lt;&#x2F;code&gt;用于字符串等。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;print(string.format(&amp;quot;%.4f&amp;quot;, 3.1415926))     -- 保留4位小数
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.format(&amp;quot;%d %x %o&amp;quot;, 31, 31, 31))-- 十进制数31转换成不同进制
+&lt;&#x2F;span&gt;&lt;span&gt;d,m,y = 29,7,2015
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.format(&amp;quot;%s %02d&#x2F;%02d&#x2F;%d&amp;quot;, &amp;quot;today is:&amp;quot;, d, m, y))
+&lt;&#x2F;span&gt;&lt;span&gt;--控制输出2位数字，并在前面补0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;输出
+&lt;&#x2F;span&gt;&lt;span&gt;-- 3.1416
+&lt;&#x2F;span&gt;&lt;span&gt;-- 31 1f 37
+&lt;&#x2F;span&gt;&lt;span&gt;-- today is: 29&#x2F;07&#x2F;2015
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知一个变量&lt;code&gt;n&lt;&#x2F;code&gt;，为&lt;code&gt;number&lt;&#x2F;code&gt;类型整数&lt;&#x2F;li&gt;
+&lt;li&gt;打印出&lt;code&gt;n:&lt;&#x2F;code&gt;连上&lt;code&gt;n&lt;&#x2F;code&gt;值的字符串&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;n = 810
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print --补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;stringde-ben-zhi&quot;&gt;string的本质&lt;&#x2F;h3&gt;
+&lt;p&gt;这一节我们来讲解字符串的本质&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;字符串&lt;&#x2F;code&gt;，是用来存储一串字符的，&lt;code&gt;但是它的本质就是一串数字&lt;&#x2F;code&gt;。如何用一串数字来代表一串字符呢？&lt;&#x2F;p&gt;
+&lt;p&gt;在计算机中，每一个符号都对应着一个数字，但是在讲解这个知识之前，我们了解一下补充知识：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;在大多数编程语言中，我们使用0x开头来表示这个数字是16进制的。
+&lt;&#x2F;span&gt;&lt;span&gt;比如
+&lt;&#x2F;span&gt;&lt;span&gt;10等价于0x0a
+&lt;&#x2F;span&gt;&lt;span&gt;256等价于0xff
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;接下来，你需要了解，每一个符号都对应着一个数字，比如：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;0`对应着`0x30`、`1`对应着`0x31` `a`对应着`0x61`、`b`对应着`0x62` `A`对应着`0x41`、`B`对应着`0x42
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;上面的编码规则，我们称之为ascii码，具体想了解可以打开下面的网址查看：&lt;&#x2F;p&gt;
+&lt;p&gt;http:&#x2F;&#x2F;ascii.911cha.com&#x2F;&lt;&#x2F;p&gt;
+&lt;p&gt;当然，1字节最大为0xff，即256，只能存下一部分符号，大部分的中文按某些编码，一个中文占用2或3个字节&lt;&#x2F;p&gt;
+&lt;p&gt;计算机如何解析这些数据，我们不需要了解，当你知道了上面的知识后，你应该可以理解下面的描述：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;字符串&amp;quot;apple&amp;quot;实际上的内容就是下面的一串数字：
+&lt;&#x2F;span&gt;&lt;span&gt;0x61,0x70,0x70,0x6c,0x65
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;同时，lua的字符串中可以保存任何数值，即使是0x00这种不代表任何含义的数，也可以保存&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;补充：在其他语言中（如C），0x00代表字符串结束，但是在lua中并不是这样。
+&lt;&#x2F;span&gt;&lt;span&gt;lua的字符串每字节可以存储任意的一字节数据。
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;比如下面的描述：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;有一串lua字符串中的数据为：
+&lt;&#x2F;span&gt;&lt;span&gt;0x01,0x02,0x30,0x00,0x44
+&lt;&#x2F;span&gt;&lt;span&gt;实际人能看到的（不可见字符用�代替）：
+&lt;&#x2F;span&gt;&lt;span&gt;��0�D
+&lt;&#x2F;span&gt;&lt;span&gt;当然，你不能说你看不见的数据就不存在，他们都完好无损地在这个字符串中
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;下面你需要思考一个问题：一串字符串数据如下，它的实际内容是什么（指人能看见的字符串内容，如abcd）？&lt;&#x2F;p&gt;
+&lt;p&gt;0x62,0x61,0x6e,0x61,0x6e,0x61&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-char&quot;&gt;string.char&lt;&#x2F;h3&gt;
+&lt;p&gt;string.char (…)&lt;&#x2F;p&gt;
+&lt;p&gt;接收 0 个或更多的整数（整数范围：0~255），返回这些整数所对应的 ASCII 码字符组成的字符串。当参数为空时，默认是一个 0。&lt;&#x2F;p&gt;
+&lt;p&gt;如果上一章节有认真学习过了的话，这段话应该是很好理解的。实质上就是把计算机认识的一串数字，变成字符串变量，并且字符串内的数据就是要存的那串数据。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;str1 = string.char(0x30,0x31,0x32,0x33)
+&lt;&#x2F;span&gt;&lt;span&gt;str2 = string.char(0x01,0x02,0x30,0x03,0x44)
+&lt;&#x2F;span&gt;&lt;span&gt;print(str1)
+&lt;&#x2F;span&gt;&lt;span&gt;print(str2)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;输出（不可见字符用�代替）
+&lt;&#x2F;span&gt;&lt;span&gt;--0123
+&lt;&#x2F;span&gt;&lt;span&gt;--��0�D
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知一个字符串的每个字符在数组t中按顺序排列&lt;&#x2F;li&gt;
+&lt;li&gt;请根据t的值，打印出字符串内容（一行数据）&lt;&#x2F;li&gt;
+&lt;li&gt;注：这个字符串存储的不一定是可见的字符&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;t = {0x79,0x6F,0x75,0x20,0x61,0x72,0x65,0x20,0x72,0x69,0x67,0x68,0x74}
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;真正的字符串内容：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-byte&quot;&gt;string.byte&lt;&#x2F;h3&gt;
+&lt;p&gt;string.byte(s [, i [, j ] ])&lt;&#x2F;p&gt;
+&lt;p&gt;返回字符 s[i]、s[i + 1]、s[i + 2]、······、s[j] 所对应的 ASCII 码。i 的默认值为 1，即第一个字节,j 的默认值为 i 。&lt;&#x2F;p&gt;
+&lt;p&gt;这个函数功能刚好和前面的string.char相反，是提取字符串中实际的数值。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;str = &amp;quot;12345&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.byte(str,2))
+&lt;&#x2F;span&gt;&lt;span&gt;print(str:byte(2))--也可以这样
+&lt;&#x2F;span&gt;&lt;span&gt;print(str:byte())--不填默认是1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;输出（十进制数据）
+&lt;&#x2F;span&gt;&lt;span&gt;--50
+&lt;&#x2F;span&gt;&lt;span&gt;--50
+&lt;&#x2F;span&gt;&lt;span&gt;--49
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知字符串s&lt;&#x2F;li&gt;
+&lt;li&gt;请把s中代表的数据，全部相加，并打印出来&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = string.char(1,2,3,4,5,6,7,8,9)
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;s内数据的和是：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-find&quot;&gt;string.find&lt;&#x2F;h3&gt;
+&lt;p&gt;string.find(s, p [, init [, plain] ])&lt;&#x2F;p&gt;
+&lt;p&gt;这个函数会在字符串&lt;code&gt;s&lt;&#x2F;code&gt;中，寻找匹配&lt;code&gt;p&lt;&#x2F;code&gt;字符串的数据。如果成功找到，那么会返回&lt;code&gt;p&lt;&#x2F;code&gt;字符串在&lt;code&gt;s&lt;&#x2F;code&gt;字符串中出现的开始位置和结束位置；如果没找到，那么就返回&lt;code&gt;nil&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;第三个参数&lt;code&gt;init&lt;&#x2F;code&gt;默认为&lt;code&gt;1&lt;&#x2F;code&gt;，表示从第几个字符开始匹配，当&lt;code&gt;init&lt;&#x2F;code&gt;为负数时，表示从&lt;code&gt;s&lt;&#x2F;code&gt;字符串的倒数第&lt;code&gt;-init&lt;&#x2F;code&gt;个字符处开始匹配。&lt;&#x2F;p&gt;
+&lt;p&gt;第四个参数&lt;code&gt;plain&lt;&#x2F;code&gt;默认为&lt;code&gt;false&lt;&#x2F;code&gt;，当其为&lt;code&gt;true&lt;&#x2F;code&gt;时，只会把&lt;code&gt;p&lt;&#x2F;code&gt;看成一个字符串对待。&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可能你会奇怪，第四个参数有什么存在的必要吗？p不是本来就应该是个字符串吗？ 实际上，lua中的匹配默认意义是正则匹配，同时，这里的正则与其它语言也有些许不同。&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;由于篇幅有限，本节和下面的几节涉及匹配内容时，均不会考虑正则的使用方法，Lua正则教程将会在最后几节单独详细地列出来。&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;第四个参数为&lt;code&gt;true&lt;&#x2F;code&gt;时，便不会使用正则功能。&lt;&#x2F;p&gt;
+&lt;p&gt;示例代码：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--只会匹配到第一个
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.find(&amp;quot;abc abc&amp;quot;, &amp;quot;ab&amp;quot;))
+&lt;&#x2F;span&gt;&lt;span&gt;-- 从索引为2的位置开始匹配字符串：ab
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.find(&amp;quot;abc abc&amp;quot;, &amp;quot;ab&amp;quot;, 2))
+&lt;&#x2F;span&gt;&lt;span&gt;-- 从索引为5的位置开始匹配字符串：ab
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.find(&amp;quot;abc abc&amp;quot;, &amp;quot;ab&amp;quot;, -3))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;输出
+&lt;&#x2F;span&gt;&lt;span&gt;--1  2
+&lt;&#x2F;span&gt;&lt;span&gt;--5  6
+&lt;&#x2F;span&gt;&lt;span&gt;--5  6
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知字符串s，里面有很多相同的字符串&lt;&#x2F;li&gt;
+&lt;li&gt;请找出字符串s中，所有字符串awsl的位置&lt;&#x2F;li&gt;
+&lt;li&gt;使用print打印结果，结果一行一个&lt;&#x2F;li&gt;
+&lt;li&gt;如字符串12awslawslaw，输出3和7&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;12awsaslwlaawsllslllswasllalssawwlawslaw&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;两个awsl的位置分别是：&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;string-gsub&quot;&gt;string.gsub&lt;&#x2F;h3&gt;
+&lt;p&gt;string.gsub(s, p, r [, n])&lt;&#x2F;p&gt;
+&lt;p&gt;将目标字符串&lt;code&gt;s&lt;&#x2F;code&gt;中所有的子串&lt;code&gt;p&lt;&#x2F;code&gt;替换成字符串r。&lt;&#x2F;p&gt;
+&lt;p&gt;可选参数&lt;code&gt;n&lt;&#x2F;code&gt;，表示限制替换次数。&lt;&#x2F;p&gt;
+&lt;p&gt;返回值有两个，第一个是被替换后的字符串，第二个是替换了多少次。&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;特别提示：这个函数的目标字符串s，也是支持正则的&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;下面是例子：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;print(string.gsub(&amp;quot;Lua Lua Lua&amp;quot;, &amp;quot;Lua&amp;quot;, &amp;quot;hello&amp;quot;))
+&lt;&#x2F;span&gt;&lt;span&gt;print(string.gsub(&amp;quot;Lua Lua Lua&amp;quot;, &amp;quot;Lua&amp;quot;, &amp;quot;hello&amp;quot;, 2)) --指明第四个参数
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--&amp;gt;打印的结果：
+&lt;&#x2F;span&gt;&lt;span&gt;-- hello hello hello   3
+&lt;&#x2F;span&gt;&lt;span&gt;-- hello hello Lua     2
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;同样的，我们也可以使用冒号来简化语法，像下面这样：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;12345&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;r = s:gsub(&amp;quot;2&amp;quot;,&amp;quot;b&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;print(r)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;请完成下面的任务：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知字符串变量s，请分别打印出（每种一行）：&lt;&#x2F;li&gt;
+&lt;li&gt;把字符串s中，前5个a，替换为b&lt;&#x2F;li&gt;
+&lt;li&gt;把字符串s中，前3个c，替换为xxx&lt;&#x2F;li&gt;
+&lt;li&gt;把结果打印出来，一行数据&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;s = &amp;quot;asdicagydausckfugdaflgscdabgsdbahhacbshbsd&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;print(&amp;quot;s变换前的值：&amp;quot;,s)
+&lt;&#x2F;span&gt;&lt;span&gt;--补全代码
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;zheng-ze-pi-pei-xiang-guan-nei-rong-deng-dai-geng-xin&quot;&gt;正则匹配相关内容等待更新&lt;&#x2F;h3&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;kua-wen-jian-diao-yong&quot;&gt;跨文件调用&lt;&#x2F;h2&gt;
+&lt;p&gt;在编写代码时，随着逻辑逐渐复杂，我们的代码量也会变大。虽然有&lt;code&gt;函数&lt;&#x2F;code&gt;可以把一部分代码逻辑封装起来，但是所有代码都放到一个文件里，显然也不是个好办法。&lt;&#x2F;p&gt;
+&lt;p&gt;所以我们需要将一些代码放到不同文件中，通过文件来区分这些代码的功能。&lt;&#x2F;p&gt;
+&lt;p&gt;比如我们有下面这个函数：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;---函数功能：
+&lt;&#x2F;span&gt;&lt;span&gt;-- 生成从1-max的table
+&lt;&#x2F;span&gt;&lt;span&gt;-- @输入值：table的最大值
+&lt;&#x2F;span&gt;&lt;span&gt;-- @返回：  table结果
+&lt;&#x2F;span&gt;&lt;span&gt;-- @例子：  local list = getNumberList(10)
+&lt;&#x2F;span&gt;&lt;span&gt;function getNumberList(max)
+&lt;&#x2F;span&gt;&lt;span&gt;    local t = {}
+&lt;&#x2F;span&gt;&lt;span&gt;    for i=1,max do
+&lt;&#x2F;span&gt;&lt;span&gt;        table.insert(t,i)
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span&gt;    return t
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;我们新建一个文件叫&lt;code&gt;tools.lua&lt;&#x2F;code&gt;，把这个函数放进去，现在，整个文件如下面这样：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;tools.lua
+&lt;&#x2F;span&gt;&lt;span&gt;---函数功能：
+&lt;&#x2F;span&gt;&lt;span&gt;-- 生成从1-max的table
+&lt;&#x2F;span&gt;&lt;span&gt;-- @输入值：table的最大值
+&lt;&#x2F;span&gt;&lt;span&gt;-- @返回：  table结果
+&lt;&#x2F;span&gt;&lt;span&gt;-- @例子：  local list = getNumberList(10)
+&lt;&#x2F;span&gt;&lt;span&gt;local function getNumberList(max)
+&lt;&#x2F;span&gt;&lt;span&gt;    local t = {}
+&lt;&#x2F;span&gt;&lt;span&gt;    for i=1,max do
+&lt;&#x2F;span&gt;&lt;span&gt;        table.insert(t,i)
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span&gt;    return t
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--手动返回一个table，包含了上面的函数
+&lt;&#x2F;span&gt;&lt;span&gt;return {
+&lt;&#x2F;span&gt;&lt;span&gt;    getNumberList = getNumberList,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;现在，我们封装的这个函数就能在其他文件里被调用了，具体代码如下：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;--引用tools.lua文件，并加载
+&lt;&#x2F;span&gt;&lt;span&gt;local tool = require(&amp;quot;tools&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;local list = tool.getNumberList(12)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;当调用了&lt;code&gt;require&lt;&#x2F;code&gt;接口后，Lua虚拟机会自动加载你调用的文件，&lt;code&gt;执行文件的内容&lt;&#x2F;code&gt;，然后&lt;code&gt;返回你文件里return的结果&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;为了更好地理解这段话，我们可以看下面两个文件，其中run.lua是被运行的那个入口文件&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;test.lua
+&lt;&#x2F;span&gt;&lt;span&gt;--以便一会儿返回使用的table
+&lt;&#x2F;span&gt;&lt;span&gt;local temp = {}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--把全局变量a更改了
+&lt;&#x2F;span&gt;&lt;span&gt;a = 1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--local变量无法被外部调用
+&lt;&#x2F;span&gt;&lt;span&gt;--但是可以在文件内被调用
+&lt;&#x2F;span&gt;&lt;span&gt;local b = 2
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--文件在被require的时候，会被执行
+&lt;&#x2F;span&gt;&lt;span&gt;--把全局变量c更改了
+&lt;&#x2F;span&gt;&lt;span&gt;c = a + b
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--使函数在table里
+&lt;&#x2F;span&gt;&lt;span&gt;function temp.addB()
+&lt;&#x2F;span&gt;&lt;span&gt;    --文件内部可以调用变量b
+&lt;&#x2F;span&gt;&lt;span&gt;    b = b + 1
+&lt;&#x2F;span&gt;&lt;span&gt;    return b
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;--返回table
+&lt;&#x2F;span&gt;&lt;span&gt;return temp
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;run.lua
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;local test = require(&amp;quot;test&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;print(a)--输出1
+&lt;&#x2F;span&gt;&lt;span&gt;print(b)--输出nil，因为b是local变量
+&lt;&#x2F;span&gt;&lt;span&gt;print(c)--输出3
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;print(test.addB())--输出3
+&lt;&#x2F;span&gt;&lt;span&gt;print(test.addB())--输出4
+&lt;&#x2F;span&gt;&lt;span&gt;print(test.addB())--输出5
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;同时，每个文件最多只会被&lt;code&gt;require&lt;&#x2F;code&gt;一次，如果有多个&lt;code&gt;require&lt;&#x2F;code&gt;，只有第一次会执行&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

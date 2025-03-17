@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Casual</title>
+    <link href="https://th1eil.github.io/tags/casual/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-21T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/casual/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Talk】Zola 主题装修日记</title>
+        <published>2024-03-21T00:00:00+00:00</published>
+        <updated>2024-03-21T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/second/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/second/</id>
+        
+        <content type="html">&lt;h1 id=&quot;zola-zhu-ti-zhuang-xiu-ri-ji&quot;&gt;Zola 主题装修日记&lt;&#x2F;h1&gt;
+&lt;p&gt;很长时间没有更新博客了，最近开始捣鼓起了 Zola，这个用 Rust 写的静态站点生成器。本文记录了我的主题装修过程。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zhu-ti-xuan-ze&quot;&gt;主题选择&lt;&#x2F;h2&gt;
+&lt;p&gt;最开始我使用了 terminimal 主题，这是一个简约的终端风格主题。选择它的原因是：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;设计简洁&lt;&#x2F;li&gt;
+&lt;li&gt;加载速度快&lt;&#x2F;li&gt;
+&lt;li&gt;支持深色模式&lt;&#x2F;li&gt;
+&lt;li&gt;代码高亮优秀&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;zhu-ti-ding-zhi&quot;&gt;主题定制&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;1-bu-ju-diao-zheng&quot;&gt;1. 布局调整&lt;&#x2F;h3&gt;
+&lt;p&gt;首先修改了首页的文章列表布局：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;添加了文章预览&lt;&#x2F;li&gt;
+&lt;li&gt;优化了标签显示&lt;&#x2F;li&gt;
+&lt;li&gt;改进了日期格式&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-yang-shi-mei-hua&quot;&gt;2. 样式美化&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;调整了字体和颜色&lt;&#x2F;li&gt;
+&lt;li&gt;优化了移动端显示&lt;&#x2F;li&gt;
+&lt;li&gt;添加了一些过渡动画&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;hou-xu-ji-hua&quot;&gt;后续计划&lt;&#x2F;h2&gt;
+&lt;p&gt;计划在后续文章中详细介绍：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Zola 的主题制作详解&lt;&#x2F;li&gt;
+&lt;li&gt;Markdown 进阶用法&lt;&#x2F;li&gt;
+&lt;li&gt;评论系统的集成&lt;&#x2F;li&gt;
+&lt;li&gt;自动化部署方案&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>【Talk】开始我的博客之旅</title>
+        <published>2024-03-20T00:00:00+00:00</published>
+        <updated>2024-03-20T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/first/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/first/</id>
+        
+        <content type="html">&lt;h1 id=&quot;kai-shi-wo-de-bo-ke-zhi-lu&quot;&gt;开始我的博客之旅&lt;&#x2F;h1&gt;
+&lt;p&gt;写博客是一个很好的方式来记录和分享自己的想法。通过写作，我们可以：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;整理自己的思路&lt;&#x2F;li&gt;
+&lt;li&gt;记录学习过程&lt;&#x2F;li&gt;
+&lt;li&gt;与他人分享经验&lt;&#x2F;li&gt;
+&lt;li&gt;建立个人品牌&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;wei-shi-yao-xuan-ze-zola&quot;&gt;为什么选择 Zola&lt;&#x2F;h2&gt;
+&lt;p&gt;在众多静态博客框架中，我选择了 Zola，原因是：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 Rust 编写，性能优异&lt;&#x2F;li&gt;
+&lt;li&gt;单二进制文件，安装部署简单&lt;&#x2F;li&gt;
+&lt;li&gt;支持 Markdown 和丰富的短代码&lt;&#x2F;li&gt;
+&lt;li&gt;活跃的社区和主题生态&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;xie-zuo-ji-hua&quot;&gt;写作计划&lt;&#x2F;h2&gt;
+&lt;p&gt;在接下来的时间里，我计划：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;每周至少发布一篇文章&lt;&#x2F;li&gt;
+&lt;li&gt;主要关注技术相关话题&lt;&#x2F;li&gt;
+&lt;li&gt;偶尔分享一些生活感悟&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;希望通过持续的写作，能够帮助到其他人，同时也提升自己。&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

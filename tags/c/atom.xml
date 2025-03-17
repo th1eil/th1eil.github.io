@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - C</title>
+    <link href="https://th1eil.github.io/tags/c/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-02-25T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/c/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Review】c复习随笔 </title>
+        <published>2025-02-25T00:00:00+00:00</published>
+        <updated>2025-02-25T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/creview/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/creview/</id>
+        
+        <content type="html">&lt;h1 id=&quot;cfu-xi-sui-bi&quot;&gt;c复习随笔&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;25-2-18&quot;&gt;25&#x2F;2&#x2F;18&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;yun-suan-fu-you-xian-ji&quot;&gt;运算符优先级&lt;&#x2F;h3&gt;
+&lt;p&gt;一共有十五个优先级： &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;assembly&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-assembly &quot;&gt;&lt;code class=&quot;language-assembly&quot; data-lang=&quot;assembly&quot;&gt;&lt;span&gt;1. ()  []  .  -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;2. !  ~   -（负号） ++  --   &amp;amp;（取变量地址）*   （type）(强制类型)    sizeof 
+&lt;&#x2F;span&gt;&lt;span&gt;3. * &#x2F; %
+&lt;&#x2F;span&gt;&lt;span&gt;4. + - 
+&lt;&#x2F;span&gt;&lt;span&gt;5. &amp;lt;&amp;lt; 
+&lt;&#x2F;span&gt;&lt;span&gt;6. = &amp;lt; &amp;lt;= 
+&lt;&#x2F;span&gt;&lt;span&gt;7. == != 
+&lt;&#x2F;span&gt;&lt;span&gt;8. &amp;amp; 
+&lt;&#x2F;span&gt;&lt;span&gt;9. ^ 
+&lt;&#x2F;span&gt;&lt;span&gt;10. | 
+&lt;&#x2F;span&gt;&lt;span&gt;11. &amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;12. ||
+&lt;&#x2F;span&gt;&lt;span&gt;13. ?:
+&lt;&#x2F;span&gt;&lt;span&gt;14. =  +=  -=  *=  &#x2F;=   %=  |=   ^=   &amp;amp;=   &amp;gt;&amp;gt;=   &amp;lt;&amp;lt;=
+&lt;&#x2F;span&gt;&lt;span&gt;15. ,
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;结合性：2、13、14 是从右至左，其他都是从左至右。&lt;&#x2F;p&gt;
+&lt;p&gt;口诀：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;assembly&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-assembly &quot;&gt;&lt;code class=&quot;language-assembly&quot; data-lang=&quot;assembly&quot;&gt;&lt;span&gt;- 括号成员第一        &#x2F;&#x2F;括号运算符[]  () 成员运算符.  -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;- 全体单目第二        &#x2F;&#x2F;所有的单目运算符比如++、 --、 +(正)、 -(负) 、指针运算*、&amp;amp; 
+&lt;&#x2F;span&gt;&lt;span&gt;- 乘除余三,加减四     &#x2F;&#x2F;这个&amp;quot;余&amp;quot;是指取余运算即%
+&lt;&#x2F;span&gt;&lt;span&gt;- 移位五，关系六      &#x2F;&#x2F;移位运算符：&amp;lt;&amp;lt; &amp;gt;&amp;gt; ，关系：&amp;gt; &amp;lt; &amp;gt;= &amp;lt;= 等
+&lt;&#x2F;span&gt;&lt;span&gt;- 等于(与)不等排第七  &#x2F;&#x2F;即== 和!=
+&lt;&#x2F;span&gt;&lt;span&gt;- 位与异或和位或      &#x2F;&#x2F;这几个都是位运算: 位与(&amp;amp;)异或(^)位或(|) 
+&lt;&#x2F;span&gt;&lt;span&gt;- 逻辑或跟与          &#x2F;&#x2F;逻辑运算符:|| 和 &amp;amp;&amp;amp;，注意顺序:优先级(||)低于优先级(&amp;amp;&amp;amp;) 
+&lt;&#x2F;span&gt;&lt;span&gt;- 条件高于赋值        &#x2F;&#x2F;三目运算符优先级排到13，只比赋值运算符和&amp;quot;,&amp;quot;高
+&lt;&#x2F;span&gt;&lt;span&gt;- 逗号运算级最低      &#x2F;&#x2F;逗号运算符优先级最低
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;const-xiu-shi-fu&quot;&gt;const 修饰符&lt;&#x2F;h3&gt;
+&lt;p&gt;const默认修饰左边的内容，如果左边没有东西则修饰其右边的内容 &lt;&#x2F;p&gt;
+&lt;p&gt;const int *a   const左边没有东西，因此const修饰int，则指针指向的内容不可通过指针修改 &lt;&#x2F;p&gt;
+&lt;p&gt;int const *a   const左边有东西，因此const修饰int &lt;&#x2F;p&gt;
+&lt;p&gt;int* const a   const修饰*，即指针不能改变指向 &lt;&#x2F;p&gt;
+&lt;p&gt;const int * const a  第一个const修饰int，第二个const修饰*，即指针指向内容不可修改，也不能改变指针指向&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;zhuan-yi-zi-fu&quot;&gt;转义字符&lt;&#x2F;h3&gt;
+&lt;p&gt;转义字符用于表示一些特殊的字符，以反斜杠 &lt;code&gt;\&lt;&#x2F;code&gt; 开始，常见的转义字符包括：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\n&lt;&#x2F;code&gt; - 换行符&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\t&lt;&#x2F;code&gt; - 制表符&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\r&lt;&#x2F;code&gt; - 回车符&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\\&lt;&#x2F;code&gt; - 反斜杠&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\&#x27;&lt;&#x2F;code&gt; - 单引号&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\&amp;quot;&lt;&#x2F;code&gt; - 双引号&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;\0&lt;&#x2F;code&gt; - 空字符&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;yin-yong&quot;&gt;引用&amp;amp;&lt;&#x2F;h3&gt;
+&lt;p&gt;引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。 &lt;&#x2F;p&gt;
+&lt;p&gt;引用的声明方法：类型标识符 &amp;amp;引用名=目标变量名； &lt;&#x2F;p&gt;
+&lt;p&gt;举个例子： &lt;&#x2F;p&gt;
+&lt;p&gt;int a;&lt;&#x2F;p&gt;
+&lt;p&gt;int &amp;amp;ra=a; &#x2F;&#x2F;定义引用ra,它是变量a的引用，即别名&lt;&#x2F;p&gt;
+&lt;p&gt;说明：&lt;&#x2F;p&gt;
+&lt;p&gt;（1）&amp;amp;在此不是求地址运算，而是起标识作用。&lt;&#x2F;p&gt;
+&lt;p&gt;（2）类型标识符是指目标变量的类型。&lt;&#x2F;p&gt;
+&lt;p&gt;（3）声明引用时，必须同时对其进行初始化。&lt;&#x2F;p&gt;
+&lt;p&gt;（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。&lt;&#x2F;p&gt;
+&lt;p&gt;ra=1; 等价于 a=1;&lt;&#x2F;p&gt;
+&lt;p&gt;（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;amp;ra与&amp;amp;a相等。&lt;&#x2F;p&gt;
+&lt;p&gt;（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。&lt;&#x2F;p&gt;
+&lt;p&gt;引用的主要作用：&lt;&#x2F;p&gt;
+&lt;p&gt;（1）在引用的使用中，单纯给某个变量取个别名是毫无意义的，引用的目的主要用于在函数参数传递中，解决大块数据或对象的传递效率和空间不如意的问题。&lt;&#x2F;p&gt;
+&lt;p&gt;（2）用引用传递函数的参数，能保证参数传递中不产生副本，提高传递的效率，且通过const的使用，保证了引用传递的安全性。&lt;&#x2F;p&gt;
+&lt;p&gt;（3）引用与指针的区别是，指针通过某个指针变量指向一个对象后，对它所指向的变量间接操作。程序中使用指针，程序的可读性差；而引用本身就是目标变量的别名，对引用的操作就是对目标变量的操作。&lt;&#x2F;p&gt;
+&lt;p&gt;（4）使用引用的时机。流操作符&amp;lt;&amp;lt;和&amp;gt;&amp;gt;、赋值操作符=的返回值、拷贝构造函数的参数、赋值操作符=的参数、其它情况都推荐使用引用。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;25-2-20&quot;&gt;25&#x2F;2&#x2F;20&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;zhi-zhen-yu-shu-zu-guan-xi&quot;&gt;指针与数组关系&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span&gt;arr[i] 等价于 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;(arr&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt;i);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;40&lt;&#x2F;span&gt;&lt;span&gt;] ( );  在分配空间后，对每个int进行了默认的初始化操作。即p[n]的值（n的取值范围是0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;39&lt;&#x2F;span&gt;&lt;span&gt;）都是为0的。 
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;40&lt;&#x2F;span&gt;&lt;span&gt;] (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);  这样是起不到对数组初始化为0的效果的，而且语法是错误的。
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;正常的应该是用大括号，&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;40&lt;&#x2F;span&gt;&lt;span&gt;]{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;delete&quot;&gt;delete&lt;&#x2F;h3&gt;
+&lt;p&gt;首先new和delete是匹配使用的，因此对于一个new运算符声明的指针，只能匹配一个delete使用，且要用delete运算符来释放内存， &lt;&#x2F;p&gt;
+&lt;p&gt;其次，在调用delete释放内存时，需要调用析构函数，原则是：析构函数看指针是什么类型的，就调用那个类的析构函数，然后按继承的顺序，依次来调用父类的析构&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sizeof&quot;&gt;sizeof&lt;&#x2F;h3&gt;
+&lt;p&gt;sizeof 是可用来计算字符串的总长度，包括\0，而strlen计算不包含\0的字符串的长度。 &lt;&#x2F;p&gt;
+&lt;p&gt;当数组作为函数的参数时，其自动转换为指向函数的指针，sizeof（str_arg）表示的是指针的长度，在32为计算机上为4位&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;strcat&quot;&gt;strcat&lt;&#x2F;h3&gt;
+&lt;p&gt;strcat 是 C 标准库中的一个函数，用于将两个字符串连接起来。具体来说，它将第二个字符串的副本追加到第一个字符串的末尾，并返回第一个字符串的起始地址。这里有几个关键点需要注意：&lt;&#x2F;p&gt;
+&lt;p&gt;函数原型：char *strcat(char *dest, const char *src);&lt;&#x2F;p&gt;
+&lt;p&gt;dest 是目标字符串，它必须有足够的空间来容纳追加的内容以及一个额外的空字符（\0），这个空字符用于标记字符串的结束。
+src 是源字符串，其内容将被追加到 dest 的末尾。&lt;&#x2F;p&gt;
+&lt;p&gt;缓冲区大小：
+调用 strcat 之前，必须确保 dest 数组有足够的空间来容纳 src 中的所有字符以及 dest 中已有的字符和结尾的空字符。如果空间不足，将发生缓冲区溢出，这可能导致未定义行为，包括程序崩溃或安全漏洞。&lt;&#x2F;p&gt;
+&lt;p&gt;空字符的处理：
+strcat 会查找 dest 中的空字符来确定在哪里开始追加 src 的内容。然后，它会复制 src 中的字符到 dest 中，直到遇到 src 中的空字符为止，但不会在 dest 的新内容末尾添加另一个空字符（因为 src 的内容已经以空字符结尾，而 strcat 只是复制内容）。然而，这里有个重要的澄清：我之前的描述有误，strcat 实际上会在整个操作结束后确保 dest 以一个空字符结尾（如果操作没有导致缓冲区溢出的话）。换句话说，strcat 会正确处理空字符，使得 dest 成为一个有效的、以空字符结尾的字符串。&lt;&#x2F;p&gt;
+&lt;p&gt;返回值：
+strcat 返回 dest 的起始地址，这使得函数调用可以很容易地被嵌套或用在需要字符串地址的表达式中。&lt;&#x2F;p&gt;
+&lt;p&gt;安全性：
+由于 strcat 不检查 dest 的大小，因此在使用时很容易出错。为了避免缓冲区溢出，可以使用 strncat 函数，它允许你指定最多可以追加多少个字符。&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;string.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; dest[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;50&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Hello, &amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 确保有足够的空间
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;src &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;world!&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;strcat&lt;&#x2F;span&gt;&lt;span&gt;(dest, src);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%s\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, dest); &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出: Hello, world!
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在这个例子中，dest 数组有足够的空间来容纳 &amp;quot;Hello, &amp;quot; 和 &amp;quot;world!&amp;quot; 以及它们之间的空字符。因此，调用 strcat 是安全的，并且会按预期工作。&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

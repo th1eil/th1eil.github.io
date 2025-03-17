@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Review】c复习随笔  - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
+  <style>
+    /* 基础响应式设计 */
+    html {
+      font-size: 16px; /* 基础字体大小 */
+    }
+    
+    /* 响应式字体大小 */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      html {
+        font-size: 14px;
+      }
+    }
+    
+    /* 使用相对单位 */
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    h4 {
+      font-size: 1.25rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+    
+    /* 容器响应式设计 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* 导航栏响应式设计 */
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    
+    /* 博客文章响应式设计 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* 代码块响应式设计 */
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      pre[class*="language-"] {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 40px;
+    top: 120px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Review】c复习随笔 </h1>
+            <div class="post-meta">
+                <time>2025-02-25</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/c/">#C</a>
+                        
+                    </div>
+                
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h1 id="cfu-xi-sui-bi">c复习随笔</h1>
+<h2 id="25-2-18">25/2/18</h2>
+<h3 id="yun-suan-fu-you-xian-ji">运算符优先级</h3>
+<p>一共有十五个优先级： </p>
+<pre data-lang="assembly" style="background-color:#272822;color:#f8f8f2;" class="language-assembly "><code class="language-assembly" data-lang="assembly"><span>1. ()  []  .  -&gt;
+</span><span>2. !  ~   -（负号） ++  --   &amp;（取变量地址）*   （type）(强制类型)    sizeof 
+</span><span>3. * / %
+</span><span>4. + - 
+</span><span>5. &lt;&lt; 
+</span><span>6. = &lt; &lt;= 
+</span><span>7. == != 
+</span><span>8. &amp; 
+</span><span>9. ^ 
+</span><span>10. | 
+</span><span>11. &amp;&amp;
+</span><span>12. ||
+</span><span>13. ?:
+</span><span>14. =  +=  -=  *=  /=   %=  |=   ^=   &amp;=   &gt;&gt;=   &lt;&lt;=
+</span><span>15. ,
+</span></code></pre>
+<p>结合性：2、13、14 是从右至左，其他都是从左至右。</p>
+<p>口诀：</p>
+<pre data-lang="assembly" style="background-color:#272822;color:#f8f8f2;" class="language-assembly "><code class="language-assembly" data-lang="assembly"><span>- 括号成员第一        //括号运算符[]  () 成员运算符.  -&gt;
+</span><span>- 全体单目第二        //所有的单目运算符比如++、 --、 +(正)、 -(负) 、指针运算*、&amp; 
+</span><span>- 乘除余三,加减四     //这个&quot;余&quot;是指取余运算即%
+</span><span>- 移位五，关系六      //移位运算符：&lt;&lt; &gt;&gt; ，关系：&gt; &lt; &gt;= &lt;= 等
+</span><span>- 等于(与)不等排第七  //即== 和!=
+</span><span>- 位与异或和位或      //这几个都是位运算: 位与(&amp;)异或(^)位或(|) 
+</span><span>- 逻辑或跟与          //逻辑运算符:|| 和 &amp;&amp;，注意顺序:优先级(||)低于优先级(&amp;&amp;) 
+</span><span>- 条件高于赋值        //三目运算符优先级排到13，只比赋值运算符和&quot;,&quot;高
+</span><span>- 逗号运算级最低      //逗号运算符优先级最低
+</span></code></pre>
+<h3 id="const-xiu-shi-fu">const 修饰符</h3>
+<p>const默认修饰左边的内容，如果左边没有东西则修饰其右边的内容 </p>
+<p>const int *a   const左边没有东西，因此const修饰int，则指针指向的内容不可通过指针修改 </p>
+<p>int const *a   const左边有东西，因此const修饰int </p>
+<p>int* const a   const修饰*，即指针不能改变指向 </p>
+<p>const int * const a  第一个const修饰int，第二个const修饰*，即指针指向内容不可修改，也不能改变指针指向</p>
+<h3 id="zhuan-yi-zi-fu">转义字符</h3>
+<p>转义字符用于表示一些特殊的字符，以反斜杠 <code>\</code> 开始，常见的转义字符包括：</p>
+<ul>
+<li><code>\n</code> - 换行符</li>
+<li><code>\t</code> - 制表符</li>
+<li><code>\r</code> - 回车符</li>
+<li><code>\\</code> - 反斜杠</li>
+<li><code>\'</code> - 单引号</li>
+<li><code>\&quot;</code> - 双引号</li>
+<li><code>\0</code> - 空字符</li>
+</ul>
+<h3 id="yin-yong">引用&amp;</h3>
+<p>引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。 </p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名； </p>
+<p>举个例子： </p>
+<p>int a;</p>
+<p>int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
+<p>说明：</p>
+<p>（1）&amp;在此不是求地址运算，而是起标识作用。</p>
+<p>（2）类型标识符是指目标变量的类型。</p>
+<p>（3）声明引用时，必须同时对其进行初始化。</p>
+<p>（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
+<p>ra=1; 等价于 a=1;</p>
+<p>（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
+<p>引用的主要作用：</p>
+<p>（1）在引用的使用中，单纯给某个变量取个别名是毫无意义的，引用的目的主要用于在函数参数传递中，解决大块数据或对象的传递效率和空间不如意的问题。</p>
+<p>（2）用引用传递函数的参数，能保证参数传递中不产生副本，提高传递的效率，且通过const的使用，保证了引用传递的安全性。</p>
+<p>（3）引用与指针的区别是，指针通过某个指针变量指向一个对象后，对它所指向的变量间接操作。程序中使用指针，程序的可读性差；而引用本身就是目标变量的别名，对引用的操作就是对目标变量的操作。</p>
+<p>（4）使用引用的时机。流操作符&lt;&lt;和&gt;&gt;、赋值操作符=的返回值、拷贝构造函数的参数、赋值操作符=的参数、其它情况都推荐使用引用。</p>
+<h2 id="25-2-20">25/2/20</h2>
+<h3 id="zhi-zhen-yu-shu-zu-guan-xi">指针与数组关系</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span>arr[i] 等价于 </span><span style="color:#f92672;">*</span><span>(arr</span><span style="color:#f92672;">+</span><span>i);
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#f92672;">*</span><span>p</span><span style="color:#f92672;">=</span><span>new </span><span style="font-style:italic;color:#66d9ef;">int</span><span>[</span><span style="color:#ae81ff;">40</span><span>] ( );  在分配空间后，对每个int进行了默认的初始化操作。即p[n]的值（n的取值范围是0</span><span style="color:#f92672;">-</span><span style="color:#ae81ff;">39</span><span>）都是为0的。 
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#f92672;">*</span><span>p</span><span style="color:#f92672;">=</span><span>new </span><span style="font-style:italic;color:#66d9ef;">int</span><span>[</span><span style="color:#ae81ff;">40</span><span>] (</span><span style="color:#ae81ff;">0</span><span>);  这样是起不到对数组初始化为0的效果的，而且语法是错误的。
+</span><span>
+</span><span>正常的应该是用大括号，</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#f92672;">*</span><span>p</span><span style="color:#f92672;">=</span><span>new </span><span style="font-style:italic;color:#66d9ef;">int</span><span>[</span><span style="color:#ae81ff;">40</span><span>]{</span><span style="color:#ae81ff;">0</span><span>,</span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#ae81ff;">2</span><span>,</span><span style="color:#ae81ff;">3</span><span>,</span><span style="color:#ae81ff;">4</span><span>};
+</span></code></pre>
+<h3 id="delete">delete</h3>
+<p>首先new和delete是匹配使用的，因此对于一个new运算符声明的指针，只能匹配一个delete使用，且要用delete运算符来释放内存， </p>
+<p>其次，在调用delete释放内存时，需要调用析构函数，原则是：析构函数看指针是什么类型的，就调用那个类的析构函数，然后按继承的顺序，依次来调用父类的析构</p>
+<h3 id="sizeof">sizeof</h3>
+<p>sizeof 是可用来计算字符串的总长度，包括\0，而strlen计算不包含\0的字符串的长度。 </p>
+<p>当数组作为函数的参数时，其自动转换为指向函数的指针，sizeof（str_arg）表示的是指针的长度，在32为计算机上为4位</p>
+<h3 id="strcat">strcat</h3>
+<p>strcat 是 C 标准库中的一个函数，用于将两个字符串连接起来。具体来说，它将第二个字符串的副本追加到第一个字符串的末尾，并返回第一个字符串的起始地址。这里有几个关键点需要注意：</p>
+<p>函数原型：char *strcat(char *dest, const char *src);</p>
+<p>dest 是目标字符串，它必须有足够的空间来容纳追加的内容以及一个额外的空字符（\0），这个空字符用于标记字符串的结束。
+src 是源字符串，其内容将被追加到 dest 的末尾。</p>
+<p>缓冲区大小：
+调用 strcat 之前，必须确保 dest 数组有足够的空间来容纳 src 中的所有字符以及 dest 中已有的字符和结尾的空字符。如果空间不足，将发生缓冲区溢出，这可能导致未定义行为，包括程序崩溃或安全漏洞。</p>
+<p>空字符的处理：
+strcat 会查找 dest 中的空字符来确定在哪里开始追加 src 的内容。然后，它会复制 src 中的字符到 dest 中，直到遇到 src 中的空字符为止，但不会在 dest 的新内容末尾添加另一个空字符（因为 src 的内容已经以空字符结尾，而 strcat 只是复制内容）。然而，这里有个重要的澄清：我之前的描述有误，strcat 实际上会在整个操作结束后确保 dest 以一个空字符结尾（如果操作没有导致缓冲区溢出的话）。换句话说，strcat 会正确处理空字符，使得 dest 成为一个有效的、以空字符结尾的字符串。</p>
+<p>返回值：
+strcat 返回 dest 的起始地址，这使得函数调用可以很容易地被嵌套或用在需要字符串地址的表达式中。</p>
+<p>安全性：
+由于 strcat 不检查 dest 的大小，因此在使用时很容易出错。为了避免缓冲区溢出，可以使用 strncat 函数，它允许你指定最多可以追加多少个字符。</p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;string.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">char</span><span> dest[</span><span style="color:#ae81ff;">50</span><span>] </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;Hello, &quot;</span><span>; </span><span style="color:#75715e;">// 确保有足够的空间
+</span><span>    </span><span style="color:#f92672;">const </span><span style="font-style:italic;color:#66d9ef;">char </span><span style="color:#f92672;">*</span><span>src </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;world!&quot;</span><span>;
+</span><span>    </span><span style="color:#66d9ef;">strcat</span><span>(dest, src);
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%s\n</span><span style="color:#e6db74;">&quot;</span><span>, dest); </span><span style="color:#75715e;">// 输出: Hello, world!
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>在这个例子中，dest 数组有足够的空间来容纳 &quot;Hello, &quot; 和 &quot;world!&quot; 以及它们之间的空字符。因此，调用 strcat 是安全的，并且会按预期工作。</p>
+
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
+            }
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+
+  <style>
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5em 0;
+      padding: 1em;
+      overflow: auto;
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Prism.highlightAll();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - algo</title>
+    <link href="https://th1eil.github.io/tags/algo/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-03-17T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/algo/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Learning】KPM的一些理解</title>
+        <published>2025-03-17T00:00:00+00:00</published>
+        <updated>2025-03-17T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/kmp/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/kmp/</id>
+        
+        <content type="html">&lt;h1 id=&quot;kmpli-jie&quot;&gt;KMP理解&lt;&#x2F;h1&gt;
+&lt;p&gt;Knuth-Morris-Pratt (KMP) 字符串匹配算法&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;gai-nian&quot;&gt;概念&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;pmt&quot;&gt;PMT&lt;&#x2F;h3&gt;
+&lt;p&gt;KMP算法的核心，是一个被称为&lt;strong&gt;部分匹配表&lt;&#x2F;strong&gt;(&lt;strong&gt;P&lt;&#x2F;strong&gt;artial &lt;strong&gt;M&lt;&#x2F;strong&gt;atch &lt;strong&gt;T&lt;&#x2F;strong&gt;able)的数组。&lt;&#x2F;p&gt;
+&lt;p&gt;对于字符串“abababca”，它的PMT如下表所示：&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-223530.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;就像例子中所示的，如果待匹配的模式字符串有8个字符，那么PMT就会有8个值。&lt;&#x2F;p&gt;
+&lt;p&gt;先解释一下字符串的&lt;strong&gt;前缀&lt;&#x2F;strong&gt;和&lt;strong&gt;后缀&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;如果字符串A和B，存在A=BS，其中S是任意的&lt;strong&gt;非空字符串&lt;&#x2F;strong&gt;，那就称B为A的&lt;strong&gt;前缀&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，”Harry”的前缀包括{”H”, ”Ha”, ”Har”, ”Harr”}，把所有前缀组成的集合，称为字符串的前缀集合。&lt;&#x2F;p&gt;
+&lt;p&gt;同样可以定义后缀A=SB， 其中S是任意的&lt;strong&gt;非空字符串&lt;&#x2F;strong&gt;，那就称B为A的&lt;strong&gt;后缀&lt;&#x2F;strong&gt;，&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，”Potter”的后缀包括{”otter”, ”tter”, ”ter”, ”er”, ”r”}，然后把所有后缀组成的集合，称为字符串的后缀集合。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;要注意的是，字符串本身并不是自己的后缀。&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;（通常我们讨论后缀时指的是&lt;strong&gt;真子串&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;有了这个定义，就可以说明PMT中的值的意义了。&lt;strong&gt;PMT中的值是字符串的前缀集合与后缀集合的交集中最长元素的长度&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，对于”aba”，它的前缀集合为{”a”, ”ab”}，后缀 集合为{”ba”, ”a”}。&lt;&#x2F;p&gt;
+&lt;p&gt;两个集合的交集为{”a”}，那么长度最长的元素就是字符串”a”了，长 度为1，所以对于”aba”而言，它在PMT表中对应的值就是1。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;再比如&lt;&#x2F;strong&gt;，对于字符串”ababa”，它的前缀集合为{”a”, ”ab”, ”aba”, ”abab”}，它的后缀集合为{”baba”, ”aba”, ”ba”, ”a”}， 两个集合的交集为{”a”, ”aba”}，其中最长的元素为”aba”，长度为3。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;li-jie&quot;&gt;理解&lt;&#x2F;h2&gt;
+&lt;p&gt;如何使用这个表来加速字符串的查找，以及这样用的道理是什么。&lt;&#x2F;p&gt;
+&lt;p&gt;要在主字符串&amp;quot;ab&lt;strong&gt;abababca&lt;&#x2F;strong&gt;&amp;quot;中查找模式字符串&amp;quot;&lt;strong&gt;abababca&lt;&#x2F;strong&gt;&amp;quot;。&lt;&#x2F;p&gt;
+&lt;p&gt;如果在 j 处字符不匹配，那么由于前边所说的模式字符串 PMT 的性质，主字符串中 i 指针之前的 PMT[j −1] 位就一定与模式字符串的第 0 位至第 PMT[j−1] 位是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;这是因为主字符串在 i 位失配，也就意味着主字符串从 i−j 到 i 这一段是与模式字符串的 0 到 j 这一段是完全相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;模式字符串从 0 到 j−1 ，在这个例子中就是”ababab”，其&lt;strong&gt;前缀集合&lt;&#x2F;strong&gt;与&lt;strong&gt;后缀集合&lt;&#x2F;strong&gt;的&lt;strong&gt;交集&lt;&#x2F;strong&gt;的&lt;strong&gt;最长元素&lt;&#x2F;strong&gt;为”abab”， 长度为&lt;strong&gt;4&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;所以就可以断言，主字符串中i指针之前的 4 位一定与模式字符串的第0位至第 4 位是相同的，即长度为 4 的后缀与前缀相同。这样一来，我们就可以将这些字符段的比较省略掉。&lt;&#x2F;p&gt;
+&lt;p&gt;具体的做法是，保持i指针不动，然后将j指针指向模式字符串的PMT[j −1]位即可&lt;&#x2F;p&gt;
+&lt;p&gt;简言之，以图中的例子来说，在 i 处失配，那么主字符串和模式字符串的前边6位就是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;又因为模式字符串的前6位，它的前4位前缀和后4位后缀是相同的，所以我们推知主字符串i之前的4位和模式字符串开头的4位是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;就是图中的灰色部分。那这部分就不用再比较了。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-223836.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;如果是在 j 位 失配，那么影响 j 指针回溯的位置的其实是第 j −1 位的 PMT 值，所以为了编程的方便， 我们不直接使用PMT数组，而是将PMT数组向后偏移一位。&lt;strong&gt;新得到的这个数组就是next数组&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;nextshu-zu&quot;&gt;next数组&lt;&#x2F;h3&gt;
+&lt;p&gt;KMP算法中的&lt;strong&gt;next数组&lt;&#x2F;strong&gt;（也称为部分匹配表或前缀函数）是算法高效性的核心。&lt;&#x2F;p&gt;
+&lt;p&gt;它通过预处理模式串（pattern），记录每个位置的最长公共前后缀长度，从而在匹配失败时快速跳过不必要的比较。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;1-nextshu-zu-de-ding-yi&quot;&gt;&lt;strong&gt;1. next数组的定义&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;对于模式串 &lt;code&gt;p&lt;&#x2F;code&gt; 的每个位置 &lt;code&gt;i&lt;&#x2F;code&gt;，&lt;code&gt;next[i]&lt;&#x2F;code&gt; 表示：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;p[0...i-1]&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt; 这个子串中，&lt;strong&gt;最长的相同前缀和后缀的长度&lt;&#x2F;strong&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;前缀&lt;&#x2F;strong&gt;：从第一个字符开始的连续子串。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;后缀&lt;&#x2F;strong&gt;：从最后一个字符向前结束的连续子串。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;&#x2F;strong&gt;：
+若 &lt;code&gt;p = &amp;quot;ABABC&amp;quot;&lt;&#x2F;code&gt;，则：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;next[4]&lt;&#x2F;code&gt; 对应子串 &lt;code&gt;&amp;quot;ABAB&amp;quot;&lt;&#x2F;code&gt;，其最长公共前后缀为 &lt;code&gt;&amp;quot;AB&amp;quot;&lt;&#x2F;code&gt;，长度为2，故 &lt;code&gt;next[4] = 2&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h4 id=&quot;2-nextshu-zu-de-ji-suan-fang-fa&quot;&gt;&lt;strong&gt;2. next数组的计算方法&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;通过双指针法（&lt;code&gt;i&lt;&#x2F;code&gt; 和 &lt;code&gt;j&lt;&#x2F;code&gt;）遍历模式串，动态计算每个位置的 &lt;code&gt;next&lt;&#x2F;code&gt; 值：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;next[0] = 0&lt;&#x2F;code&gt;（无前缀或后缀）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;j = 0&lt;&#x2F;code&gt;（前缀指针），&lt;code&gt;i = 1&lt;&#x2F;code&gt;（后缀指针）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;遍历模式串：
+&lt;ul&gt;
+&lt;li&gt;若 &lt;code&gt;p[i] == p[j]&lt;&#x2F;code&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;j++&lt;&#x2F;code&gt;（前缀长度+1）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;next[i] = j&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;i++&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;若 &lt;code&gt;p[i] != p[j]&lt;&#x2F;code&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;若 &lt;code&gt;j &amp;gt; 0&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;：&lt;code&gt;j = next[j-1]&lt;&#x2F;code&gt;（回退到前一个最长前缀的末尾）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;若 &lt;code&gt;j == 0&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;：&lt;code&gt;next[i] = 0&lt;&#x2F;code&gt;，&lt;code&gt;i++&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h4 id=&quot;3-nextshu-zu-zai-kmpsuan-fa-zhong-de-ying-yong&quot;&gt;&lt;strong&gt;3. next数组在KMP算法中的应用&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;当主串 &lt;code&gt;s&lt;&#x2F;code&gt; 与模式串 &lt;code&gt;p&lt;&#x2F;code&gt; 匹配失败时（即 &lt;code&gt;s[i] ≠ p[j]&lt;&#x2F;code&gt;），利用 &lt;code&gt;next[j-1]&lt;&#x2F;code&gt; 调整模式串的位置：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;将模式串的起始位置移动到 &lt;code&gt;next[j-1]&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;跳过已匹配的重复前缀&lt;&#x2F;strong&gt;，避免回溯主串。&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;&#x2F;strong&gt;：
+主串 &lt;code&gt;s = &amp;quot;ABABABC&amp;quot;&lt;&#x2F;code&gt;，模式串 &lt;code&gt;p = &amp;quot;ABABC&amp;quot;&lt;&#x2F;code&gt;，&lt;code&gt;next = [0,0,1,2,0]&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;当 &lt;code&gt;j=4&lt;&#x2F;code&gt;（&lt;code&gt;p[4]=&#x27;C&#x27;&lt;&#x2F;code&gt;）与主串不匹配时，回退到 &lt;code&gt;j = next[3] = 2&lt;&#x2F;code&gt;，继续匹配。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;4-nextshu-zu-de-you-hua-bian-ti&quot;&gt;&lt;strong&gt;4. next数组的优化变体&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;某些实现中，&lt;code&gt;next&lt;&#x2F;code&gt; 数组会右移一位（从索引1开始），使代码更简洁。例如：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;原 &lt;code&gt;next&lt;&#x2F;code&gt; 数组：&lt;code&gt;[0,0,0,0,1,2,0]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;优化后：&lt;code&gt;[-1,0,0,0,0,1,2]&lt;&#x2F;code&gt;（&lt;code&gt;next[0] = -1&lt;&#x2F;code&gt;，其他值右移）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;5-nextshu-zu-de-yi-yi&quot;&gt;&lt;strong&gt;5. next数组的意义&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;避免主串回溯&lt;&#x2F;strong&gt;：传统暴力算法需回溯主串，而KMP通过 &lt;code&gt;next&lt;&#x2F;code&gt; 数组仅回溯模式串。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;时间复杂度优化&lt;&#x2F;strong&gt;：预处理 &lt;code&gt;next&lt;&#x2F;code&gt; 数组为 O(m)，匹配过程为 O(n)，总时间复杂度 O(n+m)。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;要注意的一个技巧是，在把PMT进行向右偏移时，第0位的值，将其设成了-1，这只是为了编程的方便，并没有其他的意义。next数组如下表所示。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225154.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;求next数组的过程完全可以看成字符串匹配的过程，即以模式字符串为主字符串，以模式字符串的前缀为目标字符串，一旦字符串匹配成功，那么当前的next值就是匹配成功的字符串的长度。&lt;&#x2F;p&gt;
+&lt;p&gt;从模式字符串的第一位(注意，不包括第0位)开始对自身进行匹配运算。&lt;&#x2F;p&gt;
+&lt;p&gt;在任一位置，能匹配的最长长度就是当前位置的next值&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225319.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225328.png&quot; alt=&quot;QQ20250316-225328&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225339.png&quot; alt=&quot;QQ20250316-225339&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;shi-xian&quot;&gt;实现&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;string.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 计算 next 数组
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;computeNextArray&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;next&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;m&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; length of the previous longest prefix suffix
+&lt;&#x2F;span&gt;&lt;span&gt;    next[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; next[0] is always -1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; m) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(p[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; p[len]) {
+&lt;&#x2F;span&gt;&lt;span&gt;            len&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            next[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; len;
+&lt;&#x2F;span&gt;&lt;span&gt;            i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;                len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; next[len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;            } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;                next[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; KMP 字符串匹配函数
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;KMP&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;t&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span&gt;(t);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; m &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span&gt;(p);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(m &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 空模式串匹配在起始位置
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; next[m];
+&lt;&#x2F;span&gt;&lt;span&gt;    computeNextArray(p, next, m);
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; index for t[]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; index for p[]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt; j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; m) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;||&lt;&#x2F;span&gt;&lt;span&gt; t[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; p[j]) {
+&lt;&#x2F;span&gt;&lt;span&gt;            i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            j&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; next[j];
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; m)
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; j; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; match found, return start index
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; match not found
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; t[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;hello world&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; p[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;world&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; index &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;KMP(t, p);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Pattern found at index &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, index);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+</feed>

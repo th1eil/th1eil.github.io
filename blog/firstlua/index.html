@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Learning】lua入门  - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
+  <style>
+    /* 基础响应式设计 */
+    html {
+      font-size: 16px; /* 基础字体大小 */
+    }
+    
+    /* 响应式字体大小 */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      html {
+        font-size: 14px;
+      }
+    }
+    
+    /* 使用相对单位 */
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    h4 {
+      font-size: 1.25rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+    
+    /* 容器响应式设计 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* 导航栏响应式设计 */
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    
+    /* 博客文章响应式设计 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* 代码块响应式设计 */
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      pre[class*="language-"] {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 40px;
+    top: 120px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Learning】lua入门 </h1>
+            <div class="post-meta">
+                <time>2025-03-01</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/lua/">#Lua</a>
+                        
+                    </div>
+                
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h3 id="lua">Lua</h3>
+<p>Lua 是一种轻量小巧的脚本语言，它用标准C语言编写并以源代码形式开放。这意味着什么呢？这意味着Lua虚拟机可以<strong>很方便的嵌入别的程序里</strong>，从而为应用程序提供灵活的扩展和定制功能。而整个Lua虚拟机编译后仅仅一百余K，经过适当的裁剪还能做到更小，十分适合嵌入式的开发。</p>
+<p>同时，在目前脚本引擎中，Lua的运行速度占有绝对优势。这些都决定了Lua是作为嵌入式脚本的最佳选择。</p>
+<p>在我们编写代码之前，需要做一下准备，就是：<strong>确保你输入标点符号时，用的不是中文输入法。</strong></p>
+<hr />
+<h3 id="di-yi-ge-lua-cheng-xu">第一个 Lua 程序</h3>
+<p>几乎所有语言的第一行代码，都是输出<code>hello world</code>，本教程也不意外。</p>
+<p>在<code>Lua</code>中，打印结果只需要使用<code>print</code>这个<code>函数</code>即可。同时，如果需要使用<code>函数</code>，只需要在函数名后加上双括号，同时传入你想传入的值即可。</p>
+<p>所以，我们来执行下面的代码，打印出<code>hello world</code>吧！</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;hello world!&quot;</span><span>)
+</span></code></pre>
+<p>[LuatOS 在线模拟 - lua在线测试](https://wiki.luatos.com/_static/luatos-emulator/lua.html?print(&quot;hello world!&quot;) )</p>
+<hr />
+<h3 id="shu-chu-shu-ju">输出数据</h3>
+<p>上一部分，我们知道了，在<code>Lua</code>中，可以使用<code>print</code>函数来打印你想要得到的结果。</p>
+<p>并且还知道了，<code>函数</code>是指可以实现某些功能的子程序，可以使用<code>函数名(参数)</code>来执行。</p>
+<p>让我们试着输出一些其他东西吧！使用多个print函数，输出自己想输出的数据。</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;测试&quot;</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;aabcdefg&quot;</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;xxxxx&quot;</span><span>,</span><span style="color:#e6db74;">&quot;第二个参数&quot;</span><span>,</span><span style="color:#e6db74;">&quot;第三个参数&quot;</span><span>)
+</span></code></pre>
+<hr />
+<h3 id="dai-ma-zhu-shi">代码注释</h3>
+<p>代码<code>注释</code>就是在代码里，不会运行的部分。<code>注释</code>完全不会被运行。</p>
+<p>这部分是为了在查看代码时，可以更好地立即现有代码含义用的。</p>
+<p>我们可以用<code>--</code>开头，来写一段<code>单行注释</code></p>
+<p>也可以用<code>--[[</code>开头，<code>]]</code>结尾，写一段多行注释。</p>
+<p>下面是注释的例子：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;这段代码会运行&quot;</span><span>)
+</span><span style="color:#75715e;">--print(&quot;我被注释掉了，所以不会运行&quot;)
+</span><span style="color:#75715e;">--[[
+</span><span style="color:#75715e;">    我是多行注释
+</span><span style="color:#75715e;">    不管我写多少行
+</span><span style="color:#75715e;">    都不会影响代码运行
+</span><span style="color:#75715e;">]]
+</span></code></pre>
+<hr />
+<h2 id="bian-liang">变量</h2>
+<h3 id="numberbian-liang">number变量</h3>
+<p><code>变量</code>，可以看作是一个桶，在里面装你想要装的内容。这些内容可以是Lua包含的所有合法类型。</p>
+<p>例如：我想要新建一个桶，名叫bucket，在里面放入233这个数字，就可以像下面一样：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>bucket </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">233
+</span></code></pre>
+<p>让我们试着自己新建几个变量吧！</p>
+<ul>
+<li>新建变量year，并将变量的值设置为1926</li>
+<li>新建变量month，并将变量的值设置为8</li>
+<li>新建变量day，并将变量的值设置为7</li>
+</ul>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#75715e;">--新建三个变量，并赋值
+</span><span>year </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1926
+</span><span>month </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">8
+</span><span>day </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">7
+</span><span style="color:#75715e;">--打印出三个变量的值
+</span><span style="color:#66d9ef;">print</span><span>(year,month,day)
+</span></code></pre>
+<hr />
+<h3 id="liao-jie-nil">了解nil</h3>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>nil`类型表示没有任何有效值，只要是没有声明的值，它就是`nil
+</span></code></pre>
+<p>比如我打印一个没有声明的值，便会输出<code>nil</code>：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>rei </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0905
+</span><span style="color:#66d9ef;">print</span><span>(rei)
+</span><span style="color:#66d9ef;">print</span><span>(asuka)
+</span><span style="color:#75715e;">-- [21:02:11] 虚拟机初始化完毕
+</span><span style="color:#75715e;">-- [21:02:11] 905
+</span><span style="color:#75715e;">-- [21:02:11] nil
+</span><span style="color:#75715e;">-- [21:02:11] 虚拟机已停止运行
+</span></code></pre>
+<p><strong>这里需要你思考一下，运行以下代码，将会输出什么结果？</strong></p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1
+</span><span>b </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;2&#39;
+</span><span>c </span><span style="color:#f92672;">= </span><span>a
+</span><span style="color:#66d9ef;">print</span><span>(a,b,c,d)
+</span><span style="color:#75715e;">-- out 1	2	1	nil
+</span></code></pre>
+<hr />
+<h3 id="fu-zhi-yu-ju">赋值语句</h3>
+<p><code>赋值</code>是改变一个变量值的最基本的方法。</p>
+<p>如下面一样，使用<code>等号</code>对<code>左边</code>的<code>变量</code>进行赋值</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">2
+</span><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3
+</span><span>n </span><span style="color:#f92672;">= </span><span>n </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1
+</span><span>b </span><span style="color:#f92672;">= </span><span>n
+</span></code></pre>
+<p><code>Lua</code>可以对多个变量同时赋值，变量用<code>逗号</code>分开，<code>赋值</code>语句<code>右边的值</code>会依次赋给<code>左边的变量</code>。</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1
+</span><span>a, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">10</span><span>, </span><span style="color:#ae81ff;">2</span><span style="color:#f92672;">*</span><span>n
+</span></code></pre>
+<p>当左右值的数量不一致时，Lua会进行下面的设定：</p>
+<ul>
+<li>变量个数 &gt; 值的个数：按变量个数补足nil</li>
+<li>变量个数 &lt; 值的个数：多余的值会被忽略</li>
+</ul>
+<p>下面的例子可以展示这种设定：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a, b, c </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>, </span><span style="color:#ae81ff;">1
+</span><span style="color:#66d9ef;">print</span><span>(a,b,c)
+</span><span style="color:#75715e;">--输出0   1   nil
+</span><span>
+</span><span>a, b </span><span style="color:#f92672;">= </span><span>a</span><span style="color:#f92672;">+</span><span style="color:#ae81ff;">1</span><span>, b</span><span style="color:#f92672;">+</span><span style="color:#ae81ff;">1</span><span>, b</span><span style="color:#f92672;">+</span><span style="color:#ae81ff;">2
+</span><span style="color:#66d9ef;">print</span><span>(a,b)
+</span><span style="color:#75715e;">--输出1   2
+</span><span>
+</span><span>a, b, c </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0
+</span><span style="color:#66d9ef;">print</span><span>(a,b,c)
+</span><span style="color:#75715e;">--输出0   nil   nil
+</span></code></pre>
+<p><strong>这里需要你思考一下，运行以下代码，将会输出什么结果？</strong></p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a,b,c </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#ae81ff;">2</span><span>,</span><span style="color:#ae81ff;">3
+</span><span>a,c </span><span style="color:#f92672;">= </span><span>a</span><span style="color:#f92672;">+</span><span style="color:#ae81ff;">1</span><span>,b
+</span><span>d </span><span style="color:#f92672;">= </span><span>c,b
+</span><span style="color:#66d9ef;">print</span><span>(a,b,c,d)
+</span><span style="color:#75715e;">-- 2 2 2 2
+</span></code></pre>
+<hr />
+<h3 id="jiao-huan-bian-liang">交换变量</h3>
+<p>这部分需要你自己完成一个任务：</p>
+<p>已知下面的代码，并且已知<code>a</code>和<code>b</code>的值，请在交换他们的值，使打印输出<code>12 34</code></p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">34
+</span><span>b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">12
+</span><span>
+</span><span>c </span><span style="color:#f92672;">= </span><span>a
+</span><span>a </span><span style="color:#f92672;">= </span><span>b
+</span><span>b </span><span style="color:#f92672;">= </span><span>c
+</span><span>
+</span><span style="color:#66d9ef;">print</span><span>(a,b)
+</span><span>
+</span><span style="color:#75715e;">-- [21:04:15] 虚拟机初始化完毕
+</span><span style="color:#75715e;">-- [21:04:15] 12	34
+</span><span style="color:#75715e;">-- [21:04:15] 虚拟机已停止运行
+</span></code></pre>
+<hr />
+<h3 id="shu-chu-bian-liang">输出变量</h3>
+<p>我们已经知道了，在Lua中，可以使用print函数来打印你想要得到的结果。</p>
+<p>同时在上一节，我们学会了新建变量和设置变量的值。</p>
+<p>让我们试着输出某个变量吧！使用<code>print函数</code>，输出已知变量。 我们已知变量<code>num</code>为某个数字，试着输出它的值吧！</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>num </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">123
+</span><span>
+</span><span style="color:#66d9ef;">print</span><span>(num)
+</span></code></pre>
+<hr />
+<h3 id="suan-shu-yun-suan-fu">算数运算符</h3>
+<p>运算符是一个特殊的符号，用于告诉解释器执行特定的数学或逻辑运算。</p>
+<p>上一节中，新建的数字变量，我们称之为<code>number</code>类型的变量。</p>
+<p>本节我们来学习使用<code>算术运算符</code>，如下所示：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#f92672;">+</span><span> 加法
+</span><span style="color:#f92672;">-</span><span> 减法
+</span><span style="color:#f92672;">*</span><span> 乘法
+</span><span style="color:#f92672;">/</span><span> 除法
+</span><span style="color:#f92672;">%</span><span> 取余，求出除法的余数
+</span><span style="color:#f92672;">^</span><span> 乘幂，计算次方
+</span><span style="color:#f92672;">-</span><span> 负号，取负值
+</span></code></pre>
+<p>我们可以通过以下实例来理解算术运算符的应用：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">21
+</span><span>b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">10
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">+ </span><span>b
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a + b 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">- </span><span>b
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a - b 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">* </span><span>b
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a * b 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">/ </span><span>b
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a / b 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">% </span><span>b
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a % b 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a</span><span style="color:#f92672;">^</span><span style="color:#ae81ff;">2
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a^2 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= -</span><span>a
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;-a 的值为 &#39;</span><span>, c )
+</span><span>c </span><span style="color:#f92672;">= </span><span>a </span><span style="color:#f92672;">* </span><span>(b </span><span style="color:#f92672;">- </span><span>a)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;a * (b - a) 的值为 &#39;</span><span>, c )
+</span></code></pre>
+<p><strong>你需要完成下面的任务：</strong></p>
+<p>已知，一个长方体的长宽高分别为a、b、c（单位米），且这个物体重量为m（单位克）</p>
+<p>请打印出物体的密度（单位g/m³）</p>
+<p>注：密度计算公式 密度 = 质量 / 体积</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>a,b,c </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#ae81ff;">2</span><span>,</span><span style="color:#ae81ff;">3 </span><span style="color:#75715e;">--长宽高
+</span><span>m </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">10        </span><span style="color:#75715e;">--重量
+</span><span style="color:#75715e;">--请打印出物体的密度
+</span><span style="color:#66d9ef;">print</span><span>(m</span><span style="color:#f92672;">/</span><span>(a</span><span style="color:#f92672;">*</span><span>b</span><span style="color:#f92672;">*</span><span>c))
+</span><span>
+</span></code></pre>
+<hr />
+<h2 id="zi-fu-chuan">字符串</h2>
+<h3 id="stringlei-xing-bian-liang">string类型变量</h3>
+<p><code>字符串</code>（即<code>string</code>），就是一串文本数据，可以存储你要的文本。</p>
+<p>在第二节中，<code>print</code>出的数据就是一个字符串。</p>
+<p>Lua 语言中字符串可以使用以下三种方式来表示：</p>
+<ol>
+<li>单引号间的一串字符</li>
+<li>双引号间的一串字符</li>
+<li>[[和]]间的一串字符</li>
+</ol>
+<p>你可以参考下面的例子来深入理解：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#75715e;">--双引号间的一串字符
+</span><span>str1 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;Lua&quot;
+</span><span style="color:#75715e;">--单引号间的一串字符
+</span><span>str2 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;Lua&#39;
+</span><span style="color:#75715e;">--[[和]]--间的一串字符
+</span><span>str3 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">[[Lua]]
+</span><span>str4 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">[[使用双括号时，甚至能包含换行数据
+</span><span style="color:#e6db74;">换行了
+</span><span style="color:#e6db74;">最后一行]]
+</span><span>
+</span><span style="color:#75715e;">--输出所有字符串
+</span><span style="color:#66d9ef;">print</span><span>(str1)
+</span><span style="color:#66d9ef;">print</span><span>(str2)
+</span><span style="color:#66d9ef;">print</span><span>(str3)
+</span><span style="color:#66d9ef;">print</span><span>(str4)
+</span></code></pre>
+<p><strong>接下来你需要完成下面的练习：</strong></p>
+<p>新建三个变量<code>s1</code>、<code>s2</code>、<code>s3</code></p>
+<p>分别存入字符串数据：<code>rei</code>、<code>asuka</code>、<code>233</code>，使输出打印正确</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>s1 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;rei&quot;
+</span><span>s2 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;asuka&#39;
+</span><span>s3 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;233&quot;
+</span><span>
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;s1,s2,s3的值：&quot;</span><span>,s1,s2,s3)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;s1,s2,s3的类型：&quot;</span><span>,</span><span style="color:#66d9ef;">type</span><span>(s1),</span><span style="color:#66d9ef;">type</span><span>(s2),</span><span style="color:#66d9ef;">type</span><span>(s3))
+</span><span>
+</span><span style="color:#75715e;">-- [21:07:46] 虚拟机初始化完毕
+</span><span style="color:#75715e;">-- [21:07:46] s1,s2,s3的值：	rei	asuka	233
+</span><span style="color:#75715e;">-- [21:07:46] s1,s2,s3的类型：	string	string	string
+</span><span style="color:#75715e;">-- [21:07:46] 虚拟机已停止运行
+</span></code></pre>
+<hr />
+<h3 id="zhuan-yi-zi-fu">转义字符</h3>
+<p>在上一节中，我们学习了如何声明字符串。</p>
+<p>但是我们有时候会遇到一些特殊的问题，如：<strong>如何输出单引号和双引号？如何输出回车换行？</strong></p>
+<p>也许我们可以用下面的方式简单规避，输出单引号时，声明字符串用双引号括起来，像下面这样</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>str </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;&#39;&quot;
+</span></code></pre>
+<p>同理，输出双引号时，声明字符串用单引号括起来，像下面这样</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>str </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;&quot;&#39;
+</span></code></pre>
+<p>但是，这样会出现一个问题：如何同时显示单引号和双引号？这里就需要<code>转义字符</code>登场了。</p>
+<p>转义字符用于表示不能直接显示的字符，比如后退键、回车键、等。</p>
+<p>以 <code>\</code> 开头的都是转义字符，下面时常用的转义字符格式：</p>
+<table><thead><tr><th>转义字符</th><th>含义</th></tr></thead><tbody>
+<tr><td>\n</td><td>换行(LF),将当前位置移到下一行开头</td></tr>
+<tr><td>\r</td><td>回车(CR),将当前位置移到本行开头</td></tr>
+<tr><td>|反斜杠字符\</td><td></td></tr>
+<tr><td>‘</td><td>单引号</td></tr>
+<tr><td>“</td><td>双引号</td></tr>
+<tr><td>\0</td><td>空字符(NULL)</td></tr>
+<tr><td>\ddd</td><td>1到3位八进制数所代表的任意字符</td></tr>
+<tr><td>\xhh</td><td>1到2位十六进制所代表的任意字符</td></tr>
+</tbody></table>
+<p>例如，如果我们想给str赋值一个单引号，一个双引号（’”），那么我们可以这样写：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>str </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">\&#39;\&quot;</span><span style="color:#e6db74;">&quot;
+</span></code></pre>
+<p><strong>下面需要你来完成一个简单的任务：</strong></p>
+<p>新建一个变量<code>str</code>，给str赋值为</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>ab\cd</span><span style="color:#e6db74;">&quot;ef&#39;g</span><span style="background-color:#f92672;color:#f8f8f0;">\h</span><span style="color:#e6db74;">]]</span><span style="background-color:#f92672;color:#f8f8f0;">
+</span></code></pre>
+<p>并打印出来</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>str </span><span style="color:#f92672;">= </span><span style="color:#75715e;">--补全代码
+</span><span style="color:#66d9ef;">print</span><span>(str)
+</span><span style="color:#75715e;">--输出应为ab\cd&quot;ef&#39;g\h]]
+</span></code></pre>
+<hr />
+<h3 id="stringpin-jie">string拼接</h3>
+<p>字符串和字符串可以相加吗？可以！我们可以用拼接符号来将两个独立的字符串拼起来。</p>
+<p>我们使用<code>..</code>来表示字符串拼接符号，如下面的示例代码：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;abc&#39;</span><span style="color:#f92672;">..</span><span style="color:#e6db74;">&#39;def&#39;</span><span>)
+</span><span>str1 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;luv&#39;
+</span><span>str2 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;rei&#39;
+</span><span>str3 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;4ever&quot;
+</span><span style="color:#66d9ef;">print</span><span>(str1</span><span style="color:#f92672;">..</span><span>str2</span><span style="color:#f92672;">..</span><span>str3)
+</span><span>
+</span><span style="color:#75715e;">-- [21:11:03] 虚拟机初始化完毕
+</span><span style="color:#75715e;">-- [21:11:03] abcdef
+</span><span style="color:#75715e;">-- [21:11:03] luvrei4ever
+</span><span style="color:#75715e;">-- [21:11:03] 虚拟机已停止运行
+</span><span>
+</span></code></pre>
+<p><strong>下面你要完成这个任务：</strong></p>
+<p>已知三个字符串变量<code>s1</code>、<code>s2</code>、<code>s3</code></p>
+<p>请将他们按顺序拼接起来，存入<code>all</code>，并使用print输出结果</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>s1,s2,s3 </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;aaa&quot;</span><span>,</span><span style="color:#e6db74;">&quot;bbb&quot;</span><span>,</span><span style="color:#e6db74;">&quot;ccc&quot;
+</span><span>all </span><span style="color:#f92672;">= </span><span>s1</span><span style="color:#f92672;">..</span><span>s2</span><span style="color:#f92672;">..</span><span>s3
+</span><span style="color:#66d9ef;">print</span><span>(all)
+</span><span>
+</span><span style="color:#75715e;">--[21:12:01] 虚拟机初始化完毕
+</span><span style="color:#75715e;">--[21:12:01] aaabbbccc
+</span><span style="color:#75715e;">--[21:12:01] 虚拟机已停止运行
+</span><span>
+</span></code></pre>
+<hr />
+<h3 id="numberzhuan-string">number转string</h3>
+<p>上面一节学习了如何拼接字符串，这个方法固然很好用，但是有时候我们会遇到一个需求，那就是把<code>number</code>类型的变量和<code>string</code>类型的变量拼接起来，组成一个新的<code>string</code></p>
+<p>比如下面的变量<code>n</code>和<code>s</code>，如何拼接起来呢？</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 123
+</span><span>s = &#39;m/s&#39;
+</span></code></pre>
+<p>我们可以直接将<code>number</code>类型的变量<code>n</code>转换成<code>string</code>类型的值，这样就可以拼接了</p>
+<p>使用<code>tostring(value)</code>函数即可实现这一操作：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">123
+</span><span>s </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;m/s&#39;
+</span><span>
+</span><span>result </span><span style="color:#f92672;">= </span><span style="color:#66d9ef;">tostring</span><span>(n)</span><span style="color:#f92672;">..</span><span>s
+</span><span style="color:#66d9ef;">print</span><span>(result)
+</span><span>
+</span><span style="color:#75715e;">--[21:12:22] 虚拟机初始化完毕
+</span><span style="color:#75715e;">--[21:12:22] 123m/s
+</span><span style="color:#75715e;">--[21:12:22] 虚拟机已停止运行
+</span><span>
+</span></code></pre>
+<p><strong>下面你要完成这个任务：</strong></p>
+<p>已知三个变量<code>n1</code>、<code>s</code>、<code>n2</code></p>
+<p>然后将他们按顺序拼接起来，存入变量<code>result</code>，使输出结果正确</p>
+<p>小提示：在某些情况下，Lua会自动将number类型转换成string类型</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n1,s,n2 </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#e6db74;">&quot;abc&quot;</span><span>,</span><span style="color:#ae81ff;">2
+</span><span>result </span><span style="color:#f92672;">= </span><span>n1</span><span style="color:#f92672;">..</span><span>s</span><span style="color:#f92672;">..</span><span>n2
+</span><span style="color:#66d9ef;">print</span><span>(result)
+</span><span>
+</span><span style="color:#75715e;">--[21:12:55] 虚拟机初始化完毕
+</span><span style="color:#75715e;">--[21:12:55] 1abc2
+</span><span style="color:#75715e;">--[21:12:55] 虚拟机已停止运行
+</span><span>
+</span></code></pre>
+<hr />
+<h3 id="stringzhuan-number">string转number</h3>
+<p>上面一节学习了如何将number转成string，这一节我们来学习如何将string转成number</p>
+<p>比如下面的变量<code>s</code>，存储的内容是一个字符串，但是代表了一个数字，如何转成number再与n相加计算呢？</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">123
+</span><span>s </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;2333&#39;
+</span></code></pre>
+<p>我们可以直接将<code>string</code>类型的变量<code>s</code>转换成<code>number</code>类型的值，这样就可以计算了</p>
+<p>使用<code>tonumber(value)</code>函数即可实现这一操作：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">123
+</span><span>s </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&#39;2333&#39;
+</span><span>
+</span><span>result </span><span style="color:#f92672;">= </span><span style="color:#66d9ef;">tonumber</span><span>(s) </span><span style="color:#f92672;">+ </span><span>n
+</span><span style="color:#66d9ef;">print</span><span>(result)
+</span><span>
+</span><span style="color:#75715e;">--[21:13:47] 虚拟机初始化完毕
+</span><span style="color:#75715e;">--[21:13:47] 2456
+</span><span style="color:#75715e;">--[21:13:47] 虚拟机已停止运行
+</span><span>
+</span></code></pre>
+<p><strong>下面你要完成这个任务：</strong></p>
+<p>已知三个字符串变量<code>s1</code>、<code>s2</code>、<code>s3</code>，其内容均为纯数字</p>
+<p>请计算他们的算术和，赋值给新建的变量<code>result</code>，使下面代码输出正确结果</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s1,s2,s3 = &quot;11&quot;,&quot;12&quot;,&quot;100&quot;
+</span><span>result = --请补全代码
+</span><span>print(result)
+</span></code></pre>
+<hr />
+<h2 id="luo-ji-yun-suan">逻辑运算</h2>
+<h3 id="bu-er-xing-he-bi-jiao-yun-suan">布尔型和比较运算</h3>
+<p>布尔型（boolean）只有两个可选值：<code>true</code>（真） 和 <code>false</code>（假）</p>
+<p>Lua 把 false 和 nil 看作是<code>false</code>，其他的都为true（包括0这个值，也是相当于<code>true</code>）</p>
+<p>Lua 中也有许多的<code>关系运算符</code>，用于比较大小或比较是否相等，符号及其含义如下表：</p>
+<table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody>
+<tr><td>==</td><td>等于，检测两个值是否相等，相等返回 true，否则返回 false</td></tr>
+<tr><td>~=</td><td>不等于，检测两个值是否相等，相等返回 false，否则返回 true</td></tr>
+<tr><td>&gt;</td><td>大于，如果左边的值大于右边的值，返回 true，否则返回 false</td></tr>
+<tr><td>&lt;</td><td>小于，如果左边的值大于右边的值，返回 false，否则返回 true</td></tr>
+<tr><td>&gt;=</td><td>大于等于，如果左边的值大于等于右边的值，返回 true，否则返回 false</td></tr>
+<tr><td>&lt;=</td><td>小于等于， 如果左边的值小于等于右边的值，返回 true，否则返回 false</td></tr>
+</tbody></table>
+<p>我们可以通过以下实例来更加透彻的理解关系运算符的应用：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 21
+</span><span>b = 10
+</span><span>print(&#39;==的结果&#39;,a==b)
+</span><span>print(&#39;~=的结果&#39;,a~=b)
+</span><span>print(&#39;&gt;的结果&#39;,a&gt;b)
+</span><span>print(&#39;&lt;的结果&#39;,a&lt;b)
+</span><span>print(&#39;&gt;=的结果&#39;,a&gt;=b)
+</span><span>print(&#39;&lt;=的结果&#39;,a&lt;=b)
+</span></code></pre>
+<p><strong>下面问题来了，运行以下代码，将会输出什么结果？请自行思考</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 1
+</span><span>b = &#39;1&#39;
+</span><span>c = a
+</span><span>d = 2
+</span><span>
+</span><span>print(a == b)
+</span><span>print(c == a)
+</span><span>print(a ~= b)
+</span><span>print(d &lt;= c)
+</span></code></pre>
+<hr />
+<h3 id="luo-ji-yun-suan-fu">逻辑运算符</h3>
+<p>逻辑运算符基于布尔型的值来进行计算，并给出结果，下表列出了 Lua 语言中的常用逻辑运算符：</p>
+<table><thead><tr><th>符号</th><th>含义</th></tr></thead><tbody>
+<tr><td>and</td><td>逻辑与操作符。 若 A 为 false，则返回 A，否则返回 B</td></tr>
+<tr><td>or</td><td>逻辑或操作符。 若 A 为 true，则返回 A，否则返回 B</td></tr>
+<tr><td>not</td><td>逻辑非操作符。与逻辑运算结果相反，如果条件为 true，逻辑非为 false</td></tr>
+</tbody></table>
+<p>我们可以通过以下实例来更加透彻的理解逻辑运算符的应用：</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;true and false的结果&#39;</span><span>,</span><span style="color:#ae81ff;">true </span><span style="color:#f92672;">and </span><span style="color:#ae81ff;">false</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;true or false的结果&#39;</span><span>,</span><span style="color:#ae81ff;">true </span><span style="color:#f92672;">or </span><span style="color:#ae81ff;">false</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;true and true的结果&#39;</span><span>,</span><span style="color:#ae81ff;">true </span><span style="color:#f92672;">and </span><span style="color:#ae81ff;">true</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;false or false的结果&#39;</span><span>,</span><span style="color:#ae81ff;">false </span><span style="color:#f92672;">or </span><span style="color:#ae81ff;">false</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;not false的结果&#39;</span><span>,</span><span style="color:#f92672;">not </span><span style="color:#ae81ff;">false</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;123 and 345的结果&#39;</span><span>,</span><span style="color:#ae81ff;">123 </span><span style="color:#f92672;">and </span><span style="color:#ae81ff;">345</span><span>)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&#39;nil and true的结果&#39;</span><span>,</span><span style="color:#ae81ff;">nil </span><span style="color:#f92672;">and </span><span style="color:#ae81ff;">true</span><span>)
+</span></code></pre>
+<p><strong>下面问题来了，运行以下代码，将会输出什么结果？</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 1
+</span><span>b = &#39;1&#39;
+</span><span>c = 0
+</span><span>
+</span><span>print(a and b)
+</span><span>print(c or a)
+</span><span>print(not b)
+</span><span>print(d and c)
+</span><span>print(1 &lt; 2 and 3 &gt; 2)
+</span></code></pre>
+<hr />
+<h3 id="jian-yan-da-xiao-zi-ce-ti">检验大小（自测题）</h3>
+<p>题目：如果已知number变量<code>n</code>，那么如果需要判断n是否符合下面的条件：</p>
+<p>3&lt;n≤10</p>
+<p>以下四行判断代码，正确的是？</p>
+<p>（返回true即表示变量<code>n</code>符合要求）</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 1--这个数可能是任意数字
+</span><span>print(n &gt; 10 or n &lt;= 3)
+</span><span>print(n &lt;= 10 or n &gt; 3)
+</span><span>print(n &lt; 3 and n &gt;= 10)
+</span><span>print(n &lt;= 10 or n &gt; 3)
+</span></code></pre>
+<hr />
+<h2 id="fen-zhi-pan-duan">分支判断</h2>
+<h3 id="tiao-jian-pan-duan">条件判断</h3>
+<p>上面一节学习了布尔类型，那么这个需要用到哪里呢？我们需要用它来进行某些判断。</p>
+<p>在Lua中，可以使用<code>if</code>语句来进行判断，如下面所举例的代码，可以判断<code>n是否为小于10的数</code>：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 5
+</span><span>if n &lt; 10 then
+</span><span>    print(&#39;n小于10&#39;)
+</span><span>end
+</span></code></pre>
+<p>我们整理一下，实际上if语句就是如下结构：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>if 条件 then
+</span><span>    符合条件的代码
+</span><span>end
+</span></code></pre>
+<p><strong>下面是你需要完成的事：</strong></p>
+<p>已知变量<code>n</code>，请判断<code>n</code>是否为奇数，如果是，请给<code>n</code>的值加上1</p>
+<p>如果你觉得有难度，请查看下面的提示：</p>
+<ul>
+<li>求出<code>n</code>除以2的余数：n % 2</li>
+<li>给<code>n</code>的值加上1：n = n + 1</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--已知一个number变量n
+</span><span>n = 5   --这个数字是几都有可能
+</span><span>print(&quot;n在判断前的值&quot;,n)
+</span><span>
+</span><span>if 你的条件 then
+</span><span>    要做的事
+</span><span>end
+</span><span>print(&quot;n在判断后的值&quot;,n)
+</span></code></pre>
+<hr />
+<h3 id="duo-tiao-jian-pan-duan">多条件判断</h3>
+<p>上面一节学习了简单的if语句写法，这一节我们来学习多条件分支语句</p>
+<p>在Lua中，可以使用<code>if</code>语句来进行判断，同时可以使用<code>else</code>语句，表示多个分支判断</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>if 条件1 then
+</span><span>    满足条件1
+</span><span>elseif 条件2 then
+</span><span>    不满足条件1，但是满足条件2
+</span><span>else
+</span><span>    前面条件全都不满足
+</span><span>end
+</span></code></pre>
+<p>举个例子，比如有一个<code>数字n</code>：</p>
+<ul>
+<li>当它大于等于0、小于5时，输出<code>太小</code>，</li>
+<li>当它大于等于5、小于10时，输出<code>适中</code>，</li>
+<li>当它大于等于10时，输出<code>太大</code>，</li>
+</ul>
+<p>那么代码就像如下这样：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 1--更改这个数多运行几次试试
+</span><span>if n &gt;= 0 and n &lt; 5 then
+</span><span>    print(&#39;太小&#39;)
+</span><span>elseif n &gt;= 5 and n &lt; 10 then
+</span><span>    print(&#39;适中&#39;)
+</span><span>elseif n &gt;= 10 then
+</span><span>    print(&#39;太大&#39;)
+</span><span>end
+</span></code></pre>
+<p>注意：<code>else</code>和<code>elseif</code>都是可选的，可有可无，但是<code>end</code>不能省略</p>
+<p><strong>下面是你需要完成的事：</strong></p>
+<p>已知变量<code>n</code>，请判断<code>n</code>是否为奇数，</p>
+<ul>
+<li>如果是，请给<code>n</code>的值加上1</li>
+<li>如果不是，请将<code>n</code>的值改为原来的两倍</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--已知一个number变量n
+</span><span>n = 5   --这个数字是几都有可能
+</span><span>print(&quot;n在判断前的值&quot;,n)
+</span><span>
+</span><span>if 你的条件 then
+</span><span>    要做的事
+</span><span>else
+</span><span>    要做的事
+</span><span>end
+</span><span>print(&quot;n在判断后的值&quot;,n)
+</span></code></pre>
+<hr />
+<h3 id="pan-duan-san-jiao-xing-he-fa-xing-zi-ce-ti">判断三角形合法性（自测题）</h3>
+<p>你需要使用前面几章的知识，来完成下面的题目</p>
+<p>已知三个number类型的变量a、b、c，分别代表三根木棒的长度</p>
+<p>请判断，使用这三根木棒，是否可以组成一个三角形（两短边之和大于第三边）</p>
+<ul>
+<li>如果可以组成，就打印出true</li>
+<li>如果不可以，就打印false</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a,b,c = 1,2,3--多改几个数值自行测试
+</span><span>
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="ifde-pan-duan-yi-ju-zi-ce-ti">if的判断依据（自测题）</h3>
+<p>我们在前面了解到，Lua 把 <code>false</code> 和 <code>nil</code> 看作是<code>false</code>，其他的都为<code>true</code>（包括<code>0</code>这个值，也是相当于<code>true</code>）</p>
+<p><strong>那么问题来了，执行下面的代码，将会输出什么？</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>result = &#39;&#39;
+</span><span>if 0 then
+</span><span>    result = result..&#39;T,&#39;
+</span><span>else
+</span><span>    result = result..&#39;F,&#39;
+</span><span>end
+</span><span>if a then
+</span><span>    result = result..&#39;T&#39;
+</span><span>else
+</span><span>    result = result..&#39;F&#39;
+</span><span>end
+</span><span>print(result)
+</span></code></pre>
+<hr />
+<h2 id="han-shu">函数</h2>
+<h3 id="chu-shi-han-shu">初识函数</h3>
+<p><code>函数</code>是指一段在一起的、可以做某一件事儿的程序，也叫做子程序。</p>
+<p>在前面的内容中，我们已经接触过了函数的调用，这个函数就是前面用到了很多次的<code>print(...)</code>。</p>
+<p>调用函数只需要按下面的格式即可：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>函数名(参数1,参数2,参数3,......)
+</span></code></pre>
+<p>为何要使用函数？因为很多事情都是重复性操作，我们使用函数，可以快速完成这些操作</p>
+<p>下面我们举一个最简单的函数例子，这个函数没有传入参数、没有返回值</p>
+<p>它实现了一个简单的功能，就是输出<code>Hello world!</code>：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function hello()
+</span><span>    print(&#39;Hello world!&#39;)
+</span><span>end
+</span></code></pre>
+<p>这个函数名为<code>hello</code>，我们可以按下面的方法进行调用（执行）：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function hello()
+</span><span>    print(&#39;Hello world!&#39;)
+</span><span>end
+</span><span>hello()
+</span></code></pre>
+<p>这行代码会输出<code>Hello world!</code>。</p>
+<p>同时，在Lua中，函数也是一种变量类型，也就是说，<code>hello</code>实际上也是一个变量，里面存储的是一个函数，我们可以用下面的代码来理解：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function hello()
+</span><span>    print(&#39;Hello world!&#39;)
+</span><span>end
+</span><span>a = hello
+</span><span>--把hello函数同时赋值给a变量
+</span><span>a()
+</span><span>hello()
+</span><span>--a和hello变量指向同一个函数
+</span><span>--所以执行结果和hello()相同
+</span></code></pre>
+<p>因为函数只是个变量，你甚至在一开始可以这样声明<code>hello</code>函数：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>hello = function()
+</span><span>    print(&#39;Hello world!&#39;)
+</span><span>end
+</span><span>hello()
+</span></code></pre>
+<p><strong>下面你需要做一件简单的事情：</strong></p>
+<ul>
+<li>新建一个函数变量<code>biu</code>，使其执行后会打印<code>biubiubiu</code>这个字符串，</li>
+<li>新建一个函数变量<code>pong</code>，使其与<code>biu</code>指向的函数相同</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--请在此处补全代码
+</span><span>
+</span><span>--请使下面的调用可以正常打印出biubiubiu
+</span><span>biu()
+</span><span>pong()
+</span><span>print(&quot;biu和pong相等吗？&quot;,biu==pong)
+</span></code></pre>
+<hr />
+<h3 id="localbian-liang">local变量</h3>
+<p>之前我们创建的变量，都是全局变量，这种变量在代码运行周期从头到尾，都不会被销毁，而且随处都可调用。</p>
+<p>但是当我们代码量增加，很多时候大量新建全局变量会导致内存激增，我们需要一种可以临时使用、并且可以自动销毁释放内存资源的变量，要怎么解决呢？</p>
+<p>我们可以使用<code>local</code>标志来新建临时变量，使用<code>local</code>创建一个局部变量，与全局变量不同，局部变量只在被声明的那个代码块内有效。</p>
+<p>参考下面的代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 123
+</span><span>function add()
+</span><span>    local n = a+2
+</span><span>    print(n)
+</span><span>end
+</span><span>add()
+</span><span>print(n)
+</span></code></pre>
+<p>上面的代码中，<code>n</code>就是一个局部变量，它只在<code>这个funcion</code>中有效，并且函数运行完后会自动回收这部分的内存。</p>
+<p>我们应该尽可能的使用局部变量，以方便lua虚拟机自动回收内存空间，同时减少资源占用提高运行速度。</p>
+<p>下面请阅读以下代码，思考一下，正确的输出结果是什么：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>str = &#39;abc&#39;
+</span><span>function connect()
+</span><span>    local s = str..&#39;def&#39;
+</span><span>end
+</span><span>print(s,str)
+</span></code></pre>
+<hr />
+<h3 id="han-shu-can-shu">函数参数</h3>
+<p>在前几章的使用中，我们知道函数是可以传入参数的，如<code>print(123)</code></p>
+<p>那么，我们如何编写可以传入参数的函数呢？可以按下面的模板来写</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function 函数名(参数1,参数2,...)
+</span><span>    代码内容
+</span><span>end
+</span></code></pre>
+<p>这里传入的参数，等价于在函数内部新建了一个<code>local</code>的变量，修改这些数据不会影响外部的数据（除了后面还没有讲到的<code>table</code>等类型）</p>
+<p>举个例子，比如下面的函数，可以实现打印出两个传入值的和：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function add(a,b)
+</span><span>    print(a+b)
+</span><span>end
+</span><span>add(1,2)
+</span><span>--会输出3
+</span></code></pre>
+<p>这段代码其实等价于：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function add()
+</span><span>    local a = 1
+</span><span>    local b = 2
+</span><span>    print(a+b)
+</span><span>end
+</span><span>add()
+</span></code></pre>
+<p>下面问题来了，请设计一个函数<code>p</code>，可以按下面的调用方式来打印出物体的密度：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--补全这个函数的代码，满足题目要求
+</span><span>function p(a,b,c,m)
+</span><span>
+</span><span>    print()
+</span><span>end
+</span><span>
+</span><span>--一个长方体的长宽高分别为a、b、c（单位米）
+</span><span>a = 1
+</span><span>b = 2
+</span><span>c = 3
+</span><span>--这个物体重量为m（单位克）
+</span><span>m = 230
+</span><span>--下面打印出密度
+</span><span>--注：密度计算公式 密度 = 质量 / 体积
+</span><span>p(a,b,c,m)
+</span></code></pre>
+<hr />
+<h3 id="han-shu-fan-hui-zhi">函数返回值</h3>
+<p>在前面的代码中，我们实现了一个函数，输入变量<code>a</code>、<code>b</code>，函数会自动输出两个数值的和。</p>
+<p>但是一般来说，我们的需求远远不止这些，我们可能需要一个如下功能的函数：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>执行函数，输入两个值，获取这两个值的和
+</span></code></pre>
+<p>如果还是按上面几节的内容，我们只会输出这个值，并不能把这个值传递给其他的变量进行后续使用，如何解决这个需求呢？</p>
+<p>我们可以使用函数的返回值来实现这个需求，结合上面的需求，我们可以用下面的代码实现：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function add(a,b)
+</span><span>    return a+b
+</span><span>end
+</span><span>all = add(1,2)
+</span><span>--这里all的值就是3了
+</span><span>print(all)
+</span></code></pre>
+<p>这里的<code>return</code>表示返回一个值，<code>并且立刻结束这个函数的运行</code></p>
+<p>同时，和输入值可以有多个一样，返回值也可以有多个</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function add(a,b)
+</span><span>    return a+b,&quot;ok&quot;
+</span><span>end
+</span><span>all, result = add(1,2)
+</span><span>--这里all的值就是3了
+</span><span>--这里result的值就是string &quot;ok&quot;
+</span><span>print(all,result)
+</span></code></pre>
+<p>下面问题来了，请设计一个函数<code>p</code>，可以按下面的调用方式来返回出物体的密度，返回值为<code>number</code>类型：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function p(a,b,c,m)
+</span><span>    --请补全代码
+</span><span>end
+</span><span>
+</span><span>--一个长方体的长宽高分别为a、b、c（单位米）
+</span><span>a = 1
+</span><span>b = 2
+</span><span>c = 3
+</span><span>--这个物体重量为m（单位克）
+</span><span>m = 230
+</span><span>--下面返回密度值
+</span><span>--注：密度计算公式 密度 = 质量 / 体积
+</span><span>result = p(a,b,c,m)
+</span><span>print(result)
+</span></code></pre>
+<hr />
+<h3 id="pan-duan-san-jiao-xing-he-fa-xing-2-zi-ce-ti">判断三角形合法性2（自测题）</h3>
+<p>你需要使用前面几章的知识，来完成下面的题目</p>
+<ul>
+<li>已知三个number类型的变量，分别代表三根木棒的长度</li>
+<li>请判断，使用这三根木棒，是否可以组成一个三角形（两短边之和大于第三边）</li>
+<li>请新建一个函数triangle，并可以用如下形式调用（如果可以组成，就返回true）：</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function triangle(a,b,c)
+</span><span>    --请补全代码
+</span><span>end
+</span><span>
+</span><span>result = triangle(1,2,3)--传入值为三边长度，多改几个测试下
+</span><span>print(result)
+</span></code></pre>
+<hr />
+<h3 id="fan-hui-duo-ge-zhi-zi-ce-ti">返回多个值（自测题）</h3>
+<p>你需要使用前面几章的知识，来完成下面的题目</p>
+<ul>
+<li>已知2个number类型的变量，分别代表一个长方体的长和宽</li>
+<li>请计算这个长方形的周长和面积</li>
+<li>请新建一个函数<code>rectangle</code>，并可以用如下形式调用：</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>function rectangle(a,b)
+</span><span>    --补全代码
+</span><span>end
+</span><span>
+</span><span>area,len = rectangle(1,2)
+</span><span>--结果：
+</span><span>--面积area为2
+</span><span>--周长len为6
+</span><span>print(area,len)
+</span></code></pre>
+<hr />
+<h2 id="table">table</h2>
+<h3 id="ren-shi-shu-zu">认识数组</h3>
+<p>数组，使用一个变量名，存储一系列的值</p>
+<p>很多语言中都有数组这个概念，在Lua中，我们可以使用<code>table</code>（表）来实现这个功能</p>
+<p>在Lua中，table是一个一系列元素的集合，使用大括号进行表示，其中的元素之间以逗号分隔，类似下面的代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {1,3,8,5,4}
+</span></code></pre>
+<p>我们可以直接使用<code>元素</code>的<code>下标</code>，来访问、或者对该<code>元素</code>进行赋值操作。</p>
+<p>在上面的<code>table</code>变量<code>t</code>中，第一个元素的下标是<code>1</code>，第二个是<code>2</code>，以此类推。</p>
+<p>我们可以用<code>变量名</code>+<code>中括号</code>，中括号里加上<code>下标</code>，来访问或更改这个<code>元素</code>，如下面的例子：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {1,3,8,5,4}
+</span><span>print(t[1]) --打印1
+</span><span>print(t[3]) --打印8
+</span><span>
+</span><span>t[2] = 99 --更改第二个元素的值
+</span><span>print(t[2]) --打印99
+</span><span>
+</span><span>t[6] = 2 --凭空新建第六个元素并赋值
+</span><span>print(t[6]) --打印2
+</span><span>
+</span><span>print(t[10])
+</span><span>--因为不存在，打印nil
+</span></code></pre>
+<p>以上就是table最简单的一个例子了，就是当作数组来用（注意，一般语言中的数组基本都为不可变长度，这里的table为可变长度）</p>
+<p><strong>下面你需要完成：</strong></p>
+<ul>
+<li>新建一个table，名为cards，存入1-10十个数字</li>
+<li>将第3个元素与第7个元素交换</li>
+<li>将第9个元素与第2个元素交换</li>
+<li>增加第11个变量，值为23</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--请补全代码
+</span><span>cards =
+</span></code></pre>
+<hr />
+<h3 id="jian-dan-table">简单table</h3>
+<p>上一节里，我们将<code>table</code>来表示<code>数组</code>，实际上，<code>table</code>中可以包括<code>任意类型的数据</code></p>
+<p>比如我们可以在<code>table</code>中放置<code>number</code>和<code>string</code>数据，类似下面的代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {&quot;abc&quot;,223,&quot;,..a&quot;,123123}
+</span></code></pre>
+<p>我们甚至能在里面放<code>function</code>变量</p>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>t </span><span style="color:#f92672;">= </span><span>{
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">function</span><span>() </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">123 </span><span style="color:#f92672;">end</span><span>,
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">function</span><span>() </span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;abc&quot;</span><span>) </span><span style="color:#f92672;">end</span><span>,
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">function</span><span>(</span><span style="font-style:italic;color:#fd971f;">a</span><span>,</span><span style="font-style:italic;color:#fd971f;">b</span><span>) </span><span style="color:#f92672;">return </span><span>a</span><span style="color:#f92672;">+</span><span>b </span><span style="color:#f92672;">end</span><span>,
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">function</span><span>() </span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;hello world&quot;</span><span>) </span><span style="color:#f92672;">end</span><span>,
+</span><span>}
+</span><span>t[</span><span style="color:#ae81ff;">1</span><span>]()
+</span><span>t[</span><span style="color:#ae81ff;">2</span><span>]()
+</span><span>t[</span><span style="color:#ae81ff;">3</span><span>](</span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#ae81ff;">2</span><span>)
+</span><span>t[</span><span style="color:#ae81ff;">4</span><span>]()
+</span></code></pre>
+<p>这些<code>table</code>访问每个元素的方式仍然是直接用下标，并且也能用下标来进行修改</p>
+<p><strong>下面你需要完成：</strong></p>
+<ul>
+<li>新建一个<code>table</code>，名为<code>funcList</code>，并实现以下功能</li>
+<li>调用<code>funcList[1](a,b)</code>，返回a和b的乘积</li>
+<li>调用<code>funcList[2](a,b)</code>，返回a减b的差</li>
+<li>调用<code>funcList[3](a)</code>，返回a的相反数（-a）</li>
+</ul>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#75715e;">--请补全代码
+</span><span>funcList </span><span style="color:#f92672;">= </span><span>{
+</span><span>
+</span><span>}
+</span><span>
+</span><span>a,b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1</span><span>,</span><span style="color:#ae81ff;">2</span><span style="color:#75715e;">--提供两个数
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;a,b值为&quot;</span><span>,a,b)
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;a和b的乘积：&quot;</span><span>,funcList[</span><span style="color:#ae81ff;">1</span><span>](a,b))
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;a和b的差：&quot;</span><span>,funcList[</span><span style="color:#ae81ff;">2</span><span>](a,b))
+</span><span style="color:#66d9ef;">print</span><span>(</span><span style="color:#e6db74;">&quot;a和相反数：&quot;</span><span>,funcList[</span><span style="color:#ae81ff;">3</span><span>](a))
+</span></code></pre>
+<hr />
+<h3 id="tablexia-biao">table下标</h3>
+<p>在前两节，我们的<code>table</code>都只是一些简单的List（列表），每个元素的<code>下标</code>都是自动从1排列的</p>
+<p>实际上，Lua中，下标可以直接在声明时进行指定，像下面这样：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {6,7,8,9}
+</span><span>--上面和下面的代码等价
+</span><span>t = {
+</span><span>    [1] = 6,
+</span><span>    [2] = 7,
+</span><span>    [3] = 8,
+</span><span>    [4] = 9,
+</span><span>}
+</span><span>
+</span><span>--甚至你可以跳过某些下标
+</span><span>t = {
+</span><span>    [1] = 6,
+</span><span>    [3] = 7,
+</span><span>    [5] = 8,
+</span><span>    [7] = 9,
+</span><span>}
+</span><span>print(t[7])
+</span><span>--输出9
+</span><span>
+</span><span>--在声明后赋予元素值也是可以的
+</span><span>t = {}--空的table
+</span><span>t[101] = 10
+</span><span>print(t[101])
+</span><span>--输出10
+</span></code></pre>
+<p><strong>下面你需要：</strong></p>
+<ul>
+<li>新建一个变量<code>t</code>，并按下面的格式声明</li>
+<li>下标为<code>1</code>的元素，值为<code>123</code>（number）</li>
+<li>下标为<code>13</code>的元素，值为<code>&quot;abc&quot;</code>（string）</li>
+<li>下标为<code>666</code>的元素，值为<code>&quot;666&quot;</code>（string）</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--请补全代码
+</span><span>t = {
+</span><span>
+</span><span>}
+</span><span>
+</span><span>print(&quot;下标为1的元素：&quot;,t[1],type(t[1]))
+</span><span>print(&quot;下标为13的元素：&quot;,t[13],type(t[13]))
+</span><span>print(&quot;下标为666的元素：&quot;,t[666],type(t[666]))
+</span></code></pre>
+<hr />
+<h3 id="xia-biao-jin-jie">下标进阶</h3>
+<p>在上一节，我们学习了如何自定义下标，其实在Lua中，下标也可以是字符串，如下面的例子</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {
+</span><span>    [&quot;apple&quot;] = 10,
+</span><span>    banana = 12,
+</span><span>    pear = 6,
+</span><span>}
+</span><span>--使用[&quot;下标&quot;] = 值
+</span><span>--和  下标 = 值
+</span><span>--都是正确写法
+</span><span>--当第二种方式有歧义时，应该用第一种方式
+</span><span>
+</span><span>--可以用下面两种方式访问：
+</span><span>print(t[&quot;apple&quot;])
+</span><span>--输出10
+</span><span>print(t.apple)
+</span><span>--输出10
+</span><span>--当第二种方式有歧义时，应该用第一种方式
+</span></code></pre>
+<p>可见，在使用<code>string</code>作为下标时，<code>table</code>的灵活性提升了一个数量级。</p>
+<p><code>string</code>作为下标时，也可以动态赋值：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {} -- 空table
+</span><span>t[&quot;new&quot;] = &quot;新的值&quot;
+</span><span>print(t.new)
+</span><span>--输出 新的值
+</span></code></pre>
+<p><strong>下面你需要完成：</strong></p>
+<ul>
+<li>新建<code>table</code>变量<code>t</code></li>
+<li>下标为<code>apple</code>的元素，值为<code>123</code>（number）</li>
+<li>下标为<code>banana</code>的元素，值为<code>&quot;abc&quot;</code>（string）</li>
+<li>下标为<code>1@1</code>的元素，值为<code>&quot;666&quot;</code>（string）</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--请补全代码
+</span><span>t = {
+</span><span>
+</span><span>}
+</span><span>
+</span><span>print(&quot;下标为apple的元素：&quot;,t[&quot;apple&quot;],type(t[&quot;apple&quot;]))
+</span><span>print(&quot;下标为banana的元素：&quot;,t[&quot;banana&quot;],type(t[&quot;banana&quot;]))
+</span><span>print(&quot;下标为1@1的元素：&quot;,t[&quot;1@1&quot;],type(t[&quot;1@1&quot;]))
+</span></code></pre>
+<hr />
+<h3 id="tablexiao-ce-yan">table小测验</h3>
+<p><strong>下面的代码，将会打印什么？</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {
+</span><span>    apple = {
+</span><span>        price = 7.52,
+</span><span>        weight = 2.1,
+</span><span>    },
+</span><span>    banana = {
+</span><span>        price = 8.31,
+</span><span>        weight = 1.4,
+</span><span>        year = &#39;2018&#39;
+</span><span>    },
+</span><span>    year = &#39;2019&#39;
+</span><span>}
+</span><span>print(
+</span><span>    t.price,
+</span><span>    t.apple.price,
+</span><span>    t.banana.weight,
+</span><span>    t.year
+</span><span>)
+</span></code></pre>
+<hr />
+<h3 id="tablexiao-ce-yan-2">table小测验2</h3>
+<p><strong>下面的代码，将会打印什么？</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {
+</span><span>    {
+</span><span>        price = 7.52,
+</span><span>        weight = 2.1,
+</span><span>    },
+</span><span>    {
+</span><span>        price = 8.31,
+</span><span>        weight = 1.4,
+</span><span>        year = &#39;2018&#39;
+</span><span>    },
+</span><span>    year = &#39;2019&#39;
+</span><span>}
+</span><span>print(
+</span><span>    t[&quot;price&quot;],
+</span><span>    t[1].price,
+</span><span>    t[2].weight,
+</span><span>    t[&quot;year&quot;]
+</span><span>)
+</span></code></pre>
+<hr />
+<h3 id="luaquan-ju-bian-liang-yu-table">Lua全局变量与table</h3>
+<p>在前面我们知道了，在<code>table</code>中，可以直接用<code>table名[下标]</code>或<code>table名.string下标</code>来访问元素</p>
+<p>实际上，在Lua中，所有的全局变量全部被存放在了一个大<code>table</code>中，这个<code>table</code>名为：<code>_G</code></p>
+<p>我们可以用下面的例子来示范：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 123--新建变量
+</span><span>print(n)--输出123
+</span><span>print(_G.n)--输出123
+</span><span>
+</span><span>_G.abc = 1--相当于新建全局变量
+</span><span>print(abc)--输出1
+</span><span>
+</span><span>_G[&quot;def&quot;] = 23--相当于新建全局变量
+</span><span>print(def)--输出23
+</span><span>
+</span><span>--甚至你可以像下面这样
+</span><span>_G.print(&quot;hello&quot;)
+</span><span>_G[&quot;print&quot;](&quot;world&quot;)
+</span></code></pre>
+<p>现在，你明白为什么说<code>万物基于table</code>了吧？</p>
+<p><strong>你需要完成下面的任务：</strong></p>
+<ul>
+<li>已知有一个全局变量，名为<code>@#$</code></li>
+<li>请新建一个变量<code>result</code></li>
+<li>将<code>@#$</code>变量里的值赋值给<code>result</code></li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>_G[&quot;@#$&quot;] = 123
+</span><span>
+</span><span>result = --请补全代码
+</span><span>print(&quot;result值为&quot;,result)
+</span></code></pre>
+<hr />
+<h3 id="tablexiao-ce-shi-3">table小测试3</h3>
+<p><strong>请新建一个名为t的table，满足以下要求</strong></p>
+<ul>
+<li><code>t[10]</code>可获得<code>number</code>类型数据<code>100</code></li>
+<li><code>t.num</code>可获得<code>number</code>类型数据<code>12</code></li>
+<li><code>t.abc[3]</code>可获得<code>string</code>类型数据<code>abcd</code></li>
+<li><code>t.a.b.c</code>可获得<code>number</code>类型数据<code>789</code></li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--请补全代码
+</span><span>t = {
+</span><span>
+</span><span>}
+</span><span>
+</span><span>print(&quot;t[10]可获得number类型数据100:&quot;,t[10],type(t[10]))
+</span><span>print(&quot;t.num可获得number类型数据12:&quot;,t.num,type(t.num))
+</span><span>print(&quot;t.abc[3]可获得string类型数据abcd:&quot;,t.abc[3],type(t.abc[3]))
+</span><span>print(&quot;t.a.b.c可获得number类型数据789:&quot;,t.a.b.c,type(t.a.b.c))
+</span></code></pre>
+<hr />
+<h3 id="table-concat">table.concat</h3>
+<p>table.concat (table [, sep [, i [, j ] ] ])</p>
+<p>将元素是<code>string</code>或者<code>number</code>类型的<code>table</code>，每个元素连接起来变成字符串并返回。</p>
+<p>可选参数<code>sep</code>，表示连接间隔符，默认为空。</p>
+<p><code>i</code>和<code>j</code>表示元素起始和结束的下标。</p>
+<p>下面是例子：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>local a = {1, 3, 5, &quot;hello&quot; }
+</span><span>print(table.concat(a))
+</span><span>print(table.concat(a, &quot;|&quot;))
+</span><span>
+</span><span>--&gt;打印的结果：
+</span><span>--135hello
+</span><span>--1|3|5|hello
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知table变量t，</li>
+<li>将t中的结果全部连起来</li>
+<li>间隔符使用<code>,</code></li>
+<li>并使用print打印出来</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;}
+</span><span>print(&quot;连接结果：&quot;)
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="tableshan-jian">table删减</h3>
+<p>table.insert (table, [pos ,] value)</p>
+<p>在（数组型）表 table 的 pos 索引位置插入 value，其它元素向后移动到空的地方。pos 的默认值是表的长度加一，即默认是插在表的最后。</p>
+<p>table.remove (table [, pos])</p>
+<p>在表 table 中删除索引为 pos（pos 只能是 number 型）的元素，并返回这个被删除的元素，它后面所有元素的索引值都会减一。pos 的默认值是表的长度，即默认是删除表的最后一个元素。</p>
+<p>下面是例子：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>local a = {1, 8}             --a[1] = 1,a[2] = 8
+</span><span>table.insert(a, 1, 3)   --在表索引为1处插入3
+</span><span>print(a[1], a[2], a[3])
+</span><span>table.insert(a, 10)    --在表的最后插入10
+</span><span>print(a[1], a[2], a[3], a[4])
+</span><span>
+</span><span>--&gt;打印的结果：
+</span><span>--3    1    8
+</span><span>--3    1    8    10
+</span><span>
+</span><span>
+</span><span>local a = { 1, 2, 3, 4}
+</span><span>print(table.remove(a, 1)) --删除速索引为1的元素
+</span><span>print(a[1], a[2], a[3], a[4])
+</span><span>
+</span><span>print(table.remove(a))   --删除最后一个元素
+</span><span>print(a[1], a[2], a[3], a[4])
+</span><span>
+</span><span>--&gt;打印的结果：
+</span><span>--1
+</span><span>--2    3    4    nil
+</span><span>--4
+</span><span>--2    3    nil    nil
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知table变量<code>t</code>，</li>
+<li>去除t中的第一个元素</li>
+<li>然后这时，在t的第三个元素前，加上一个number变量，值为810</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {1,2,3,4,5,6,7,8,9}
+</span><span>
+</span><span>--补全代码
+</span><span>
+</span><span>print(&quot;第一个元素应为2：&quot;,t[1])
+</span><span>print(&quot;第三个元素应为810：&quot;,t[3])
+</span></code></pre>
+<hr />
+<h2 id="xun-huan">循环</h2>
+<h3 id="whilexun-huan">while循环</h3>
+<p>在实际功能实现中，经常会遇到需要循环运行的代码，比如从1到100填充table数据，我们可以直接用循环语句来实现</p>
+<p>我们首先来学习<code>while</code>这个循环语法，整体的格式如下：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>while 继续循环判断依据 do
+</span><span>    执行的代码
+</span><span>end
+</span></code></pre>
+<p>下面举一个例子，我们计算从1加到100的结果：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>local result = 0
+</span><span>local num = 1
+</span><span>
+</span><span>while num &lt;= 100 do
+</span><span>    result = result + num
+</span><span>    num = num + 1
+</span><span>end
+</span><span>
+</span><span>print(result)
+</span></code></pre>
+<p>上面的代码，就是当num≤100时，result不断地加num，并且num每次循环后自己加1</p>
+<p><strong>理解了上面的代码，我们来完成下面一个简单的任务吧：</strong></p>
+<ul>
+<li>已知两个number类型的变量<code>min</code>和<code>max</code></li>
+<li>请计算从<code>min</code>与<code>max</code>之间，所有<code>3的倍数</code>的和</li>
+<li>打印出结果</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>min,max = 114,514 --这个结果应为42009
+</span><span>result = 0--结果存放到这个变量
+</span><span>
+</span><span>while 请完善 do
+</span><span>    --补全代码
+</span><span>end
+</span><span>
+</span><span>print(&quot;结果：&quot;,result)
+</span></code></pre>
+<hr />
+<h3 id="forxun-huan">for循环</h3>
+<p>for循环在某些程度上，和while循环很相似，但是for循环可以更加简洁地表达中间累积的量</p>
+<p>我们首先来学习<code>for</code>这个循环语法，整体的格式如下：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>for 临时变量名=开始值,结束值,步长 do
+</span><span>    循环的代码
+</span><span>end
+</span></code></pre>
+<p>其中，<code>步长</code>可以省略，默认为1</p>
+<p><code>临时变量名</code>可以直接在代码区域使用（但不可更改），每次循环会自动加<code>步长值</code>，并且在到达<code>结束值</code>后停止循环</p>
+<p>下面举一个例子，我们计算从1加到100的结果：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>local result = 0
+</span><span>
+</span><span>for i=1,100 do
+</span><span>    result = result + i
+</span><span>end
+</span><span>
+</span><span>print(result)
+</span></code></pre>
+<p>上面的代码，就是当i≤100时，result不断地加i，并且i每次循环后增加1</p>
+<p><strong>理解了上面的代码，我们来完成下面一个简单的任务吧：</strong></p>
+<ul>
+<li>已知两个number类型的变量<code>min</code>和<code>max</code></li>
+<li>请计算从<code>min</code>与<code>max</code>之间，所有7的倍数的和</li>
+<li>打印出结果</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>min,max = 114,514 --这个结果应为17955
+</span><span>result = 0--结果存放到这个变量
+</span><span>
+</span><span>for --补全代码
+</span><span>
+</span><span>
+</span><span>print(&quot;结果：&quot;,result)
+</span></code></pre>
+<hr />
+<h3 id="zhong-duan-xun-huan">中断循环</h3>
+<p>前面我们学习了循环语句，有些时候循环运行到一半，我们不想再继续运行了，怎么办呢？</p>
+<p>我们可以在一个循环体中使用<code>break</code>，来立即结束本次循环，继续运行下面的代码</p>
+<p>比如像下面这样，计算1-100相加途中，<code>小于100</code>的<code>最大的和</code>：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>result = 0
+</span><span>for i=1,100 do
+</span><span>    result = result + i
+</span><span>    if result &gt; 100 then
+</span><span>        result = result - i
+</span><span>        break
+</span><span>    end
+</span><span>end
+</span><span>
+</span><span>print(result)
+</span></code></pre>
+<p>可以看见，当发现和大于100后，代码立即把<code>result</code>的值还原到了加上当前数字之前的状态，并且调用<code>break</code>语句，立即退出了本次循环</p>
+<p>在<code>while</code>中，我们也可以使用<code>break</code>:</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>result = 0
+</span><span>c = 1
+</span><span>while true do
+</span><span>    result = result + c
+</span><span>    if result &gt; 100 then
+</span><span>        result = result - c  
+</span><span>        break
+</span><span>    end
+</span><span>    c = c + 1
+</span><span>end
+</span><span>
+</span><span>print(result)
+</span></code></pre>
+<p>我们在这里直接使用了死循环（因为<code>while</code>的继续运行判断依据始终为<code>true</code>），整体逻辑也和之前for的代码一致，当发现和大于100后，代码立即把<code>result</code>的值还原到了加上当前数字之前的状态，并且调用<code>break</code>语句，立即退出了本次循环</p>
+<p><strong>现在你需要完成一项任务：</strong></p>
+<ul>
+<li>请求出小于变量max的13的倍数的最大值（max大于0）</li>
+<li>并将结果打印出来</li>
+<li>本题理论上不用循环就能实现，但是为了练习一下技巧，请用for循环来实现</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>max = 810 --结果应为806
+</span><span>result = 0
+</span><span>
+</span><span>for --请补全代码
+</span><span>
+</span><span>print(result)
+</span></code></pre>
+<hr />
+<h3 id="xun-huan-ce-shi-ti-1-zi-ce-ti">循环测试题1（自测题）</h3>
+<p>前面我们学习了循环语句，我们需要完成下面的任务</p>
+<p>我们知道，<code>print</code>函数可以打印一行完整的输出</p>
+<p>那么，已知变量a，请打印出下面的结果：</p>
+<p>（a为大于0的整数，且需要输出a行数据，数据从1开始，每行与上一行的差为2）</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>1
+</span><span>3
+</span><span>5
+</span><span>7
+</span><span>9
+</span><span>（上面例子为当a为5的情况）
+</span></code></pre>
+<p>做题区域：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 10
+</span><span>--需要用print输出要求的结果
+</span><span>print(&quot;输出结果：&quot;)
+</span><span>
+</span><span>
+</span><span>for --请补全代码
+</span></code></pre>
+<hr />
+<h3 id="xun-huan-ce-shi-ti-2-zi-ce-ti">循环测试题2（自测题）</h3>
+<p>我们需要完成下面的任务</p>
+<p>那么，已知变量a，请打印出下面的结果：</p>
+<p>（a为大于0的整数，且需要输出a行数据，第一行为一个*，后面每行多一个*）</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>*
+</span><span>**
+</span><span>***
+</span><span>****
+</span><span>*****
+</span><span>（上面例子为当a为5的情况）
+</span></code></pre>
+<p>做题区域：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 10
+</span><span>--需要用print输出要求的结果
+</span><span>print(&quot;输出结果：&quot;)
+</span><span>
+</span><span>
+</span><span>for --请补全代码
+</span></code></pre>
+<hr />
+<h3 id="xun-huan-ce-shi-ti-3-zi-ce-ti">循环测试题3（自测题）</h3>
+<p>我们需要完成下面的任务</p>
+<p>那么，已知变量a，请打印出下面的结果：</p>
+<p>（a为大于0的整数，且需要输出a行数据，按图示规律输出）</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>1
+</span><span>12
+</span><span>123
+</span><span>1234
+</span><span>12345
+</span><span>123456
+</span><span>1234567
+</span><span>12345678
+</span><span>123456789
+</span><span>12345678910
+</span><span>1234567891011
+</span><span>（上面例子为当a为11的情况）
+</span></code></pre>
+<p>做题区域：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 20
+</span><span>--需要用print输出要求的结果
+</span><span>print(&quot;输出结果：&quot;)
+</span><span>
+</span><span>
+</span><span>for --请补全代码
+</span></code></pre>
+<hr />
+<h3 id="xun-huan-ce-shi-ti-4-zi-ce-ti">循环测试题4（自测题）</h3>
+<ul>
+<li>有一只猴子，第一天摘了若干个桃子 ，当即吃了一半，但还觉得不过瘾 ，就又多吃了一个。</li>
+<li>第2天早上又将剩下的桃子吃掉一半，还是觉得不过瘾，就又多吃了两个。</li>
+<li>以后每天早上都吃了前一天剩下的一半加天数个（例如，第5天吃了前一天剩下的一半加5个）。</li>
+<li>到第n天早上再想吃的时候，就只剩下一个桃子了。</li>
+<li>那么，已知变量a为最后一天的天数，请打印出第一天的桃子数。</li>
+<li>如：a为5时，输出114</li>
+</ul>
+<p>做题区域：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>a = 6
+</span><span>--需要用print输出要求的结果
+</span><span>print(&quot;输出结果：&quot;)
+</span><span>
+</span><span>
+</span><span>for --请补全代码
+</span></code></pre>
+<hr />
+<h2 id="xiang-jie-stringku">详解string库</h2>
+<h3 id="string-sub">string.sub</h3>
+<p>接下来几节会讲解string库的各种接口</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>string.sub(s, i [, j])
+</span></code></pre>
+<p>返回字符串 <code>s</code> 中，从索引 <code>i</code> 到索引 <code>j</code> 之间的子字符串。</p>
+<p>i 可以为负数，表示倒数第几个字符。</p>
+<p>当 j 缺省时，默认为 -1，也就是字符串 s 的最后位置。</p>
+<p>当索引 i 在字符串 s 的位置在索引 j 的后面时，将返回一个空字符串。</p>
+<p>下面是例子：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>print(string.sub(&quot;Hello Lua&quot;, 4, 7))
+</span><span>print(string.sub(&quot;Hello Lua&quot;, 2))
+</span><span>print(string.sub(&quot;Hello Lua&quot;, 2, 1))
+</span><span>print(string.sub(&quot;Hello Lua&quot;, -3, -1))
+</span><span>
+</span><span>--&gt;打印的结果：
+</span><span>lo L
+</span><span>ello Lua
+</span><span>
+</span><span>Lua
+</span></code></pre>
+<p>值得注意的是，我们可以使用冒号来简化语法，像下面这样：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;12345&quot;
+</span><span>s1 = string.sub(s, 4, 7)
+</span><span>s2 = s:sub(4, 7)
+</span><span>--两种写法是等价关系
+</span><span>print(s1,s2)
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知字符串变量<code>s</code>，请分别打印出（每种一行）：</li>
+<li><code>s</code>从<code>第4个字符开始，到最后</code>的值</li>
+<li><code>s</code>从<code>第1个字符开始，到倒数第3个字符</code>的值</li>
+<li><code>s</code>从<code>倒数第5个字符开始，到倒数第2个字符</code>的值</li>
+</ul>
+<pre data-lang="lua" style="background-color:#272822;color:#f8f8f2;" class="language-lua "><code class="language-lua" data-lang="lua"><span>s </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;1919810&quot;
+</span><span>
+</span><span style="color:#75715e;">--补全代码
+</span><span style="color:#66d9ef;">print</span><span>()
+</span><span style="color:#66d9ef;">print</span><span>()
+</span><span style="color:#66d9ef;">print</span><span>()
+</span></code></pre>
+<hr />
+<h3 id="string-rep">string.rep</h3>
+<p>string.rep(s, n)</p>
+<p>返回字符串 s 的 n 次拷贝。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>print(string.rep(&quot;abc&quot;, 3))
+</span><span>--输出结果：
+</span><span>--abcabcabc
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<p><strong>打印一行数据，数据内容为810个114514</strong></p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--补全代码
+</span><span>print()
+</span></code></pre>
+<hr />
+<h3 id="string-len">string.len</h3>
+<p>string.len(s)</p>
+<p>接收一个字符串，返回它的长度。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;hello lua&quot;
+</span><span>print(string.len(s))
+</span><span>--输出结果：
+</span><span>9
+</span><span>
+</span><span>--同时也可以使用简便语法
+</span><span>print(s:len())
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>新建一个变量s，使数据内容为810个114514</li>
+<li>并打印出字符串s的长度</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = --补全代码
+</span><span>print()
+</span></code></pre>
+<hr />
+<h3 id="da-xiao-xie-zhuan-huan">大小写转换</h3>
+<p>string.lower(s)</p>
+<p>接收一个字符串 s，返回一个把所有大写字母变成小写字母的字符串。</p>
+<p>string.upper(s)</p>
+<p>接收一个字符串 s，返回一个把所有小写字母变成大写字母的字符串。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;hello lua&quot;
+</span><span>print(string.upper(s))
+</span><span>print(string.lower(s))
+</span><span>--输出结果：
+</span><span>HELLO LUA
+</span><span>hello lua
+</span><span>
+</span><span>--同时也可以使用简便语法
+</span><span>print(s:upper())
+</span><span>print(s:lower())
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<p>已知一个变量<code>s</code>，打印出全是大写字母的s字符串</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;asd8938KJjsidiajdl;(()k)&quot;
+</span><span>print --补全代码
+</span></code></pre>
+<hr />
+<h3 id="string-format">string.format</h3>
+<p>string.format(formatstring, …)</p>
+<p>按照格式化参数<code>formatstring</code>，返回后面<code>...</code>内容的格式化版本。</p>
+<p>编写格式化字符串的规则与标准 c 语言中 printf 函数的规则基本相同：</p>
+<p>它由常规文本和指示组成，这些指示控制了每个参数应放到格式化结果的什么位置，及如何放入它们。</p>
+<p>一个指示由字符<code>%</code>加上一个字母组成，这些字母指定了如何格式化参数，例如<code>d</code>用于十进制数、<code>x</code>用于十六进制数、<code>o</code>用于八进制数、<code>f</code>用于浮点数、<code>s</code>用于字符串等。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>print(string.format(&quot;%.4f&quot;, 3.1415926))     -- 保留4位小数
+</span><span>print(string.format(&quot;%d %x %o&quot;, 31, 31, 31))-- 十进制数31转换成不同进制
+</span><span>d,m,y = 29,7,2015
+</span><span>print(string.format(&quot;%s %02d/%02d/%d&quot;, &quot;today is:&quot;, d, m, y))
+</span><span>--控制输出2位数字，并在前面补0
+</span><span>
+</span><span>--&gt;输出
+</span><span>-- 3.1416
+</span><span>-- 31 1f 37
+</span><span>-- today is: 29/07/2015
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知一个变量<code>n</code>，为<code>number</code>类型整数</li>
+<li>打印出<code>n:</code>连上<code>n</code>值的字符串</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>n = 810
+</span><span>
+</span><span>print --补全代码
+</span></code></pre>
+<hr />
+<h3 id="stringde-ben-zhi">string的本质</h3>
+<p>这一节我们来讲解字符串的本质</p>
+<p><code>字符串</code>，是用来存储一串字符的，<code>但是它的本质就是一串数字</code>。如何用一串数字来代表一串字符呢？</p>
+<p>在计算机中，每一个符号都对应着一个数字，但是在讲解这个知识之前，我们了解一下补充知识：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>在大多数编程语言中，我们使用0x开头来表示这个数字是16进制的。
+</span><span>比如
+</span><span>10等价于0x0a
+</span><span>256等价于0xff
+</span></code></pre>
+<p>接下来，你需要了解，每一个符号都对应着一个数字，比如：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>0`对应着`0x30`、`1`对应着`0x31` `a`对应着`0x61`、`b`对应着`0x62` `A`对应着`0x41`、`B`对应着`0x42
+</span></code></pre>
+<p>上面的编码规则，我们称之为ascii码，具体想了解可以打开下面的网址查看：</p>
+<p>http://ascii.911cha.com/</p>
+<p>当然，1字节最大为0xff，即256，只能存下一部分符号，大部分的中文按某些编码，一个中文占用2或3个字节</p>
+<p>计算机如何解析这些数据，我们不需要了解，当你知道了上面的知识后，你应该可以理解下面的描述：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>字符串&quot;apple&quot;实际上的内容就是下面的一串数字：
+</span><span>0x61,0x70,0x70,0x6c,0x65
+</span></code></pre>
+<p>同时，lua的字符串中可以保存任何数值，即使是0x00这种不代表任何含义的数，也可以保存</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>补充：在其他语言中（如C），0x00代表字符串结束，但是在lua中并不是这样。
+</span><span>lua的字符串每字节可以存储任意的一字节数据。
+</span></code></pre>
+<p>比如下面的描述：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>有一串lua字符串中的数据为：
+</span><span>0x01,0x02,0x30,0x00,0x44
+</span><span>实际人能看到的（不可见字符用�代替）：
+</span><span>��0�D
+</span><span>当然，你不能说你看不见的数据就不存在，他们都完好无损地在这个字符串中
+</span></code></pre>
+<p>下面你需要思考一个问题：一串字符串数据如下，它的实际内容是什么（指人能看见的字符串内容，如abcd）？</p>
+<p>0x62,0x61,0x6e,0x61,0x6e,0x61</p>
+<hr />
+<h3 id="string-char">string.char</h3>
+<p>string.char (…)</p>
+<p>接收 0 个或更多的整数（整数范围：0~255），返回这些整数所对应的 ASCII 码字符组成的字符串。当参数为空时，默认是一个 0。</p>
+<p>如果上一章节有认真学习过了的话，这段话应该是很好理解的。实质上就是把计算机认识的一串数字，变成字符串变量，并且字符串内的数据就是要存的那串数据。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>str1 = string.char(0x30,0x31,0x32,0x33)
+</span><span>str2 = string.char(0x01,0x02,0x30,0x03,0x44)
+</span><span>print(str1)
+</span><span>print(str2)
+</span><span>
+</span><span>--&gt;输出（不可见字符用�代替）
+</span><span>--0123
+</span><span>--��0�D
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知一个字符串的每个字符在数组t中按顺序排列</li>
+<li>请根据t的值，打印出字符串内容（一行数据）</li>
+<li>注：这个字符串存储的不一定是可见的字符</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>t = {0x79,0x6F,0x75,0x20,0x61,0x72,0x65,0x20,0x72,0x69,0x67,0x68,0x74}
+</span><span>print(&quot;真正的字符串内容：&quot;)
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="string-byte">string.byte</h3>
+<p>string.byte(s [, i [, j ] ])</p>
+<p>返回字符 s[i]、s[i + 1]、s[i + 2]、······、s[j] 所对应的 ASCII 码。i 的默认值为 1，即第一个字节,j 的默认值为 i 。</p>
+<p>这个函数功能刚好和前面的string.char相反，是提取字符串中实际的数值。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>str = &quot;12345&quot;
+</span><span>print(string.byte(str,2))
+</span><span>print(str:byte(2))--也可以这样
+</span><span>print(str:byte())--不填默认是1
+</span><span>
+</span><span>--&gt;输出（十进制数据）
+</span><span>--50
+</span><span>--50
+</span><span>--49
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知字符串s</li>
+<li>请把s中代表的数据，全部相加，并打印出来</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = string.char(1,2,3,4,5,6,7,8,9)
+</span><span>print(&quot;s内数据的和是：&quot;)
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="string-find">string.find</h3>
+<p>string.find(s, p [, init [, plain] ])</p>
+<p>这个函数会在字符串<code>s</code>中，寻找匹配<code>p</code>字符串的数据。如果成功找到，那么会返回<code>p</code>字符串在<code>s</code>字符串中出现的开始位置和结束位置；如果没找到，那么就返回<code>nil</code>。</p>
+<p>第三个参数<code>init</code>默认为<code>1</code>，表示从第几个字符开始匹配，当<code>init</code>为负数时，表示从<code>s</code>字符串的倒数第<code>-init</code>个字符处开始匹配。</p>
+<p>第四个参数<code>plain</code>默认为<code>false</code>，当其为<code>true</code>时，只会把<code>p</code>看成一个字符串对待。</p>
+<blockquote>
+<p>可能你会奇怪，第四个参数有什么存在的必要吗？p不是本来就应该是个字符串吗？ 实际上，lua中的匹配默认意义是正则匹配，同时，这里的正则与其它语言也有些许不同。</p>
+</blockquote>
+<blockquote>
+<p>由于篇幅有限，本节和下面的几节涉及匹配内容时，均不会考虑正则的使用方法，Lua正则教程将会在最后几节单独详细地列出来。</p>
+</blockquote>
+<p>第四个参数为<code>true</code>时，便不会使用正则功能。</p>
+<p>示例代码：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--只会匹配到第一个
+</span><span>print(string.find(&quot;abc abc&quot;, &quot;ab&quot;))
+</span><span>-- 从索引为2的位置开始匹配字符串：ab
+</span><span>print(string.find(&quot;abc abc&quot;, &quot;ab&quot;, 2))
+</span><span>-- 从索引为5的位置开始匹配字符串：ab
+</span><span>print(string.find(&quot;abc abc&quot;, &quot;ab&quot;, -3))
+</span><span>
+</span><span>--&gt;输出
+</span><span>--1  2
+</span><span>--5  6
+</span><span>--5  6
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知字符串s，里面有很多相同的字符串</li>
+<li>请找出字符串s中，所有字符串awsl的位置</li>
+<li>使用print打印结果，结果一行一个</li>
+<li>如字符串12awslawslaw，输出3和7</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;12awsaslwlaawsllslllswasllalssawwlawslaw&quot;
+</span><span>print(&quot;两个awsl的位置分别是：&quot;)
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="string-gsub">string.gsub</h3>
+<p>string.gsub(s, p, r [, n])</p>
+<p>将目标字符串<code>s</code>中所有的子串<code>p</code>替换成字符串r。</p>
+<p>可选参数<code>n</code>，表示限制替换次数。</p>
+<p>返回值有两个，第一个是被替换后的字符串，第二个是替换了多少次。</p>
+<blockquote>
+<p>特别提示：这个函数的目标字符串s，也是支持正则的</p>
+</blockquote>
+<p>下面是例子：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>print(string.gsub(&quot;Lua Lua Lua&quot;, &quot;Lua&quot;, &quot;hello&quot;))
+</span><span>print(string.gsub(&quot;Lua Lua Lua&quot;, &quot;Lua&quot;, &quot;hello&quot;, 2)) --指明第四个参数
+</span><span>
+</span><span>--&gt;打印的结果：
+</span><span>-- hello hello hello   3
+</span><span>-- hello hello Lua     2
+</span></code></pre>
+<p>同样的，我们也可以使用冒号来简化语法，像下面这样：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;12345&quot;
+</span><span>r = s:gsub(&quot;2&quot;,&quot;b&quot;)
+</span><span>print(r)
+</span></code></pre>
+<p><strong>请完成下面的任务：</strong></p>
+<ul>
+<li>已知字符串变量s，请分别打印出（每种一行）：</li>
+<li>把字符串s中，前5个a，替换为b</li>
+<li>把字符串s中，前3个c，替换为xxx</li>
+<li>把结果打印出来，一行数据</li>
+</ul>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>s = &quot;asdicagydausckfugdaflgscdabgsdbahhacbshbsd&quot;
+</span><span>print(&quot;s变换前的值：&quot;,s)
+</span><span>--补全代码
+</span></code></pre>
+<hr />
+<h3 id="zheng-ze-pi-pei-xiang-guan-nei-rong-deng-dai-geng-xin">正则匹配相关内容等待更新</h3>
+<hr />
+<h2 id="kua-wen-jian-diao-yong">跨文件调用</h2>
+<p>在编写代码时，随着逻辑逐渐复杂，我们的代码量也会变大。虽然有<code>函数</code>可以把一部分代码逻辑封装起来，但是所有代码都放到一个文件里，显然也不是个好办法。</p>
+<p>所以我们需要将一些代码放到不同文件中，通过文件来区分这些代码的功能。</p>
+<p>比如我们有下面这个函数：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>---函数功能：
+</span><span>-- 生成从1-max的table
+</span><span>-- @输入值：table的最大值
+</span><span>-- @返回：  table结果
+</span><span>-- @例子：  local list = getNumberList(10)
+</span><span>function getNumberList(max)
+</span><span>    local t = {}
+</span><span>    for i=1,max do
+</span><span>        table.insert(t,i)
+</span><span>    end
+</span><span>    return t
+</span><span>end
+</span></code></pre>
+<p>我们新建一个文件叫<code>tools.lua</code>，把这个函数放进去，现在，整个文件如下面这样：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>tools.lua
+</span><span>---函数功能：
+</span><span>-- 生成从1-max的table
+</span><span>-- @输入值：table的最大值
+</span><span>-- @返回：  table结果
+</span><span>-- @例子：  local list = getNumberList(10)
+</span><span>local function getNumberList(max)
+</span><span>    local t = {}
+</span><span>    for i=1,max do
+</span><span>        table.insert(t,i)
+</span><span>    end
+</span><span>    return t
+</span><span>end
+</span><span>
+</span><span>--手动返回一个table，包含了上面的函数
+</span><span>return {
+</span><span>    getNumberList = getNumberList,
+</span><span>}
+</span></code></pre>
+<p>现在，我们封装的这个函数就能在其他文件里被调用了，具体代码如下：</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>--引用tools.lua文件，并加载
+</span><span>local tool = require(&quot;tools&quot;)
+</span><span>
+</span><span>local list = tool.getNumberList(12)
+</span></code></pre>
+<p>当调用了<code>require</code>接口后，Lua虚拟机会自动加载你调用的文件，<code>执行文件的内容</code>，然后<code>返回你文件里return的结果</code>。</p>
+<p>为了更好地理解这段话，我们可以看下面两个文件，其中run.lua是被运行的那个入口文件</p>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>test.lua
+</span><span>--以便一会儿返回使用的table
+</span><span>local temp = {}
+</span><span>
+</span><span>--把全局变量a更改了
+</span><span>a = 1
+</span><span>
+</span><span>--local变量无法被外部调用
+</span><span>--但是可以在文件内被调用
+</span><span>local b = 2
+</span><span>
+</span><span>--文件在被require的时候，会被执行
+</span><span>--把全局变量c更改了
+</span><span>c = a + b
+</span><span>
+</span><span>--使函数在table里
+</span><span>function temp.addB()
+</span><span>    --文件内部可以调用变量b
+</span><span>    b = b + 1
+</span><span>    return b
+</span><span>end
+</span><span>
+</span><span>--返回table
+</span><span>return temp
+</span></code></pre>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>run.lua
+</span></code></pre>
+<pre style="background-color:#272822;color:#f8f8f2;"><code><span>local test = require(&quot;test&quot;)
+</span><span>print(a)--输出1
+</span><span>print(b)--输出nil，因为b是local变量
+</span><span>print(c)--输出3
+</span><span>
+</span><span>print(test.addB())--输出3
+</span><span>print(test.addB())--输出4
+</span><span>print(test.addB())--输出5
+</span></code></pre>
+<p>同时，每个文件最多只会被<code>require</code>一次，如果有多个<code>require</code>，只有第一次会执行</p>
+
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
+            }
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+
+  <style>
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5em 0;
+      padding: 1em;
+      overflow: auto;
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Prism.highlightAll();
+    });
+  </script>
+</body>
+
+</html>

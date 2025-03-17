@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>关于我 - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
+  <style>
+    /* 基础响应式设计 */
+    html {
+      font-size: 16px; /* 基础字体大小 */
+    }
+    
+    /* 响应式字体大小 */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      html {
+        font-size: 14px;
+      }
+    }
+    
+    /* 使用相对单位 */
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    h4 {
+      font-size: 1.25rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+    
+    /* 容器响应式设计 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* 导航栏响应式设计 */
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    
+    /* 博客文章响应式设计 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* 代码块响应式设计 */
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      pre[class*="language-"] {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link ">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link active">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<div class="content-wrapper about-page">
+  <article class="about-content">
+    <h1 id="ni-hao-wo-shi-rei-wave">你好，我是 Rei 👋</h1>
+<h2 id="guan-yu-wo">关于我</h2>
+<ul>
+<li>🎓 软件工程专业在读</li>
+<li>💻 热爱编程和技术</li>
+<li>🌱 正在学习 Rust、Web 开发</li>
+<li>📝 热爱文字</li>
+</ul>
+<h2 id="ji-zhu-zhan">技术栈</h2>
+<ul>
+<li>编程语言：Python, Java, Rust,C</li>
+<li>前端：HTML, CSS, React</li>
+<li>后端：Node.js, Django</li>
+<li>工具：Git, Docker</li>
+<li>其他：Linux, Vim</li>
+</ul>
+<h2 id="zui-jin-zai-du">最近在读</h2>
+<ul>
+<li>《接受幸福的勇气》</li>
+<li>《雪国》</li>
+</ul>
+<h2 id="zui-jin-zai-kan">最近在看</h2>
+<ul>
+<li>《青之驱魔师》（新番连载ing 🍾</li>
+<li>《GTO》</li>
+</ul>
+<h2 id="zui-jin-zai-wan">最近在玩</h2>
+<ul>
+<li>在推壳之少女。。（不是gal佬orz</li>
+<li>apex好玩喵 ovo</li>
+</ul>
+<h2 id="lian-xi-wo">联系我</h2>
+<ul>
+<li>📧 QQ: 1071920207</li>
+<li>🐱 GitHub: <a href="https://github.com/th1eil">th1eil</a></li>
+</ul>
+<h2 id="guan-yu-ben-zhan">关于本站</h2>
+<p>这个博客使用 <a href="https://www.getzola.org/">Zola</a> 构建，主要用于：</p>
+<ul>
+<li>分享技术学习笔记</li>
+<li>记录个人成长历程</li>
+</ul>
+
+  </article>
+</div>
+
+  </div>
+
+  <style>
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5em 0;
+      padding: 1em;
+      overflow: auto;
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Prism.highlightAll();
+    });
+  </script>
+</body>
+
+</html>
