@@ -19,7 +19,7 @@ KMP算法的核心，是一个被称为**部分匹配表**(**P**artial **M**atch
 
 对于字符串“abababca”，它的PMT如下表所示：
 
-![](../../static/pics/QQ20250316-223530.png)
+![](https://github.com/th1eil/th1eil.github.io/blob/main/static/pics/QQ20250316-223530.png)
 
 就像例子中所示的，如果待匹配的模式字符串有8个字符，那么PMT就会有8个值。
 
