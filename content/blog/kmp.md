@@ -20,7 +20,7 @@ KMP算法的核心，是一个被称为**部分匹配表**(**P**artial **M**atch
 
 对于字符串“abababca”，它的PMT如下表所示：
 
-![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/refs/heads/main/static/pics/QQ20250316-223530.png)
+![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-223530.png)
 
 就像例子中所示的，如果待匹配的模式字符串有8个字符，那么PMT就会有8个值。
 
@@ -72,7 +72,7 @@ KMP算法的核心，是一个被称为**部分匹配表**(**P**artial **M**atch
 
 就是图中的灰色部分。那这部分就不用再比较了。
 
-![](../../static/pics/QQ20250316-223836.png)
+![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-223836.png)
 
 
 
@@ -147,7 +147,7 @@ KMP算法中的**next数组**（也称为部分匹配表或前缀函数）是算
 
 要注意的一个技巧是，在把PMT进行向右偏移时，第0位的值，将其设成了-1，这只是为了编程的方便，并没有其他的意义。next数组如下表所示。
 
-![](../../static/pics/QQ20250316-225154.png)
+![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225154.png)
 
 求next数组的过程完全可以看成字符串匹配的过程，即以模式字符串为主字符串，以模式字符串的前缀为目标字符串，一旦字符串匹配成功，那么当前的next值就是匹配成功的字符串的长度。
 
@@ -155,11 +155,11 @@ KMP算法中的**next数组**（也称为部分匹配表或前缀函数）是算
 
  在任一位置，能匹配的最长长度就是当前位置的next值
 
-![](../../static/pics/QQ20250316-225319.png)
+![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225319.png)
 
-![QQ20250316-225328](../../static/pics/QQ20250316-225328.png)
+![QQ20250316-225328](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225328.png)
 
-![QQ20250316-225339](../../static/pics/QQ20250316-225339.png)
+![QQ20250316-225339](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225339.png)
 
 
 
