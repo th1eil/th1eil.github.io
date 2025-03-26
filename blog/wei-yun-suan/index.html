@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Learing】c和java中的位运算  - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
+  <style>
+    /* 基础响应式设计 */
+    html {
+      font-size: 16px; /* 基础字体大小 */
+    }
+    
+    /* 响应式字体大小 */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      html {
+        font-size: 14px;
+      }
+    }
+    
+    /* 使用相对单位 */
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    h4 {
+      font-size: 1.25rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+    
+    /* 容器响应式设计 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* 导航栏响应式设计 */
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    
+    /* 博客文章响应式设计 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* 代码块响应式设计 */
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      pre[class*="language-"] {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 40px;
+    top: 120px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Learing】c和java中的位运算 </h1>
+            <div class="post-meta">
+                <time>2025-03-25</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/c/">#C</a>
+                        
+                            <a href="https://th1eil.github.io/tags/java/">#Java</a>
+                        
+                            <a href="https://th1eil.github.io/tags/algo/">#algo</a>
+                        
+                    </div>
+                
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h1 id="wei-yun-suan">位运算</h1>
+<p>位运算是直接对整数的二进制位进行操作的运算</p>
+<p>常见的位运算有：</p>
+<ol>
+<li><strong>与运算（AND）</strong>：<code>&amp;</code>
+<ul>
+<li>对应位都为 1 时结果为 1，否则为 0。</li>
+</ul>
+</li>
+<li><strong>或运算（OR）</strong>：<code>|</code>
+<ul>
+<li>对应位有 1 时结果为 1，否则为 0。</li>
+</ul>
+</li>
+<li><strong>异或运算（XOR）</strong>：<code>^</code>
+<ul>
+<li>对应位不同为 1，相同为 0。</li>
+</ul>
+</li>
+<li><strong>取反运算（NOT）</strong>：<code>~</code>
+<ul>
+<li>逐位取反（0 变 1，1 变 0）。</li>
+</ul>
+</li>
+<li><strong>左移运算（左移）</strong>：<code>&lt;&lt;</code>
+<ul>
+<li>将位向左移动指定的位数，低位补 0。</li>
+</ul>
+</li>
+<li><strong>右移运算（右移）</strong>：<code>&gt;&gt;</code>
+<ul>
+<li>将位向右移动指定的位数，高位填充符号位（对于无符号数，高位补 0）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="jian-dan-jie-shao-liu-chong-wei-yun-suan">简单介绍六种位运算</h2>
+<h3 id="yu-yun-suan-and">与运算（AND）</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">&amp;</span><span> b);  </span><span style="color:#75715e;">// 结果为 1（二进制 0001）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&amp;</span><span> b);  </span><span style="color:#75715e;">// 输出 1（二进制 0001）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="huo-yun-suan-or">或运算（OR）</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">|</span><span> b);  </span><span style="color:#75715e;">// 结果为 7（二进制 0111）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">|</span><span> b);  </span><span style="color:#75715e;">// 输出 7（二进制 0111）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="yi-huo-yun-suan-xor">异或运算（XOR）</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">^</span><span> b);  </span><span style="color:#75715e;">// 结果为 6（二进制 0110）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">3</span><span>;  </span><span style="color:#75715e;">// 二进制 0011
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">^</span><span> b);  </span><span style="color:#75715e;">// 输出 6（二进制 0110）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="qu-fan-yun-suan-not">取反运算（NOT）</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, </span><span style="color:#f92672;">~</span><span>a);  </span><span style="color:#75715e;">// 结果为 -6（取反后变为二进制 1010）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#f92672;">~</span><span>a);  </span><span style="color:#75715e;">// 输出 -6（取反后变为二进制 1010）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="zuo-yi-yun-suan">左移运算 &lt;&lt;</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 结果为 10（二进制 1010），左移 1 位
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 10（二进制 1010）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="you-yi-yun-suan">右移运算 &gt;&gt;</h3>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 结果为 2（二进制 0010），右移 1 位
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;  </span><span style="color:#75715e;">// 二进制 0101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 2（二进制 0010）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="chang-jian-yun-yong">常见运用</h2>
+<h3 id="1-jian-cha-yi-ge-shu-shi-fou-shi-2de-mi">1.<strong>检查一个数是否是2的幂</strong></h3>
+<p>判断一个数是否是 2 的幂（即 1, 2, 4, 8, 16, ...）。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>
+<p>一个数是 2 的幂时，它的二进制表示中只有一个 <code>1</code>，比如：</p>
+<ul>
+<li>1 的二进制是 <code>0001</code></li>
+<li>2 的二进制是 <code>0010</code></li>
+<li>4 的二进制是 <code>0100</code></li>
+<li>8 的二进制是 <code>1000</code></li>
+</ul>
+<p>2 的幂数的特点是：<code>n &amp; (n - 1) == 0</code>，这个条件成立时，<code>n</code> 就是 2 的幂。</p>
+</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">isPowerOfTwo</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="color:#f92672;">return </span><span>(n </span><span style="color:#f92672;">&gt; </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">&amp;&amp; </span><span>(n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>)) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">16</span><span>;
+</span><span>    </span><span style="color:#f92672;">if </span><span>(isPowerOfTwo(n)) {
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> is a power of 2</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, n);
+</span><span>    } </span><span style="color:#f92672;">else </span><span>{
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> is not a power of 2</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, n);
+</span><span>    }
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">boolean </span><span style="color:#a6e22e;">isPowerOfTwo</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="color:#f92672;">return </span><span>(n </span><span style="color:#f92672;">&gt; </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">&amp;&amp; </span><span>(n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>)) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">16</span><span>;
+</span><span>        </span><span style="color:#f92672;">if </span><span>(isPowerOfTwo(n)) {
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(n </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; is a power of 2&quot;</span><span>);
+</span><span>        } </span><span style="color:#f92672;">else </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(n </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; is not a power of 2&quot;</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="2-jiao-huan-liang-ge-shu">2.交换两个数</h3>
+<p>使用异或运算可以实现两个数的交换，避免使用临时变量。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>利用异或的性质：<code>a = a ^ b</code>, <code>b = a ^ b</code>, <code>a = a ^ b</code>，实现 <code>a</code> 和 <code>b</code> 的交换。
+<ul>
+<li><code>a ^ b</code> 相当于两个数的“差”，再通过这种“差”运算恢复原数值。</li>
+</ul>
+</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">swap</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">* </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">* </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>    </span><span style="color:#f92672;">*</span><span>a </span><span style="color:#f92672;">= *</span><span>a </span><span style="color:#f92672;">^ *</span><span>b;
+</span><span>    </span><span style="color:#f92672;">*</span><span>b </span><span style="color:#f92672;">= *</span><span>a </span><span style="color:#f92672;">^ *</span><span>b;
+</span><span>    </span><span style="color:#f92672;">*</span><span>a </span><span style="color:#f92672;">= *</span><span>a </span><span style="color:#f92672;">^ *</span><span>b;
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">10</span><span>;
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;Before swap: a = </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;">, b = </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a, b);
+</span><span>    swap(</span><span style="color:#f92672;">&amp;</span><span>a, </span><span style="color:#f92672;">&amp;</span><span>b);
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;After swap: a = </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;">, b = </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a, b);
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">swap</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>        a[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">=</span><span> a[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">^</span><span> b[</span><span style="color:#ae81ff;">0</span><span>];
+</span><span>        b[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">=</span><span> a[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">^</span><span> b[</span><span style="color:#ae81ff;">0</span><span>];
+</span><span>        a[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">=</span><span> a[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">^</span><span> b[</span><span style="color:#ae81ff;">0</span><span>];
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">10</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;Before swap: a = &quot; </span><span style="color:#f92672;">+</span><span> a </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot;, b = &quot; </span><span style="color:#f92672;">+</span><span> b);
+</span><span>        swap(</span><span style="color:#f92672;">new </span><span style="font-style:italic;color:#66d9ef;">int</span><span>[]{a}, </span><span style="color:#f92672;">new </span><span style="font-style:italic;color:#66d9ef;">int</span><span>[]{b});
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;After swap: a = &quot; </span><span style="color:#f92672;">+</span><span> a </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot;, b = &quot; </span><span style="color:#f92672;">+</span><span> b);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="3-qiu-yi-ge-zheng-shu-er-jin-zhi-biao-shi-zhong-1-de-ge-shu-yi-ming-zhong-liang">3.求一个整数二进制表示中 <code>1</code> 的个数（汉明重量）</h3>
+<p>使用位运算可以高效地计算一个整数的二进制中有多少个 <code>1</code>，常用于计算二进制中某个数的位数。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>每次 <code>n &amp; (n - 1)</code> 可以消除一个 <code>1</code>，直到 <code>n</code> 为 0。这个方法的时间复杂度为 <code>O(log n)</code>。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">hammingWeight</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> count </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>    </span><span style="color:#f92672;">while </span><span>(n) {
+</span><span>        count</span><span style="color:#f92672;">++</span><span>;
+</span><span>        n </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 每次消去最低位的 1
+</span><span>    }
+</span><span>    </span><span style="color:#f92672;">return</span><span> count;
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">29</span><span>;  </span><span style="color:#75715e;">// 二进制 11101
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;Hamming weight: </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, hammingWeight(n));  </span><span style="color:#75715e;">// 输出 4
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">hammingWeight</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> count </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>        </span><span style="color:#f92672;">while </span><span>(n </span><span style="color:#f92672;">!= </span><span style="color:#ae81ff;">0</span><span>) {
+</span><span>            count</span><span style="color:#f92672;">++</span><span>;
+</span><span>            n </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 每次消去最低位的 1
+</span><span>        }
+</span><span>        </span><span style="color:#f92672;">return</span><span> count;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">29</span><span>;  </span><span style="color:#75715e;">// 二进制 11101
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;Hamming weight: &quot; </span><span style="color:#f92672;">+ </span><span>hammingWeight(n));  </span><span style="color:#75715e;">// 输出 4
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="4-zhao-chu-zheng-shu-shu-zu-zhong-de-wei-yi-shu-zi-mei-ge-shu-zi-chu-xian-liang-ci-zhi-you-yi-ge-shu-zi-chu-xian-yi-ci">4.找出整数数组中的唯一数字（每个数字出现两次，只有一个数字出现一次）</h3>
+<p>假设在一个数组中，除了一个数字，其余的数字都出现了两次，使用位运算可以高效地找出唯一的数字。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>使用异或运算的性质：相同的数字异或为 0，不同的数字异或为非 0。最终，数组中的唯一数字将保留下来。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">singleNumber</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">* </span><span style="font-style:italic;color:#fd971f;">nums</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">numsSize</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> result </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>    </span><span style="color:#f92672;">for </span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span> i </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>; i </span><span style="color:#f92672;">&lt;</span><span> numsSize; i</span><span style="color:#f92672;">++</span><span>) {
+</span><span>        result </span><span style="color:#f92672;">^=</span><span> nums[i];  </span><span style="color:#75715e;">// 相同数字会被消除，剩下唯一的数字
+</span><span>    }
+</span><span>    </span><span style="color:#f92672;">return</span><span> result;
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> nums[] </span><span style="color:#f92672;">= </span><span>{</span><span style="color:#ae81ff;">4</span><span>, </span><span style="color:#ae81ff;">1</span><span>, </span><span style="color:#ae81ff;">2</span><span>, </span><span style="color:#ae81ff;">1</span><span>, </span><span style="color:#ae81ff;">2</span><span>};
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> size </span><span style="color:#f92672;">= sizeof</span><span>(nums) </span><span style="color:#f92672;">/ sizeof</span><span>(nums[</span><span style="color:#ae81ff;">0</span><span>]);
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;Single number: </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, singleNumber(nums, size));  </span><span style="color:#75715e;">// 输出 4
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">singleNumber</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">nums</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> result </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>        </span><span style="color:#f92672;">for </span><span>(</span><span style="font-style:italic;color:#66d9ef;">int</span><span> num </span><span style="color:#f92672;">:</span><span> nums) {
+</span><span>            result </span><span style="color:#f92672;">^=</span><span> num;  </span><span style="color:#75715e;">// 相同数字会被消除，剩下唯一的数字
+</span><span>        }
+</span><span>        </span><span style="color:#f92672;">return</span><span> result;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span style="color:#f92672;">[]</span><span> nums </span><span style="color:#f92672;">= </span><span>{</span><span style="color:#ae81ff;">4</span><span>, </span><span style="color:#ae81ff;">1</span><span>, </span><span style="color:#ae81ff;">2</span><span>, </span><span style="color:#ae81ff;">1</span><span>, </span><span style="color:#ae81ff;">2</span><span>};
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;Single number: &quot; </span><span style="color:#f92672;">+ </span><span>singleNumber(nums));  </span><span style="color:#75715e;">// 输出 4
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="5-jiao-huan-zheng-shu-de-ou-shu-wei-he-qi-shu-wei">5. <strong>交换整数的偶数位和奇数位</strong></h3>
+<p>将一个整数的偶数位和奇数位互换，可以通过位运算来实现。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>使用掩码分离出偶数位和奇数位，然后将它们左移或右移并组合起来。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">unsigned int </span><span style="color:#a6e22e;">swapEvenOddBits</span><span>(</span><span style="font-style:italic;color:#66d9ef;">unsigned int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">unsigned int</span><span> evenBits </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">0xAAAAAAAA</span><span>;  </span><span style="color:#75715e;">// 获取偶数位
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">unsigned int</span><span> oddBits </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">0x55555555</span><span>;   </span><span style="color:#75715e;">// 获取奇数位
+</span><span>    evenBits </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 偶数位右移
+</span><span>    oddBits </span><span style="color:#f92672;">&lt;&lt;= </span><span style="color:#ae81ff;">1</span><span>;   </span><span style="color:#75715e;">// 奇数位左移
+</span><span>    </span><span style="color:#f92672;">return </span><span>(evenBits </span><span style="color:#f92672;">|</span><span> oddBits);
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">unsigned int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">23</span><span>;  </span><span style="color:#75715e;">// 二进制 10111
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;After swapping bits: </span><span style="color:#ae81ff;">%u\n</span><span style="color:#e6db74;">&quot;</span><span>, swapEvenOddBits(n));  </span><span style="color:#75715e;">// 输出 43（二进制 101011）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">swapEvenOddBits</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> evenBits </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">0xAAAAAAAA</span><span>;  </span><span style="color:#75715e;">// 获取偶数位
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> oddBits </span><span style="color:#f92672;">=</span><span> n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">0x55555555</span><span>;   </span><span style="color:#75715e;">// 获取奇数位
+</span><span>        evenBits </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 偶数位右移
+</span><span>        oddBits </span><span style="color:#f92672;">&lt;&lt;= </span><span style="color:#ae81ff;">1</span><span>;   </span><span style="color:#75715e;">// 奇数位左移
+</span><span>        </span><span style="color:#f92672;">return </span><span>(evenBits </span><span style="color:#f92672;">|</span><span> oddBits);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">23</span><span>;  </span><span style="color:#75715e;">// 二进制 10111
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;After swapping bits: &quot; </span><span style="color:#f92672;">+ </span><span>swapEvenOddBits(n));  </span><span style="color:#75715e;">// 输出 43（二进制 101011）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="6-pan-duan-yi-ge-shu-shi-fou-shi-qi-shu-huo-ou-shu">6. <strong>判断一个数是否是奇数或偶数</strong></h3>
+<p>位运算可以非常高效地判断一个整数是奇数还是偶数。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>
+<p>一个整数的二进制表示的最后一位（最低位）决定了该数是奇数还是偶数：</p>
+<ul>
+<li>如果最低位为 <code>1</code>，则该数为奇数。</li>
+<li>如果最低位为 <code>0</code>，则该数为偶数。</li>
+</ul>
+<p>通过与操作 <code>n &amp; 1</code>，如果结果是 <code>1</code>，则是奇数；如果结果是 <code>0</code>，则是偶数。</p>
+</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">isEven</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="color:#f92672;">return </span><span>(n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">7</span><span>;
+</span><span>    </span><span style="color:#f92672;">if </span><span>(isEven(n)) {
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> is even</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, n);
+</span><span>    } </span><span style="color:#f92672;">else </span><span>{
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> is odd</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, n);
+</span><span>    }
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">boolean </span><span style="color:#a6e22e;">isEven</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="color:#f92672;">return </span><span>(n </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">7</span><span>;
+</span><span>        </span><span style="color:#f92672;">if </span><span>(isEven(n)) {
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(n </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; is even&quot;</span><span>);
+</span><span>        } </span><span style="color:#f92672;">else </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(n </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; is odd&quot;</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="7-qing-chu-zui-di-you-xiao-wei-lowest-set-bit">7. <strong>清除最低有效位（Lowest Set Bit）</strong></h3>
+<p>有时你需要删除一个整数中的最低有效位（第一个 <code>1</code>），可以通过位运算实现。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li><code>n &amp; (n - 1)</code> 可以清除最低有效位。例如：
+<ul>
+<li>对于 <code>n = 12</code>（二进制 <code>1100</code>），<code>n - 1 = 11</code>（二进制 <code>1011</code>），<code>n &amp; (n - 1)</code> 就是 <code>1000</code>，清除了最低有效位。</li>
+</ul>
+</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">clearLowestBit</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="color:#f92672;">return</span><span> n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>);
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">12</span><span>;  </span><span style="color:#75715e;">// 二进制 1100
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;After clearing the lowest bit: </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, clearLowestBit(n));  </span><span style="color:#75715e;">// 输出 8（二进制 1000）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">clearLowestBit</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="color:#f92672;">return</span><span> n </span><span style="color:#f92672;">&amp; </span><span>(n </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">12</span><span>;  </span><span style="color:#75715e;">// 二进制 1100
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;After clearing the lowest bit: &quot; </span><span style="color:#f92672;">+ </span><span>clearLowestBit(n));  </span><span style="color:#75715e;">// 输出 8（二进制 1000）
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="8-jiao-huan-zheng-shu-de-fu-hao">8. <strong>交换整数的符号</strong></h3>
+<p>通过位运算，你可以改变一个整数的符号（即负数变为正数，正数变为负数）。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>通过异或操作，可以反转整数的符号位（最高位）。例如：<code>n = n ^ (1 &lt;&lt; 31)</code>，这会将 <code>n</code> 的符号位取反。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">swapSign</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>    </span><span style="color:#f92672;">return</span><span> n </span><span style="color:#f92672;">^ </span><span>(</span><span style="color:#ae81ff;">1 </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">31</span><span>);  </span><span style="color:#75715e;">// 将符号位取反
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">5</span><span>;
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;After swapping sign: </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, swapSign(n));  </span><span style="color:#75715e;">// 输出 5
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">swapSign</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">n</span><span>) {
+</span><span>        </span><span style="color:#f92672;">return</span><span> n </span><span style="color:#f92672;">^ </span><span>(</span><span style="color:#ae81ff;">1 </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">31</span><span>);  </span><span style="color:#75715e;">// 将符号位取反
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">5</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;After swapping sign: &quot; </span><span style="color:#f92672;">+ </span><span>swapSign(n));  </span><span style="color:#75715e;">// 输出 5
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="9-qiu-liang-ge-shu-de-zui-da-gong-yue-shu-gcd">9. <strong>求两个数的最大公约数（GCD）</strong></h3>
+<p>可以利用位运算快速求解两个数的最大公约数（Euclid's algorithm），特别是在处理大数时，位运算可以提高效率。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>利用<strong>二进制求最大公约数</strong>的方法，可以通过 <code>n &amp; -n</code> 来去除数字的最低有效位，从而加速求 GCD。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">gcd</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>    </span><span style="color:#f92672;">if </span><span>(a </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">return</span><span> b;
+</span><span>    </span><span style="color:#f92672;">if </span><span>(b </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">return</span><span> a;
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> shift;
+</span><span>    
+</span><span>    </span><span style="color:#75715e;">// 计算 a 和 b 的二进制表示中公共的 2 的幂
+</span><span>    </span><span style="color:#f92672;">for </span><span>(shift </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>; ((a </span><span style="color:#f92672;">|</span><span> b) </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>; </span><span style="color:#f92672;">++</span><span>shift) {
+</span><span>        a </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;
+</span><span>        b </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style="color:#f92672;">while </span><span>((a </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) a </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 去除 a 中的所有 2 的幂
+</span><span>    
+</span><span>    </span><span style="color:#f92672;">do </span><span>{
+</span><span>        </span><span style="color:#f92672;">while </span><span>((b </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) b </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 去除 b 中的所有 2 的幂
+</span><span>        </span><span style="color:#f92672;">if </span><span>(a </span><span style="color:#f92672;">&gt;</span><span> b) {
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">int</span><span> temp </span><span style="color:#f92672;">=</span><span> a;
+</span><span>            a </span><span style="color:#f92672;">=</span><span> b;
+</span><span>            b </span><span style="color:#f92672;">=</span><span> temp;
+</span><span>        }
+</span><span>        b </span><span style="color:#f92672;">=</span><span> b </span><span style="color:#f92672;">-</span><span> a;  </span><span style="color:#75715e;">// b = b - a
+</span><span>    } </span><span style="color:#f92672;">while </span><span>(b </span><span style="color:#f92672;">!= </span><span style="color:#ae81ff;">0</span><span>);
+</span><span>    
+</span><span>    </span><span style="color:#f92672;">return</span><span> a </span><span style="color:#f92672;">&lt;&lt;</span><span> shift;  </span><span style="color:#75715e;">// 将公共的 2 的幂加回来
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">56</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">98</span><span>;
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;GCD of </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> and </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> is: </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a, b, gcd(a, b));  </span><span style="color:#75715e;">// 输出 GCD
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">gcd</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>        </span><span style="color:#f92672;">if </span><span>(a </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">return</span><span> b;
+</span><span>        </span><span style="color:#f92672;">if </span><span>(b </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">return</span><span> a;
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> shift </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>        
+</span><span>        </span><span style="color:#75715e;">// 计算 a 和 b 的二进制表示中公共的 2 的幂
+</span><span>        </span><span style="color:#f92672;">while </span><span>((a </span><span style="color:#f92672;">|</span><span> b) </span><span style="color:#f92672;">% </span><span style="color:#ae81ff;">2 </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) {
+</span><span>            a </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;
+</span><span>            b </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;
+</span><span>            shift</span><span style="color:#f92672;">++</span><span>;
+</span><span>        }
+</span><span>        
+</span><span>        </span><span style="color:#f92672;">while </span><span>((a </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) a </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 去除 a 中的所有 2 的幂
+</span><span>        
+</span><span>        </span><span style="color:#f92672;">do </span><span>{
+</span><span>            </span><span style="color:#f92672;">while </span><span>((b </span><span style="color:#f92672;">&amp; </span><span style="color:#ae81ff;">1</span><span>) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) b </span><span style="color:#f92672;">&gt;&gt;= </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 去除 b 中的所有 2 的幂
+</span><span>            </span><span style="color:#f92672;">if </span><span>(a </span><span style="color:#f92672;">&gt;</span><span> b) {
+</span><span>                </span><span style="font-style:italic;color:#66d9ef;">int</span><span> temp </span><span style="color:#f92672;">=</span><span> a;
+</span><span>                a </span><span style="color:#f92672;">=</span><span> b;
+</span><span>                b </span><span style="color:#f92672;">=</span><span> temp;
+</span><span>            }
+</span><span>            b </span><span style="color:#f92672;">=</span><span> b </span><span style="color:#f92672;">-</span><span> a;  </span><span style="color:#75715e;">// b = b - a
+</span><span>        } </span><span style="color:#f92672;">while </span><span>(b </span><span style="color:#f92672;">!= </span><span style="color:#ae81ff;">0</span><span>);
+</span><span>        
+</span><span>        </span><span style="color:#f92672;">return</span><span> a </span><span style="color:#f92672;">&lt;&lt;</span><span> shift;  </span><span style="color:#75715e;">// 将公共的 2 的幂加回来
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">56</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">98</span><span>;
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(</span><span style="color:#e6db74;">&quot;GCD of &quot; </span><span style="color:#f92672;">+</span><span> a </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; and &quot; </span><span style="color:#f92672;">+</span><span> b </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; is: &quot; </span><span style="color:#f92672;">+ </span><span>gcd(a, b));
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h3 id="10-tong-guo-wei-yun-suan-pan-duan-liang-ge-zheng-shu-shi-fou-xiang-deng">10. <strong>通过位运算判断两个整数是否相等</strong></h3>
+<p>如果两个整数相等，则它们的异或结果为 0。这可以通过 <code>a ^ b</code> 来判断两个数是否相等。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>如果 <code>a</code> 和 <code>b</code> 相等，<code>a ^ b == 0</code>。</li>
+</ul>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#75715e;">// C语言
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">areEqual</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>    </span><span style="color:#f92672;">return </span><span>(a </span><span style="color:#f92672;">^</span><span> b) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;  </span><span style="color:#75715e;">// 如果 a 和 b 相等，则 a ^ b 为 0
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;
+</span><span>    </span><span style="color:#f92672;">if </span><span>(areEqual(a, b)) {
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> and </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> are equal</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, a, b);
+</span><span>    } </span><span style="color:#f92672;">else </span><span>{
+</span><span>        </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> and </span><span style="color:#ae81ff;">%d</span><span style="color:#e6db74;"> are not equal</span><span style="color:#ae81ff;">\n</span><span style="color:#e6db74;">&quot;</span><span>, a, b);
+</span><span>    }
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#75715e;">// Java
+</span><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">boolean </span><span style="color:#a6e22e;">areEqual</span><span>(</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">a</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">b</span><span>) {
+</span><span>        </span><span style="color:#f92672;">return </span><span>(a </span><span style="color:#f92672;">^</span><span> b) </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>;  </span><span style="color:#75715e;">// 如果 a 和 b 相等，则 a ^ b 为 0
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>, b </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5</span><span>;
+</span><span>        </span><span style="color:#f92672;">if </span><span>(areEqual(a, b)) {
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; and &quot; </span><span style="color:#f92672;">+</span><span> b </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; are equal&quot;</span><span>);
+</span><span>        } </span><span style="color:#f92672;">else </span><span>{
+</span><span>            </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; and &quot; </span><span style="color:#f92672;">+</span><span> b </span><span style="color:#f92672;">+ </span><span style="color:#e6db74;">&quot; are not equal&quot;</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="javayu-cde-wei-yun-suan-qu-bie">java与c的位运算区别</h2>
+<p>在 Java 和 C 中，位运算的基本原理和操作是相同的，但它们在一些细节上有所不同，</p>
+<p>主要体现在 <strong>数据类型的处理</strong>、<strong>符号扩展</strong> 和 <strong>溢出处理</strong> 等方面。</p>
+<h3 id="1-shu-ju-lei-xing-he-wei-kuan">1. <strong>数据类型和位宽</strong></h3>
+<ul>
+<li><strong>C 语言</strong>：
+<ul>
+<li>C 语言中的整数类型如 <code>int</code>、<code>short</code>、<code>long</code> 等的位宽是由平台和编译器决定的。通常，<code>int</code> 在大多数平台上是 32 位，<code>long</code> 可能是 32 位或 64 位。</li>
+<li>C 语言对有符号类型的位运算有时会产生未定义行为，尤其是在符号扩展时。</li>
+<li>C 语言的类型也允许使用 <code>char</code>（通常是 8 位）进行位运算。</li>
+</ul>
+</li>
+<li><strong>Java</strong>：
+<ul>
+<li>在 Java 中，<code>int</code> 和 <code>long</code> 是 <strong>固定长度</strong> 的。<code>int</code> 总是 32 位，<code>long</code> 总是 64 位。</li>
+<li>Java 中的所有整数类型（包括 <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>）的位运算操作都将其转换为 32 位或 64 位的二进制表示。</li>
+<li>Java 不允许直接操作 <code>char</code> 类型的位（<code>char</code> 在 Java 中是 16 位无符号类型，不能进行位运算），但是可以通过 <code>int</code> 类型来实现相同的操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-fu-hao-kuo-zhan">2. <strong>符号扩展</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中进行右移操作时，<strong>有符号整数</strong> 右移会进行符号扩展，即将符号位（最高位）填充到左边。这意味着对于负数，右移后会填充 <code>1</code>，对于正数，右移后会填充 <code>0</code>。</li>
+<li>对于 <strong>无符号整数</strong>，右移不会进行符号扩展，而是填充 <code>0</code>。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">8</span><span>;  </span><span style="color:#75715e;">// 二进制：11111111111111111111111111111000
+</span><span>printf(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);  </span><span style="color:#75715e;">// 输出 -2，二进制：11111111111111111111111111111110
+</span></code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的 <strong>有符号整数</strong> 右移也会进行符号扩展，但是 Java 提供了两种不同的右移操作：
+<ul>
+<li><strong>算术右移（<code>&gt;&gt;</code>）</strong>：进行符号扩展。</li>
+<li><strong>逻辑右移（<code>&gt;&gt;&gt;</code>）</strong>：无论是有符号还是无符号整数，都会填充 <code>0</code>。</li>
+</ul>
+</li>
+<li>Java 对于无符号整数的处理不同于 C，因为 Java 中的整数是 <strong>有符号</strong> 的，<code>char</code> 不是无符号类型，因此不能直接进行无符号右移。但可以通过 <code>&gt;&gt;&gt;</code> 来实现无符号右移。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">8</span><span>;  </span><span style="color:#75715e;">// 二进制：11111111111111111111111111111000
+</span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);   </span><span style="color:#75715e;">// 输出 -2，二进制：11111111111111111111111111111110
+</span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);  </span><span style="color:#75715e;">// 输出 1073741822，二进制：00111111111111111111111111111110
+</span></code></pre>
+</li>
+</ul>
+<h3 id="3-yi-chu-chu-li">3. <strong>溢出处理</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中的 <strong>溢出行为</strong> 是未定义的，特别是对于有符号整数。对有符号整数进行溢出（例如，<code>int</code> 超过其最大值或最小值）会导致未定义的行为，而对无符号整数进行溢出则会发生 <strong>模运算</strong>，即会“环绕”回 0。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">2147483647</span><span>;  </span><span style="color:#75715e;">// int 类型最大值
+</span><span>a </span><span style="color:#f92672;">=</span><span> a </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 会发生溢出，结果未定义
+</span><span>printf(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a);
+</span></code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>在 Java 中，溢出是定义好的行为。对于 <strong>有符号整数</strong>，如果超出 <code>int</code> 或 <code>long</code> 的范围，结果会回绕到最小值。例如，<code>int</code> 的最大值是 <code>2147483647</code>，当其值超过该范围时，会回绕到负数。Java 中的 <strong>整数溢出</strong> 是通过 <strong>模运算</strong> 实现的。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">2147483647</span><span>;  </span><span style="color:#75715e;">// int 类型最大值
+</span><span>a </span><span style="color:#f92672;">=</span><span> a </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>;  </span><span style="color:#75715e;">// 溢出，结果是 -2147483648
+</span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a);  </span><span style="color:#75715e;">// 输出 -2147483648
+</span></code></pre>
+</li>
+</ul>
+<h3 id="4-wei-yun-suan-you-xian-ji">4. <strong>位运算优先级</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>在 C 语言中，位运算的优先级低于大多数算术运算，因此如果要确保位运算优先执行，通常需要使用括号。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="font-style:italic;color:#66d9ef;">int</span><span> result </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5 </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">3 </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">2</span><span>;  </span><span style="color:#75715e;">// 先执行加法，再执行左移
+</span></code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的位运算优先级和 C 类似，但有时在与其他运算符结合时需要小心。例如，Java 中的位运算同样优先级较低，需要使用括号明确运算顺序。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#66d9ef;">int</span><span> result </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">5 </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">3 </span><span style="color:#f92672;">&lt;&lt; </span><span style="color:#ae81ff;">2</span><span>;  </span><span style="color:#75715e;">// 先执行加法，再执行左移
+</span></code></pre>
+</li>
+</ul>
+<h3 id="5-you-fu-hao-yu-wu-fu-hao-lei-xing">5. <strong>有符号与无符号类型</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中可以使用 <strong>无符号类型</strong>（如 <code>unsigned int</code>、<code>unsigned char</code>），并且对无符号整数的位运算不会涉及符号扩展。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="font-style:italic;color:#66d9ef;">unsigned int</span><span> a </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">4294967295</span><span>;  </span><span style="color:#75715e;">// 最大无符号整数值
+</span><span>printf(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%u\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 0（无符号溢出）
+</span></code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的整数类型都是 <strong>有符号</strong> 的，因此没有 <code>unsigned int</code> 或 <code>unsigned long</code> 类型。Java 提供了 <code>&gt;&gt;&gt;</code>（逻辑右移）来模拟无符号整数的操作，但并没有专门的无符号类型。在 Java 中处理无符号整数需要特别小心，通常需要通过 <code>long</code> 类型来处理更大的数值范围。</li>
+</ul>
+<p><strong>例如</strong>：</p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">1</span><span>;
+</span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt;&gt; </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 2147483647（无符号右移）
+</span></code></pre>
+</li>
+</ul>
+<h3 id="6-yi-chu-yu-qu-mo">6. <strong>溢出与取模</strong></h3>
+<ul>
+<li><strong>C 语言</strong>：
+<ul>
+<li>C 中对无符号整数的溢出会发生取模操作，而对有符号整数则会产生未定义行为。</li>
+</ul>
+</li>
+<li><strong>Java</strong>：
+<ul>
+<li>在 Java 中，溢出操作是严格定义的，对于整数溢出，会按照二进制取模操作进行。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="zong-jie">总结</h3>
+<ul>
+<li><strong>位运算的核心操作</strong>（与、或、非、异或、左移、右移）在 C 和 Java 中的基本原理相同，但由于两者对整数类型的处理有所不同，特别是在符号扩展、溢出行为和无符号类型支持上有所差异。</li>
+<li><strong>Java</strong> 语言提供了更为严格和一致的行为（如固定位宽、符号扩展等），但是也限制了对无符号类型的直接支持；而 <strong>C</strong> 语言则具有更大的灵活性，尤其是在平台相关的类型宽度和未定义行为方面，开发者需要更小心地处理溢出和符号扩展等问题。</li>
+</ul>
+<h2 id="yi-chu-yu-qu-mo">溢出与取模</h2>
+<p>溢出（Overflow）和取模（Modulo）是位运算和数学运算中非常重要的概念，特别是在处理整数类型时。溢出与取模的关系在不同的编程语言和不同的数值类型下会有不同的表现。</p>
+<h3 id="1-yi-chu-overflow">1. <strong>溢出 (Overflow)</strong></h3>
+<p>溢出通常是指一个数值超出了其数据类型所能表示的范围。溢出可能会导致结果变为未定义，或者是某种“环绕”行为（即从最大值回到最小值或反之）。溢出经常出现在整数计算中，特别是在加法、乘法等运算中，或者在右移、左移等位运算中。</p>
+<h4 id="yi-chu-de-lei-xing"><strong>溢出的类型：</strong></h4>
+<ul>
+<li><strong>有符号溢出</strong>：当对 <strong>有符号整数</strong> 进行运算时，如果计算结果超出了该类型的表示范围，就会发生溢出。</li>
+<li><strong>无符号溢出</strong>：对于 <strong>无符号整数</strong>，溢出通常是以 <strong>模运算</strong> 的方式处理，即结果回绕到类型的最小值（0）处。</li>
+</ul>
+<h4 id="you-fu-hao-yi-chu-de-li-zi"><strong>有符号溢出的例子：</strong></h4>
+<p>在有符号整数的运算中，如果一个值超过了该类型的最大值，通常会导致溢出，并且在 <strong>C 语言</strong> 中，溢出的行为是未定义的，可能会导致不可预期的结果。</p>
+<p><strong>C 语言中的溢出示例</strong>：</p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> max </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">2147483647</span><span>;  </span><span style="color:#75715e;">// 32-bit int 类型的最大值
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, max </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 溢出，结果未定义
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>在上述代码中，<code>max + 1</code> 的结果会超出 <code>int</code> 类型的最大值，这会导致溢出，结果是未定义的，可能会表现为负数或某个非常不正常的数值。</p>
+<h4 id="java-zhong-de-yi-chu"><strong>Java 中的溢出：</strong></h4>
+<p>在 <strong>Java</strong> 中，溢出是有定义的。对于 <strong>有符号整数</strong>（如 <code>int</code>），如果计算超出了该类型的表示范围，结果会回绕。例如，<code>int</code> 的最大值是 <code>2147483647</code>，再加 1 就会回绕到最小值 <code>-2147483648</code>。</p>
+<p><strong>Java 中的溢出示例</strong>：</p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> max </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">2147483647</span><span>;  </span><span style="color:#75715e;">// int 类型的最大值
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(max </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 -2147483648，发生溢出
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>在 Java 中，溢出的结果是 <strong>环绕</strong> 的，结果会回到整数类型的最小值。</p>
+<h3 id="2-yi-chu-yu-qu-mo">2. <strong>溢出与取模</strong></h3>
+<p>溢出和取模之间的关系主要体现在整数运算中，尤其是在处理无符号整数时。具体来说，当无符号整数超出其最大值时，运算会按 <strong>模运算</strong> 规则处理，即回绕到零或最小值。</p>
+<h4 id="wu-fu-hao-yi-chu-de-mo-yun-suan"><strong>无符号溢出的模运算：</strong></h4>
+<p>对于 <strong>无符号整数</strong>，溢出是通过模运算来处理的。无符号整数的溢出会回绕到零或最小值，而不是出现未定义行为。例如，假设有一个 8 位无符号整数，其最大值为 255。如果我们将其值加 1，就会回绕到 0。</p>
+<p><strong>C 语言中的无符号溢出示例</strong>：</p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">unsigned int</span><span> max </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">4294967295</span><span>;  </span><span style="color:#75715e;">// 32-bit unsigned int 的最大值
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%u\n</span><span style="color:#e6db74;">&quot;</span><span>, max </span><span style="color:#f92672;">+ </span><span style="color:#ae81ff;">1</span><span>);  </span><span style="color:#75715e;">// 输出 0，无符号溢出（模运算）
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>在这个例子中，<code>max + 1</code> 超出了 <code>unsigned int</code> 能表示的最大值 <code>4294967295</code>，因此会发生 <strong>模运算</strong>，回绕到 <code>0</code>。</p>
+<h4 id="yi-chu-yu-qu-mo-de-ben-zhi"><strong>溢出与取模的本质：</strong></h4>
+<ul>
+<li>对于 <strong>无符号整数</strong>，每当一个值超出其能表示的最大值时，它会像一个环绕计数器一样，从最大值回到最小值。这个过程可以通过取模运算来描述。
+<ul>
+<li>对于一个无符号 <code>n</code> 位整数，<code>n</code> 的最大值是 <code>2^n - 1</code>。当数值超过这个最大值时，它会回绕并重新开始计算。</li>
+<li>例如，对于一个 8 位无符号整数（最大值 255），计算 <code>256 % 256</code> 会得到 0。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-you-yi-he-yi-chu">3. <strong>右移和溢出</strong></h3>
+<p>在位运算中，<strong>右移操作</strong>常常会导致溢出，尤其是对于有符号整数。右移会将最低有效位（最右边的位）丢弃，并且根据类型的符号位决定填充的位（符号扩展或零扩展）。</p>
+<h4 id="c-yu-yan-de-you-yi-yi-chu"><strong>C 语言的右移溢出：</strong></h4>
+<p>对于有符号整数，右移操作会导致符号扩展（即用符号位填充空位），但如果是无符号整数，右移则会填充零。</p>
+<p><strong>C 语言中的右移示例</strong>：</p>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span>
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">8</span><span>;  </span><span style="color:#75715e;">// 二进制：11111111111111111111111111111000
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;</span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);  </span><span style="color:#75715e;">// 输出 -2，符号扩展
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>对于有符号整数，右移时，会用符号位填充空位，导致 <code>-8</code> 右移后变成 <code>-2</code>。</p>
+<h4 id="java-de-you-yi-yu-yi-chu"><strong>Java 的右移与溢出：</strong></h4>
+<p>在 Java 中，右移的行为和 C 类似，但 Java 提供了两种右移操作：</p>
+<ul>
+<li><strong>算术右移（<code>&gt;&gt;</code>）</strong>：会进行符号扩展。</li>
+<li><strong>逻辑右移（<code>&gt;&gt;&gt;</code>）</strong>：会用 <code>0</code> 填充空位，即无符号右移。</li>
+</ul>
+<p><strong>Java 中的右移示例</strong>：</p>
+<pre data-lang="java" style="background-color:#272822;color:#f8f8f2;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#f92672;">public </span><span style="font-style:italic;color:#66d9ef;">class </span><span style="text-decoration:underline;color:#a6e22e;">Main </span><span>{
+</span><span>    </span><span style="color:#f92672;">public static </span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">main</span><span>(</span><span style="font-style:italic;color:#66d9ef;">String</span><span style="color:#f92672;">[] </span><span style="font-style:italic;color:#fd971f;">args</span><span>) {
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">int</span><span> a </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">8</span><span>;  </span><span style="color:#75715e;">// 二进制：11111111111111111111111111111000
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);   </span><span style="color:#75715e;">// 输出 -2，符号扩展
+</span><span>        </span><span style="font-style:italic;color:#66d9ef;">System</span><span>.out.println(a </span><span style="color:#f92672;">&gt;&gt;&gt; </span><span style="color:#ae81ff;">2</span><span>);  </span><span style="color:#75715e;">// 输出 1073741822，无符号右移
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>在上面的例子中，<code>&gt;&gt;</code> 做的是算术右移，<code>&gt;&gt;&gt;</code> 做的是逻辑右移，后者无论符号如何，都会用零填充空位。</p>
+<h3 id="4-yi-chu-yu-qu-mo-zai-shi-ji-ying-yong-zhong-de-ying-yong">4. <strong>溢出与取模在实际应用中的应用</strong></h3>
+<ul>
+<li><strong>哈希算法</strong>：在哈希算法中，溢出和取模是常见的操作。通常，哈希函数会返回一个数值，然后使用取模运算（如 <code>hash % table_size</code>）来确定数据存储的索引。这个过程实际上是在使用模运算处理溢出，确保索引值在有效范围内。</li>
+<li><strong>计数器与环绕</strong>：在一些计数器或者循环中，溢出和取模通常是用来实现循环行为的。例如，计数器在达到了最大值后会从 0 开始。</li>
+<li><strong>无符号整数的应用</strong>：在处理非常大的数值时，尤其是在 <strong>图形处理</strong> 或 <strong>网络协议</strong> 中，经常会使用无符号整数，这时溢出和模运算就显得尤为重要。</li>
+</ul>
+
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
+            }
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+
+  <style>
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5em 0;
+      padding: 1em;
+      overflow: auto;
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Prism.highlightAll();
+    });
+  </script>
+</body>
+
+</html>

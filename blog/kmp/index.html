@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Learning】KPM的一些理解 - </title>
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
+  <style>
+    /* 基础响应式设计 */
+    html {
+      font-size: 16px; /* 基础字体大小 */
+    }
+    
+    /* 响应式字体大小 */
+    @media (max-width: 768px) {
+      html {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      html {
+        font-size: 14px;
+      }
+    }
+    
+    /* 使用相对单位 */
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+    
+    h4 {
+      font-size: 1.25rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    p, ul, ol {
+      margin-bottom: 1rem;
+    }
+    
+    /* 容器响应式设计 */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    /* 导航栏响应式设计 */
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+    
+    /* 博客文章响应式设计 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* 代码块响应式设计 */
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      pre[class*="language-"] {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<style>
+.content-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single {
+    max-width: 800px;
+    margin-right: 300px;
+}
+
+.toc {
+    position: fixed;
+    right: 40px;
+    top: 120px;
+    width: 250px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.toc h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin: 0.5rem 0;
+}
+
+.toc-list a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+}
+
+.toc-list a:hover {
+    color: #000;
+}
+
+.toc-list a.active {
+    color: #6b46c1;
+    font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+    .post-single {
+        margin-right: 0;
+    }
+    .toc {
+        display: none;
+    }
+}
+</style>
+
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Learning】KPM的一些理解</h1>
+            <div class="post-meta">
+                <time>2025-03-17</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/algo/">#algo</a>
+                        
+                    </div>
+                
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h1 id="kmpli-jie">KMP理解</h1>
+<p>Knuth-Morris-Pratt (KMP) 字符串匹配算法</p>
+<h2 id="gai-nian">概念</h2>
+<h3 id="pmt">PMT</h3>
+<p>KMP算法的核心，是一个被称为<strong>部分匹配表</strong>(<strong>P</strong>artial <strong>M</strong>atch <strong>T</strong>able)的数组。</p>
+<p>对于字符串“abababca”，它的PMT如下表所示：</p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-223530.png" alt="" /></p>
+<p>就像例子中所示的，如果待匹配的模式字符串有8个字符，那么PMT就会有8个值。</p>
+<p>先解释一下字符串的<strong>前缀</strong>和<strong>后缀</strong>。</p>
+<p>如果字符串A和B，存在A=BS，其中S是任意的<strong>非空字符串</strong>，那就称B为A的<strong>前缀</strong>。</p>
+<p><strong>例如</strong>，”Harry”的前缀包括{”H”, ”Ha”, ”Har”, ”Harr”}，把所有前缀组成的集合，称为字符串的前缀集合。</p>
+<p>同样可以定义后缀A=SB， 其中S是任意的<strong>非空字符串</strong>，那就称B为A的<strong>后缀</strong>，</p>
+<p><strong>例如</strong>，”Potter”的后缀包括{”otter”, ”tter”, ”ter”, ”er”, ”r”}，然后把所有后缀组成的集合，称为字符串的后缀集合。</p>
+<p><em>要注意的是，字符串本身并不是自己的后缀。</em></p>
+<p>（通常我们讨论后缀时指的是<strong>真子串</strong></p>
+<p>有了这个定义，就可以说明PMT中的值的意义了。<strong>PMT中的值是字符串的前缀集合与后缀集合的交集中最长元素的长度</strong>。</p>
+<p><strong>例如</strong>，对于”aba”，它的前缀集合为{”a”, ”ab”}，后缀 集合为{”ba”, ”a”}。</p>
+<p>两个集合的交集为{”a”}，那么长度最长的元素就是字符串”a”了，长 度为1，所以对于”aba”而言，它在PMT表中对应的值就是1。</p>
+<p><strong>再比如</strong>，对于字符串”ababa”，它的前缀集合为{”a”, ”ab”, ”aba”, ”abab”}，它的后缀集合为{”baba”, ”aba”, ”ba”, ”a”}， 两个集合的交集为{”a”, ”aba”}，其中最长的元素为”aba”，长度为3。</p>
+<h2 id="li-jie">理解</h2>
+<p>如何使用这个表来加速字符串的查找，以及这样用的道理是什么。</p>
+<p>要在主字符串&quot;ab<strong>abababca</strong>&quot;中查找模式字符串&quot;<strong>abababca</strong>&quot;。</p>
+<p>如果在 j 处字符不匹配，那么由于前边所说的模式字符串 PMT 的性质，主字符串中 i 指针之前的 PMT[j −1] 位就一定与模式字符串的第 0 位至第 PMT[j−1] 位是相同的。</p>
+<p>这是因为主字符串在 i 位失配，也就意味着主字符串从 i−j 到 i 这一段是与模式字符串的 0 到 j 这一段是完全相同的。</p>
+<p>模式字符串从 0 到 j−1 ，在这个例子中就是”ababab”，其<strong>前缀集合</strong>与<strong>后缀集合</strong>的<strong>交集</strong>的<strong>最长元素</strong>为”abab”， 长度为<strong>4</strong>。</p>
+<p>所以就可以断言，主字符串中i指针之前的 4 位一定与模式字符串的第0位至第 4 位是相同的，即长度为 4 的后缀与前缀相同。这样一来，我们就可以将这些字符段的比较省略掉。</p>
+<p>具体的做法是，保持i指针不动，然后将j指针指向模式字符串的PMT[j −1]位即可</p>
+<p>简言之，以图中的例子来说，在 i 处失配，那么主字符串和模式字符串的前边6位就是相同的。</p>
+<p>又因为模式字符串的前6位，它的前4位前缀和后4位后缀是相同的，所以我们推知主字符串i之前的4位和模式字符串开头的4位是相同的。</p>
+<p>就是图中的灰色部分。那这部分就不用再比较了。</p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-223836.png" alt="" /></p>
+<p>如果是在 j 位 失配，那么影响 j 指针回溯的位置的其实是第 j −1 位的 PMT 值，所以为了编程的方便， 我们不直接使用PMT数组，而是将PMT数组向后偏移一位。<strong>新得到的这个数组就是next数组</strong>。</p>
+<h3 id="nextshu-zu">next数组</h3>
+<p>KMP算法中的<strong>next数组</strong>（也称为部分匹配表或前缀函数）是算法高效性的核心。</p>
+<p>它通过预处理模式串（pattern），记录每个位置的最长公共前后缀长度，从而在匹配失败时快速跳过不必要的比较。</p>
+<h4 id="1-nextshu-zu-de-ding-yi"><strong>1. next数组的定义</strong></h4>
+<p>对于模式串 <code>p</code> 的每个位置 <code>i</code>，<code>next[i]</code> 表示：</p>
+<ul>
+<li><strong><code>p[0...i-1]</code></strong> 这个子串中，<strong>最长的相同前缀和后缀的长度</strong>。</li>
+<li><strong>前缀</strong>：从第一个字符开始的连续子串。</li>
+<li><strong>后缀</strong>：从最后一个字符向前结束的连续子串。</li>
+</ul>
+<p><strong>示例</strong>：
+若 <code>p = &quot;ABABC&quot;</code>，则：</p>
+<ul>
+<li><code>next[4]</code> 对应子串 <code>&quot;ABAB&quot;</code>，其最长公共前后缀为 <code>&quot;AB&quot;</code>，长度为2，故 <code>next[4] = 2</code>。</li>
+</ul>
+<hr />
+<h4 id="2-nextshu-zu-de-ji-suan-fang-fa"><strong>2. next数组的计算方法</strong></h4>
+<p>通过双指针法（<code>i</code> 和 <code>j</code>）遍历模式串，动态计算每个位置的 <code>next</code> 值：</p>
+<ol>
+<li>初始化：
+<ul>
+<li><code>next[0] = 0</code>（无前缀或后缀）。</li>
+<li><code>j = 0</code>（前缀指针），<code>i = 1</code>（后缀指针）。</li>
+</ul>
+</li>
+<li>遍历模式串：
+<ul>
+<li>若 <code>p[i] == p[j]</code>：
+<ul>
+<li><code>j++</code>（前缀长度+1）。</li>
+<li><code>next[i] = j</code>。</li>
+<li><code>i++</code>。</li>
+</ul>
+</li>
+<li>若 <code>p[i] != p[j]</code>：
+<ul>
+<li><strong>若 <code>j &gt; 0</code></strong>：<code>j = next[j-1]</code>（回退到前一个最长前缀的末尾）。</li>
+<li><strong>若 <code>j == 0</code></strong>：<code>next[i] = 0</code>，<code>i++</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="3-nextshu-zu-zai-kmpsuan-fa-zhong-de-ying-yong"><strong>3. next数组在KMP算法中的应用</strong></h4>
+<p>当主串 <code>s</code> 与模式串 <code>p</code> 匹配失败时（即 <code>s[i] ≠ p[j]</code>），利用 <code>next[j-1]</code> 调整模式串的位置：</p>
+<ol>
+<li><strong>将模式串的起始位置移动到 <code>next[j-1]</code></strong>。</li>
+<li><strong>跳过已匹配的重复前缀</strong>，避免回溯主串。</li>
+</ol>
+<p><strong>示例</strong>：
+主串 <code>s = &quot;ABABABC&quot;</code>，模式串 <code>p = &quot;ABABC&quot;</code>，<code>next = [0,0,1,2,0]</code>。</p>
+<ul>
+<li>当 <code>j=4</code>（<code>p[4]='C'</code>）与主串不匹配时，回退到 <code>j = next[3] = 2</code>，继续匹配。</li>
+</ul>
+<h4 id="4-nextshu-zu-de-you-hua-bian-ti"><strong>4. next数组的优化变体</strong></h4>
+<p>某些实现中，<code>next</code> 数组会右移一位（从索引1开始），使代码更简洁。例如：</p>
+<ul>
+<li>原 <code>next</code> 数组：<code>[0,0,0,0,1,2,0]</code></li>
+<li>优化后：<code>[-1,0,0,0,0,1,2]</code>（<code>next[0] = -1</code>，其他值右移）。</li>
+</ul>
+<h4 id="5-nextshu-zu-de-yi-yi"><strong>5. next数组的意义</strong></h4>
+<ul>
+<li><strong>避免主串回溯</strong>：传统暴力算法需回溯主串，而KMP通过 <code>next</code> 数组仅回溯模式串。</li>
+<li><strong>时间复杂度优化</strong>：预处理 <code>next</code> 数组为 O(m)，匹配过程为 O(n)，总时间复杂度 O(n+m)。</li>
+</ul>
+<p>要注意的一个技巧是，在把PMT进行向右偏移时，第0位的值，将其设成了-1，这只是为了编程的方便，并没有其他的意义。next数组如下表所示。</p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225154.png" alt="" /></p>
+<p>求next数组的过程完全可以看成字符串匹配的过程，即以模式字符串为主字符串，以模式字符串的前缀为目标字符串，一旦字符串匹配成功，那么当前的next值就是匹配成功的字符串的长度。</p>
+<p>从模式字符串的第一位(注意，不包括第0位)开始对自身进行匹配运算。</p>
+<p>在任一位置，能匹配的最长长度就是当前位置的next值</p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225319.png" alt="" /></p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225328.png" alt="QQ20250316-225328" /></p>
+<p><img src="https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/static/pics/QQ20250316-225339.png" alt="QQ20250316-225339" /></p>
+<h2 id="shi-xian">实现</h2>
+<pre data-lang="c" style="background-color:#272822;color:#f8f8f2;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;stdio.h&gt;
+</span><span style="color:#f92672;">#include </span><span style="color:#e6db74;">&lt;string.h&gt;
+</span><span> 
+</span><span style="color:#75715e;">// 计算 next 数组
+</span><span style="font-style:italic;color:#66d9ef;">void </span><span style="color:#a6e22e;">computeNextArray</span><span>(</span><span style="font-style:italic;color:#66d9ef;">char </span><span style="color:#f92672;">*</span><span style="font-style:italic;color:#fd971f;">p</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#f92672;">*</span><span style="font-style:italic;color:#fd971f;">next</span><span>, </span><span style="font-style:italic;color:#66d9ef;">int </span><span style="font-style:italic;color:#fd971f;">m</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> len </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>; </span><span style="color:#75715e;">// length of the previous longest prefix suffix
+</span><span>    next[</span><span style="color:#ae81ff;">0</span><span>] </span><span style="color:#f92672;">= -</span><span style="color:#ae81ff;">1</span><span>; </span><span style="color:#75715e;">// next[0] is always -1
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> i </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">1</span><span>;
+</span><span>    </span><span style="color:#f92672;">while </span><span>(i </span><span style="color:#f92672;">&lt;</span><span> m) {
+</span><span>        </span><span style="color:#f92672;">if </span><span>(p[i] </span><span style="color:#f92672;">==</span><span> p[len]) {
+</span><span>            len</span><span style="color:#f92672;">++</span><span>;
+</span><span>            next[i] </span><span style="color:#f92672;">=</span><span> len;
+</span><span>            i</span><span style="color:#f92672;">++</span><span>;
+</span><span>        } </span><span style="color:#f92672;">else </span><span>{
+</span><span>            </span><span style="color:#f92672;">if </span><span>(len </span><span style="color:#f92672;">!= </span><span style="color:#ae81ff;">0</span><span>) {
+</span><span>                len </span><span style="color:#f92672;">=</span><span> next[len </span><span style="color:#f92672;">- </span><span style="color:#ae81ff;">1</span><span>];
+</span><span>            } </span><span style="color:#f92672;">else </span><span>{
+</span><span>                next[i] </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>                i</span><span style="color:#f92672;">++</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span><span> 
+</span><span style="color:#75715e;">// KMP 字符串匹配函数
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">KMP</span><span>(</span><span style="font-style:italic;color:#66d9ef;">char </span><span style="color:#f92672;">*</span><span style="font-style:italic;color:#fd971f;">t</span><span>, </span><span style="font-style:italic;color:#66d9ef;">char </span><span style="color:#f92672;">*</span><span style="font-style:italic;color:#fd971f;">p</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> n </span><span style="color:#f92672;">= </span><span style="color:#66d9ef;">strlen</span><span>(t);
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> m </span><span style="color:#f92672;">= </span><span style="color:#66d9ef;">strlen</span><span>(p);
+</span><span>    </span><span style="color:#f92672;">if </span><span>(m </span><span style="color:#f92672;">== </span><span style="color:#ae81ff;">0</span><span>) </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>; </span><span style="color:#75715e;">// 空模式串匹配在起始位置
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> next[m];
+</span><span>    computeNextArray(p, next, m);
+</span><span> 
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> i </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>; </span><span style="color:#75715e;">// index for t[]
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> j </span><span style="color:#f92672;">= </span><span style="color:#ae81ff;">0</span><span>; </span><span style="color:#75715e;">// index for p[]
+</span><span>    </span><span style="color:#f92672;">while </span><span>(i </span><span style="color:#f92672;">&lt;</span><span> n </span><span style="color:#f92672;">&amp;&amp;</span><span> j </span><span style="color:#f92672;">&lt;</span><span> m) {
+</span><span>        </span><span style="color:#f92672;">if </span><span>(j </span><span style="color:#f92672;">== -</span><span style="color:#ae81ff;">1 </span><span style="color:#f92672;">||</span><span> t[i] </span><span style="color:#f92672;">==</span><span> p[j]) {
+</span><span>            i</span><span style="color:#f92672;">++</span><span>;
+</span><span>            j</span><span style="color:#f92672;">++</span><span>;
+</span><span>        } </span><span style="color:#f92672;">else </span><span>{
+</span><span>            j </span><span style="color:#f92672;">=</span><span> next[j];
+</span><span>        }
+</span><span>    }
+</span><span> 
+</span><span>    </span><span style="color:#f92672;">if </span><span>(j </span><span style="color:#f92672;">==</span><span> m)
+</span><span>        </span><span style="color:#f92672;">return</span><span> i </span><span style="color:#f92672;">-</span><span> j; </span><span style="color:#75715e;">// match found, return start index
+</span><span>    </span><span style="color:#f92672;">else
+</span><span>        </span><span style="color:#f92672;">return -</span><span style="color:#ae81ff;">1</span><span>; </span><span style="color:#75715e;">// match not found
+</span><span>}
+</span><span> 
+</span><span style="font-style:italic;color:#66d9ef;">int </span><span style="color:#a6e22e;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">char</span><span> t[] </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;hello world&quot;</span><span>;
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">char</span><span> p[] </span><span style="color:#f92672;">= </span><span style="color:#e6db74;">&quot;world&quot;</span><span>;
+</span><span>    </span><span style="font-style:italic;color:#66d9ef;">int</span><span> index </span><span style="color:#f92672;">= </span><span>KMP(t, p);
+</span><span>    </span><span style="color:#66d9ef;">printf</span><span>(</span><span style="color:#e6db74;">&quot;Pattern found at index </span><span style="color:#ae81ff;">%d\n</span><span style="color:#e6db74;">&quot;</span><span>, index);
+</span><span>    </span><span style="color:#f92672;">return </span><span style="color:#ae81ff;">0</span><span>;
+</span><span>}
+</span></code></pre>
+
+        </div>
+    </article>
+
+    <div class="toc">
+        <h3>目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 生成目录
+    const article = document.querySelector('article');
+    const headings = article.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    const tocContainer = document.getElementById('toc-container');
+    const tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    // 如果没有标题，隐藏目录
+    if (headings.length === 0) {
+        document.querySelector('.toc').style.display = 'none';
+        return;
+    }
+
+    headings.forEach((heading, index) => {
+        // 为每个标题添加ID
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
+
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
+        a.style.paddingLeft = `${(parseInt(heading.tagName[1]) - 1) * 1}rem`;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 监听滚动，高亮当前部分
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    
+    function highlightToc() {
+        // 获取视窗高度的 1/3 位置作为触发点
+        const triggerPoint = window.innerHeight / 3;
+        
+        // 找到当前可见的标题
+        let currentHeading = null;
+        for (let i = 0; i < headings.length; i++) {
+            const heading = headings[i];
+            const rect = heading.getBoundingClientRect();
+            
+            // 如果标题在触发点上方但还在视窗内，或者是第一个在触发点下方的标题
+            if ((rect.top <= triggerPoint && rect.bottom >= 0) || 
+                (rect.top > triggerPoint && !currentHeading)) {
+                currentHeading = heading;
+                break;
+            }
+        }
+
+        // 如果找到了当前标题，高亮对应的目录项
+        if (currentHeading) {
+            tocLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${currentHeading.id}`) {
+                    link.classList.add('active');
+                    // 确保高亮的目录项在视图中可见
+                    link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 添加平滑滚动效果
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+
+  <style>
+    pre[class*="language-"] {
+      border-radius: 5px;
+      margin: 1.5em 0;
+      padding: 1em;
+      overflow: auto;
+    }
+    
+    code[class*="language-"] {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Prism.highlightAll();
+    });
+  </script>
+</body>
+
+</html>

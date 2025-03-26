@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - algo</title>
+    <link href="https://th1eil.github.io/tags/algo/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-03-25T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/algo/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Learing】c和java中的位运算 </title>
+        <published>2025-03-25T00:00:00+00:00</published>
+        <updated>2025-03-25T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/wei-yun-suan/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/wei-yun-suan/</id>
+        
+        <content type="html">&lt;h1 id=&quot;wei-yun-suan&quot;&gt;位运算&lt;&#x2F;h1&gt;
+&lt;p&gt;位运算是直接对整数的二进制位进行操作的运算&lt;&#x2F;p&gt;
+&lt;p&gt;常见的位运算有：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;与运算（AND）&lt;&#x2F;strong&gt;：&lt;code&gt;&amp;amp;&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;对应位都为 1 时结果为 1，否则为 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;或运算（OR）&lt;&#x2F;strong&gt;：&lt;code&gt;|&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;对应位有 1 时结果为 1，否则为 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;异或运算（XOR）&lt;&#x2F;strong&gt;：&lt;code&gt;^&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;对应位不同为 1，相同为 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;取反运算（NOT）&lt;&#x2F;strong&gt;：&lt;code&gt;~&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;逐位取反（0 变 1，1 变 0）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;左移运算（左移）&lt;&#x2F;strong&gt;：&lt;code&gt;&amp;lt;&amp;lt;&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;将位向左移动指定的位数，低位补 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;右移运算（右移）&lt;&#x2F;strong&gt;：&lt;code&gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;将位向右移动指定的位数，高位填充符号位（对于无符号数，高位补 0）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;jian-dan-jie-shao-liu-chong-wei-yun-suan&quot;&gt;简单介绍六种位运算&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;yu-yun-suan-and&quot;&gt;与运算（AND）&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 1（二进制 0001）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 1（二进制 0001）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;huo-yun-suan-or&quot;&gt;或运算（OR）&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 7（二进制 0111）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 7（二进制 0111）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;yi-huo-yun-suan-xor&quot;&gt;异或运算（XOR）&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 6（二进制 0110）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0011
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 6（二进制 0110）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;qu-fan-yun-suan-not&quot;&gt;取反运算（NOT）&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;a);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 -6（取反后变为二进制 1010）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;a);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -6（取反后变为二进制 1010）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;zuo-yi-yun-suan&quot;&gt;左移运算 &amp;lt;&amp;lt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 10（二进制 1010），左移 1 位
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 10（二进制 1010）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;you-yi-yun-suan&quot;&gt;右移运算 &amp;gt;&amp;gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 结果为 2（二进制 0010），右移 1 位
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 0101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 2（二进制 0010）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;chang-jian-yun-yong&quot;&gt;常见运用&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;1-jian-cha-yi-ge-shu-shi-fou-shi-2de-mi&quot;&gt;1.&lt;strong&gt;检查一个数是否是2的幂&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;判断一个数是否是 2 的幂（即 1, 2, 4, 8, 16, ...）。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;一个数是 2 的幂时，它的二进制表示中只有一个 &lt;code&gt;1&lt;&#x2F;code&gt;，比如：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 的二进制是 &lt;code&gt;0001&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2 的二进制是 &lt;code&gt;0010&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;4 的二进制是 &lt;code&gt;0100&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;8 的二进制是 &lt;code&gt;1000&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;2 的幂数的特点是：&lt;code&gt;n &amp;amp; (n - 1) == 0&lt;&#x2F;code&gt;，这个条件成立时，&lt;code&gt;n&lt;&#x2F;code&gt; 就是 2 的幂。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;isPowerOfTwo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(isPowerOfTwo(n)) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; is a power of 2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, n);
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; is not a power of 2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, n);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;boolean &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;isPowerOfTwo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(isPowerOfTwo(n)) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; is a power of 2&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; is not a power of 2&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;2-jiao-huan-liang-ge-shu&quot;&gt;2.交换两个数&lt;&#x2F;h3&gt;
+&lt;p&gt;使用异或运算可以实现两个数的交换，避免使用临时变量。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;利用异或的性质：&lt;code&gt;a = a ^ b&lt;&#x2F;code&gt;, &lt;code&gt;b = a ^ b&lt;&#x2F;code&gt;, &lt;code&gt;a = a ^ b&lt;&#x2F;code&gt;，实现 &lt;code&gt;a&lt;&#x2F;code&gt; 和 &lt;code&gt;b&lt;&#x2F;code&gt; 的交换。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;a ^ b&lt;&#x2F;code&gt; 相当于两个数的“差”，再通过这种“差”运算恢复原数值。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swap&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= *&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^ *&lt;&#x2F;span&gt;&lt;span&gt;b;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= *&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^ *&lt;&#x2F;span&gt;&lt;span&gt;b;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= *&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^ *&lt;&#x2F;span&gt;&lt;span&gt;b;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Before swap: a = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;, b = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a, b);
+&lt;&#x2F;span&gt;&lt;span&gt;    swap(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;a, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt;b);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swap: a = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;, b = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a, b);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swap&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        a[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;        b[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;        a[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Before swap: a = &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;, b = &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b);
+&lt;&#x2F;span&gt;&lt;span&gt;        swap(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;[]{a}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;new &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;[]{b});
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swap: a = &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;, b = &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;3-qiu-yi-ge-zheng-shu-er-jin-zhi-biao-shi-zhong-1-de-ge-shu-yi-ming-zhong-liang&quot;&gt;3.求一个整数二进制表示中 &lt;code&gt;1&lt;&#x2F;code&gt; 的个数（汉明重量）&lt;&#x2F;h3&gt;
+&lt;p&gt;使用位运算可以高效地计算一个整数的二进制中有多少个 &lt;code&gt;1&lt;&#x2F;code&gt;，常用于计算二进制中某个数的位数。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;每次 &lt;code&gt;n &amp;amp; (n - 1)&lt;&#x2F;code&gt; 可以消除一个 &lt;code&gt;1&lt;&#x2F;code&gt;，直到 &lt;code&gt;n&lt;&#x2F;code&gt; 为 0。这个方法的时间复杂度为 &lt;code&gt;O(log n)&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;hammingWeight&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; count &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(n) {
+&lt;&#x2F;span&gt;&lt;span&gt;        count&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 每次消去最低位的 1
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; count;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;29&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 11101
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Hamming weight: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, hammingWeight(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 4
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;hammingWeight&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; count &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;            count&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 每次消去最低位的 1
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; count;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;29&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 11101
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Hamming weight: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;hammingWeight(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 4
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;4-zhao-chu-zheng-shu-shu-zu-zhong-de-wei-yi-shu-zi-mei-ge-shu-zi-chu-xian-liang-ci-zhi-you-yi-ge-shu-zi-chu-xian-yi-ci&quot;&gt;4.找出整数数组中的唯一数字（每个数字出现两次，只有一个数字出现一次）&lt;&#x2F;h3&gt;
+&lt;p&gt;假设在一个数组中，除了一个数字，其余的数字都出现了两次，使用位运算可以高效地找出唯一的数字。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用异或运算的性质：相同的数字异或为 0，不同的数字异或为非 0。最终，数组中的唯一数字将保留下来。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;singleNumber&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;nums&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;numsSize&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; numsSize; i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^=&lt;&#x2F;span&gt;&lt;span&gt; nums[i];  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 相同数字会被消除，剩下唯一的数字
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; result;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; nums[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; size &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= sizeof&lt;&#x2F;span&gt;&lt;span&gt;(nums) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&#x2F; sizeof&lt;&#x2F;span&gt;&lt;span&gt;(nums[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;]);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Single number: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, singleNumber(nums, size));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 4
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;singleNumber&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;nums&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; num &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; nums) {
+&lt;&#x2F;span&gt;&lt;span&gt;            result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^=&lt;&#x2F;span&gt;&lt;span&gt; num;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 相同数字会被消除，剩下唯一的数字
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; result;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[]&lt;&#x2F;span&gt;&lt;span&gt; nums &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;};
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Single number: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;singleNumber(nums));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 4
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;5-jiao-huan-zheng-shu-de-ou-shu-wei-he-qi-shu-wei&quot;&gt;5. &lt;strong&gt;交换整数的偶数位和奇数位&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;将一个整数的偶数位和奇数位互换，可以通过位运算来实现。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用掩码分离出偶数位和奇数位，然后将它们左移或右移并组合起来。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swapEvenOddBits&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int&lt;&#x2F;span&gt;&lt;span&gt; evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0xAAAAAAAA&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 获取偶数位
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int&lt;&#x2F;span&gt;&lt;span&gt; oddBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0x55555555&lt;&#x2F;span&gt;&lt;span&gt;;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 获取奇数位
+&lt;&#x2F;span&gt;&lt;span&gt;    evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 偶数位右移
+&lt;&#x2F;span&gt;&lt;span&gt;    oddBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 奇数位左移
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; oddBits);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;23&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 10111
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swapping bits: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%u\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, swapEvenOddBits(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 43（二进制 101011）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swapEvenOddBits&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0xAAAAAAAA&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 获取偶数位
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; oddBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0x55555555&lt;&#x2F;span&gt;&lt;span&gt;;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 获取奇数位
+&lt;&#x2F;span&gt;&lt;span&gt;        evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 偶数位右移
+&lt;&#x2F;span&gt;&lt;span&gt;        oddBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 奇数位左移
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(evenBits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; oddBits);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;23&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 10111
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swapping bits: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;swapEvenOddBits(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 43（二进制 101011）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;6-pan-duan-yi-ge-shu-shi-fou-shi-qi-shu-huo-ou-shu&quot;&gt;6. &lt;strong&gt;判断一个数是否是奇数或偶数&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;位运算可以非常高效地判断一个整数是奇数还是偶数。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;一个整数的二进制表示的最后一位（最低位）决定了该数是奇数还是偶数：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果最低位为 &lt;code&gt;1&lt;&#x2F;code&gt;，则该数为奇数。&lt;&#x2F;li&gt;
+&lt;li&gt;如果最低位为 &lt;code&gt;0&lt;&#x2F;code&gt;，则该数为偶数。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;通过与操作 &lt;code&gt;n &amp;amp; 1&lt;&#x2F;code&gt;，如果结果是 &lt;code&gt;1&lt;&#x2F;code&gt;，则是奇数；如果结果是 &lt;code&gt;0&lt;&#x2F;code&gt;，则是偶数。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;isEven&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;7&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(isEven(n)) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; is even&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, n);
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; is odd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, n);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;boolean &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;isEven&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;7&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(isEven(n)) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; is even&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; is odd&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;7-qing-chu-zui-di-you-xiao-wei-lowest-set-bit&quot;&gt;7. &lt;strong&gt;清除最低有效位（Lowest Set Bit）&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;有时你需要删除一个整数中的最低有效位（第一个 &lt;code&gt;1&lt;&#x2F;code&gt;），可以通过位运算实现。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;n &amp;amp; (n - 1)&lt;&#x2F;code&gt; 可以清除最低有效位。例如：
+&lt;ul&gt;
+&lt;li&gt;对于 &lt;code&gt;n = 12&lt;&#x2F;code&gt;（二进制 &lt;code&gt;1100&lt;&#x2F;code&gt;），&lt;code&gt;n - 1 = 11&lt;&#x2F;code&gt;（二进制 &lt;code&gt;1011&lt;&#x2F;code&gt;），&lt;code&gt;n &amp;amp; (n - 1)&lt;&#x2F;code&gt; 就是 &lt;code&gt;1000&lt;&#x2F;code&gt;，清除了最低有效位。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;clearLowestBit&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;12&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 1100
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After clearing the lowest bit: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, clearLowestBit(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 8（二进制 1000）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;clearLowestBit&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span&gt;(n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;12&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制 1100
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After clearing the lowest bit: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;clearLowestBit(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 8（二进制 1000）
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;8-jiao-huan-zheng-shu-de-fu-hao&quot;&gt;8. &lt;strong&gt;交换整数的符号&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;通过位运算，你可以改变一个整数的符号（即负数变为正数，正数变为负数）。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过异或操作，可以反转整数的符号位（最高位）。例如：&lt;code&gt;n = n ^ (1 &amp;lt;&amp;lt; 31)&lt;&#x2F;code&gt;，这会将 &lt;code&gt;n&lt;&#x2F;code&gt; 的符号位取反。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swapSign&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^ &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;31&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 将符号位取反
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swapping sign: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, swapSign(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 5
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;swapSign&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;n&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^ &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;31&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 将符号位取反
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;After swapping sign: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;swapSign(n));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 5
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;9-qiu-liang-ge-shu-de-zui-da-gong-yue-shu-gcd&quot;&gt;9. &lt;strong&gt;求两个数的最大公约数（GCD）&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;可以利用位运算快速求解两个数的最大公约数（Euclid&#x27;s algorithm），特别是在处理大数时，位运算可以提高效率。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;利用&lt;strong&gt;二进制求最大公约数&lt;&#x2F;strong&gt;的方法，可以通过 &lt;code&gt;n &amp;amp; -n&lt;&#x2F;code&gt; 来去除数字的最低有效位，从而加速求 GCD。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;gcd&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; b;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; a;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; shift;
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 计算 a 和 b 的二进制表示中公共的 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(shift &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; ((a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; b) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;shift) {
+&lt;&#x2F;span&gt;&lt;span&gt;        a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 去除 a 中的所有 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;do &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 去除 b 中的所有 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; b) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; temp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a;
+&lt;&#x2F;span&gt;&lt;span&gt;            a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; b;
+&lt;&#x2F;span&gt;&lt;span&gt;            b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; temp;
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; a;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; b = b - a
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; shift;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 将公共的 2 的幂加回来
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;56&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;98&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;GCD of &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; is: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a, b, gcd(a, b));  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 GCD
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;gcd&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; b;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; a;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; shift &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 计算 a 和 b 的二进制表示中公共的 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;|&lt;&#x2F;span&gt;&lt;span&gt; b) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;            a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            shift&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 去除 a 中的所有 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;do &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 去除 b 中的所有 2 的幂
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; b) {
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; temp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a;
+&lt;&#x2F;span&gt;&lt;span&gt;                a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; b;
+&lt;&#x2F;span&gt;&lt;span&gt;                b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; temp;
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;            b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; a;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; b = b - a
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; shift;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 将公共的 2 的幂加回来
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;56&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;98&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;GCD of &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; and &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; is: &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span&gt;gcd(a, b));
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;10-tong-guo-wei-yun-suan-pan-duan-liang-ge-zheng-shu-shi-fou-xiang-deng&quot;&gt;10. &lt;strong&gt;通过位运算判断两个整数是否相等&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;如果两个整数相等，则它们的异或结果为 0。这可以通过 &lt;code&gt;a ^ b&lt;&#x2F;code&gt; 来判断两个数是否相等。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果 &lt;code&gt;a&lt;&#x2F;code&gt; 和 &lt;code&gt;b&lt;&#x2F;code&gt; 相等，&lt;code&gt;a ^ b == 0&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; C语言
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;areEqual&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 如果 a 和 b 相等，则 a ^ b 为 0
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(areEqual(a, b)) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; are equal&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a, b);
+&lt;&#x2F;span&gt;&lt;span&gt;    } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt; are not equal&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a, b);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; Java
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;boolean &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;areEqual&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;^&lt;&#x2F;span&gt;&lt;span&gt; b) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 如果 a 和 b 相等，则 a ^ b 为 0
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;, b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(areEqual(a, b)) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; and &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; are equal&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; and &amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot; are not equal&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;javayu-cde-wei-yun-suan-qu-bie&quot;&gt;java与c的位运算区别&lt;&#x2F;h2&gt;
+&lt;p&gt;在 Java 和 C 中，位运算的基本原理和操作是相同的，但它们在一些细节上有所不同，&lt;&#x2F;p&gt;
+&lt;p&gt;主要体现在 &lt;strong&gt;数据类型的处理&lt;&#x2F;strong&gt;、&lt;strong&gt;符号扩展&lt;&#x2F;strong&gt; 和 &lt;strong&gt;溢出处理&lt;&#x2F;strong&gt; 等方面。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-shu-ju-lei-xing-he-wei-kuan&quot;&gt;1. &lt;strong&gt;数据类型和位宽&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;C 语言中的整数类型如 &lt;code&gt;int&lt;&#x2F;code&gt;、&lt;code&gt;short&lt;&#x2F;code&gt;、&lt;code&gt;long&lt;&#x2F;code&gt; 等的位宽是由平台和编译器决定的。通常，&lt;code&gt;int&lt;&#x2F;code&gt; 在大多数平台上是 32 位，&lt;code&gt;long&lt;&#x2F;code&gt; 可能是 32 位或 64 位。&lt;&#x2F;li&gt;
+&lt;li&gt;C 语言对有符号类型的位运算有时会产生未定义行为，尤其是在符号扩展时。&lt;&#x2F;li&gt;
+&lt;li&gt;C 语言的类型也允许使用 &lt;code&gt;char&lt;&#x2F;code&gt;（通常是 8 位）进行位运算。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;在 Java 中，&lt;code&gt;int&lt;&#x2F;code&gt; 和 &lt;code&gt;long&lt;&#x2F;code&gt; 是 &lt;strong&gt;固定长度&lt;&#x2F;strong&gt; 的。&lt;code&gt;int&lt;&#x2F;code&gt; 总是 32 位，&lt;code&gt;long&lt;&#x2F;code&gt; 总是 64 位。&lt;&#x2F;li&gt;
+&lt;li&gt;Java 中的所有整数类型（包括 &lt;code&gt;byte&lt;&#x2F;code&gt;, &lt;code&gt;short&lt;&#x2F;code&gt;, &lt;code&gt;int&lt;&#x2F;code&gt;, &lt;code&gt;long&lt;&#x2F;code&gt;）的位运算操作都将其转换为 32 位或 64 位的二进制表示。&lt;&#x2F;li&gt;
+&lt;li&gt;Java 不允许直接操作 &lt;code&gt;char&lt;&#x2F;code&gt; 类型的位（&lt;code&gt;char&lt;&#x2F;code&gt; 在 Java 中是 16 位无符号类型，不能进行位运算），但是可以通过 &lt;code&gt;int&lt;&#x2F;code&gt; 类型来实现相同的操作。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-fu-hao-kuo-zhan&quot;&gt;2. &lt;strong&gt;符号扩展&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;C 语言中进行右移操作时，&lt;strong&gt;有符号整数&lt;&#x2F;strong&gt; 右移会进行符号扩展，即将符号位（最高位）填充到左边。这意味着对于负数，右移后会填充 &lt;code&gt;1&lt;&#x2F;code&gt;，对于正数，右移后会填充 &lt;code&gt;0&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;对于 &lt;strong&gt;无符号整数&lt;&#x2F;strong&gt;，右移不会进行符号扩展，而是填充 &lt;code&gt;0&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制：11111111111111111111111111111000
+&lt;&#x2F;span&gt;&lt;span&gt;printf(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2，二进制：11111111111111111111111111111110
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 中的 &lt;strong&gt;有符号整数&lt;&#x2F;strong&gt; 右移也会进行符号扩展，但是 Java 提供了两种不同的右移操作：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;算术右移（&lt;code&gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;）&lt;&#x2F;strong&gt;：进行符号扩展。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;逻辑右移（&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;）&lt;&#x2F;strong&gt;：无论是有符号还是无符号整数，都会填充 &lt;code&gt;0&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Java 对于无符号整数的处理不同于 C，因为 Java 中的整数是 &lt;strong&gt;有符号&lt;&#x2F;strong&gt; 的，&lt;code&gt;char&lt;&#x2F;code&gt; 不是无符号类型，因此不能直接进行无符号右移。但可以通过 &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt; 来实现无符号右移。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制：11111111111111111111111111111000
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2，二进制：11111111111111111111111111111110
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 1073741822，二进制：00111111111111111111111111111110
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;3-yi-chu-chu-li&quot;&gt;3. &lt;strong&gt;溢出处理&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;C 语言中的 &lt;strong&gt;溢出行为&lt;&#x2F;strong&gt; 是未定义的，特别是对于有符号整数。对有符号整数进行溢出（例如，&lt;code&gt;int&lt;&#x2F;code&gt; 超过其最大值或最小值）会导致未定义的行为，而对无符号整数进行溢出则会发生 &lt;strong&gt;模运算&lt;&#x2F;strong&gt;，即会“环绕”回 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2147483647&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; int 类型最大值
+&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 会发生溢出，结果未定义
+&lt;&#x2F;span&gt;&lt;span&gt;printf(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a);
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 Java 中，溢出是定义好的行为。对于 &lt;strong&gt;有符号整数&lt;&#x2F;strong&gt;，如果超出 &lt;code&gt;int&lt;&#x2F;code&gt; 或 &lt;code&gt;long&lt;&#x2F;code&gt; 的范围，结果会回绕到最小值。例如，&lt;code&gt;int&lt;&#x2F;code&gt; 的最大值是 &lt;code&gt;2147483647&lt;&#x2F;code&gt;，当其值超过该范围时，会回绕到负数。Java 中的 &lt;strong&gt;整数溢出&lt;&#x2F;strong&gt; 是通过 &lt;strong&gt;模运算&lt;&#x2F;strong&gt; 实现的。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2147483647&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; int 类型最大值
+&lt;&#x2F;span&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 溢出，结果是 -2147483648
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2147483648
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;4-wei-yun-suan-you-xian-ji&quot;&gt;4. &lt;strong&gt;位运算优先级&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 C 语言中，位运算的优先级低于大多数算术运算，因此如果要确保位运算优先执行，通常需要使用括号。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 先执行加法，再执行左移
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 中的位运算优先级和 C 类似，但有时在与其他运算符结合时需要小心。例如，Java 中的位运算同样优先级较低，需要使用括号明确运算顺序。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; result &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;5 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 先执行加法，再执行左移
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;5-you-fu-hao-yu-wu-fu-hao-lei-xing&quot;&gt;5. &lt;strong&gt;有符号与无符号类型&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;C 语言中可以使用 &lt;strong&gt;无符号类型&lt;&#x2F;strong&gt;（如 &lt;code&gt;unsigned int&lt;&#x2F;code&gt;、&lt;code&gt;unsigned char&lt;&#x2F;code&gt;），并且对无符号整数的位运算不会涉及符号扩展。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4294967295&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 最大无符号整数值
+&lt;&#x2F;span&gt;&lt;span&gt;printf(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%u\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 0（无符号溢出）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java 中的整数类型都是 &lt;strong&gt;有符号&lt;&#x2F;strong&gt; 的，因此没有 &lt;code&gt;unsigned int&lt;&#x2F;code&gt; 或 &lt;code&gt;unsigned long&lt;&#x2F;code&gt; 类型。Java 提供了 &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;（逻辑右移）来模拟无符号整数的操作，但并没有专门的无符号类型。在 Java 中处理无符号整数需要特别小心，通常需要通过 &lt;code&gt;long&lt;&#x2F;code&gt; 类型来处理更大的数值范围。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 2147483647（无符号右移）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;6-yi-chu-yu-qu-mo&quot;&gt;6. &lt;strong&gt;溢出与取模&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;C 语言&lt;&#x2F;strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;C 中对无符号整数的溢出会发生取模操作，而对有符号整数则会产生未定义行为。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;在 Java 中，溢出操作是严格定义的，对于整数溢出，会按照二进制取模操作进行。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;zong-jie&quot;&gt;总结&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;位运算的核心操作&lt;&#x2F;strong&gt;（与、或、非、异或、左移、右移）在 C 和 Java 中的基本原理相同，但由于两者对整数类型的处理有所不同，特别是在符号扩展、溢出行为和无符号类型支持上有所差异。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Java&lt;&#x2F;strong&gt; 语言提供了更为严格和一致的行为（如固定位宽、符号扩展等），但是也限制了对无符号类型的直接支持；而 &lt;strong&gt;C&lt;&#x2F;strong&gt; 语言则具有更大的灵活性，尤其是在平台相关的类型宽度和未定义行为方面，开发者需要更小心地处理溢出和符号扩展等问题。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;yi-chu-yu-qu-mo&quot;&gt;溢出与取模&lt;&#x2F;h2&gt;
+&lt;p&gt;溢出（Overflow）和取模（Modulo）是位运算和数学运算中非常重要的概念，特别是在处理整数类型时。溢出与取模的关系在不同的编程语言和不同的数值类型下会有不同的表现。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-yi-chu-overflow&quot;&gt;1. &lt;strong&gt;溢出 (Overflow)&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;溢出通常是指一个数值超出了其数据类型所能表示的范围。溢出可能会导致结果变为未定义，或者是某种“环绕”行为（即从最大值回到最小值或反之）。溢出经常出现在整数计算中，特别是在加法、乘法等运算中，或者在右移、左移等位运算中。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;yi-chu-de-lei-xing&quot;&gt;&lt;strong&gt;溢出的类型：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;有符号溢出&lt;&#x2F;strong&gt;：当对 &lt;strong&gt;有符号整数&lt;&#x2F;strong&gt; 进行运算时，如果计算结果超出了该类型的表示范围，就会发生溢出。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;无符号溢出&lt;&#x2F;strong&gt;：对于 &lt;strong&gt;无符号整数&lt;&#x2F;strong&gt;，溢出通常是以 &lt;strong&gt;模运算&lt;&#x2F;strong&gt; 的方式处理，即结果回绕到类型的最小值（0）处。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;you-fu-hao-yi-chu-de-li-zi&quot;&gt;&lt;strong&gt;有符号溢出的例子：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;在有符号整数的运算中，如果一个值超过了该类型的最大值，通常会导致溢出，并且在 &lt;strong&gt;C 语言&lt;&#x2F;strong&gt; 中，溢出的行为是未定义的，可能会导致不可预期的结果。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;C 语言中的溢出示例&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2147483647&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 32-bit int 类型的最大值
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 溢出，结果未定义
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在上述代码中，&lt;code&gt;max + 1&lt;&#x2F;code&gt; 的结果会超出 &lt;code&gt;int&lt;&#x2F;code&gt; 类型的最大值，这会导致溢出，结果是未定义的，可能会表现为负数或某个非常不正常的数值。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;java-zhong-de-yi-chu&quot;&gt;&lt;strong&gt;Java 中的溢出：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;在 &lt;strong&gt;Java&lt;&#x2F;strong&gt; 中，溢出是有定义的。对于 &lt;strong&gt;有符号整数&lt;&#x2F;strong&gt;（如 &lt;code&gt;int&lt;&#x2F;code&gt;），如果计算超出了该类型的表示范围，结果会回绕。例如，&lt;code&gt;int&lt;&#x2F;code&gt; 的最大值是 &lt;code&gt;2147483647&lt;&#x2F;code&gt;，再加 1 就会回绕到最小值 &lt;code&gt;-2147483648&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Java 中的溢出示例&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2147483647&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; int 类型的最大值
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2147483648，发生溢出
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在 Java 中，溢出的结果是 &lt;strong&gt;环绕&lt;&#x2F;strong&gt; 的，结果会回到整数类型的最小值。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-yi-chu-yu-qu-mo&quot;&gt;2. &lt;strong&gt;溢出与取模&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;溢出和取模之间的关系主要体现在整数运算中，尤其是在处理无符号整数时。具体来说，当无符号整数超出其最大值时，运算会按 &lt;strong&gt;模运算&lt;&#x2F;strong&gt; 规则处理，即回绕到零或最小值。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;wu-fu-hao-yi-chu-de-mo-yun-suan&quot;&gt;&lt;strong&gt;无符号溢出的模运算：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;对于 &lt;strong&gt;无符号整数&lt;&#x2F;strong&gt;，溢出是通过模运算来处理的。无符号整数的溢出会回绕到零或最小值，而不是出现未定义行为。例如，假设有一个 8 位无符号整数，其最大值为 255。如果我们将其值加 1，就会回绕到 0。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;C 语言中的无符号溢出示例&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;unsigned int&lt;&#x2F;span&gt;&lt;span&gt; max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;4294967295&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 32-bit unsigned int 的最大值
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%u\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, max &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 0，无符号溢出（模运算）
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在这个例子中，&lt;code&gt;max + 1&lt;&#x2F;code&gt; 超出了 &lt;code&gt;unsigned int&lt;&#x2F;code&gt; 能表示的最大值 &lt;code&gt;4294967295&lt;&#x2F;code&gt;，因此会发生 &lt;strong&gt;模运算&lt;&#x2F;strong&gt;，回绕到 &lt;code&gt;0&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;yi-chu-yu-qu-mo-de-ben-zhi&quot;&gt;&lt;strong&gt;溢出与取模的本质：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;对于 &lt;strong&gt;无符号整数&lt;&#x2F;strong&gt;，每当一个值超出其能表示的最大值时，它会像一个环绕计数器一样，从最大值回到最小值。这个过程可以通过取模运算来描述。
+&lt;ul&gt;
+&lt;li&gt;对于一个无符号 &lt;code&gt;n&lt;&#x2F;code&gt; 位整数，&lt;code&gt;n&lt;&#x2F;code&gt; 的最大值是 &lt;code&gt;2^n - 1&lt;&#x2F;code&gt;。当数值超过这个最大值时，它会回绕并重新开始计算。&lt;&#x2F;li&gt;
+&lt;li&gt;例如，对于一个 8 位无符号整数（最大值 255），计算 &lt;code&gt;256 % 256&lt;&#x2F;code&gt; 会得到 0。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;3-you-yi-he-yi-chu&quot;&gt;3. &lt;strong&gt;右移和溢出&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;在位运算中，&lt;strong&gt;右移操作&lt;&#x2F;strong&gt;常常会导致溢出，尤其是对于有符号整数。右移会将最低有效位（最右边的位）丢弃，并且根据类型的符号位决定填充的位（符号扩展或零扩展）。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;c-yu-yan-de-you-yi-yi-chu&quot;&gt;&lt;strong&gt;C 语言的右移溢出：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;对于有符号整数，右移操作会导致符号扩展（即用符号位填充空位），但如果是无符号整数，右移则会填充零。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;C 语言中的右移示例&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制：11111111111111111111111111111000
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2，符号扩展
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;对于有符号整数，右移时，会用符号位填充空位，导致 &lt;code&gt;-8&lt;&#x2F;code&gt; 右移后变成 &lt;code&gt;-2&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;java-de-you-yi-yu-yi-chu&quot;&gt;&lt;strong&gt;Java 的右移与溢出：&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;在 Java 中，右移的行为和 C 类似，但 Java 提供了两种右移操作：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;算术右移（&lt;code&gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;）&lt;&#x2F;strong&gt;：会进行符号扩展。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;逻辑右移（&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt;）&lt;&#x2F;strong&gt;：会用 &lt;code&gt;0&lt;&#x2F;code&gt; 填充空位，即无符号右移。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;Java 中的右移示例&lt;&#x2F;strong&gt;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Main &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;public static &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;args&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 二进制：11111111111111111111111111111000
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 -2，符号扩展
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;System&lt;&#x2F;span&gt;&lt;span&gt;.out.println(a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;);  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 输出 1073741822，无符号右移
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;在上面的例子中，&lt;code&gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt; 做的是算术右移，&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;&#x2F;code&gt; 做的是逻辑右移，后者无论符号如何，都会用零填充空位。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;4-yi-chu-yu-qu-mo-zai-shi-ji-ying-yong-zhong-de-ying-yong&quot;&gt;4. &lt;strong&gt;溢出与取模在实际应用中的应用&lt;&#x2F;strong&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;哈希算法&lt;&#x2F;strong&gt;：在哈希算法中，溢出和取模是常见的操作。通常，哈希函数会返回一个数值，然后使用取模运算（如 &lt;code&gt;hash % table_size&lt;&#x2F;code&gt;）来确定数据存储的索引。这个过程实际上是在使用模运算处理溢出，确保索引值在有效范围内。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;计数器与环绕&lt;&#x2F;strong&gt;：在一些计数器或者循环中，溢出和取模通常是用来实现循环行为的。例如，计数器在达到了最大值后会从 0 开始。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;无符号整数的应用&lt;&#x2F;strong&gt;：在处理非常大的数值时，尤其是在 &lt;strong&gt;图形处理&lt;&#x2F;strong&gt; 或 &lt;strong&gt;网络协议&lt;&#x2F;strong&gt; 中，经常会使用无符号整数，这时溢出和模运算就显得尤为重要。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>【Learning】KPM的一些理解</title>
+        <published>2025-03-17T00:00:00+00:00</published>
+        <updated>2025-03-17T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://th1eil.github.io/blog/kmp/" type="text/html"/>
+        <id>https://th1eil.github.io/blog/kmp/</id>
+        
+        <content type="html">&lt;h1 id=&quot;kmpli-jie&quot;&gt;KMP理解&lt;&#x2F;h1&gt;
+&lt;p&gt;Knuth-Morris-Pratt (KMP) 字符串匹配算法&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;gai-nian&quot;&gt;概念&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;pmt&quot;&gt;PMT&lt;&#x2F;h3&gt;
+&lt;p&gt;KMP算法的核心，是一个被称为&lt;strong&gt;部分匹配表&lt;&#x2F;strong&gt;(&lt;strong&gt;P&lt;&#x2F;strong&gt;artial &lt;strong&gt;M&lt;&#x2F;strong&gt;atch &lt;strong&gt;T&lt;&#x2F;strong&gt;able)的数组。&lt;&#x2F;p&gt;
+&lt;p&gt;对于字符串“abababca”，它的PMT如下表所示：&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-223530.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;就像例子中所示的，如果待匹配的模式字符串有8个字符，那么PMT就会有8个值。&lt;&#x2F;p&gt;
+&lt;p&gt;先解释一下字符串的&lt;strong&gt;前缀&lt;&#x2F;strong&gt;和&lt;strong&gt;后缀&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;如果字符串A和B，存在A=BS，其中S是任意的&lt;strong&gt;非空字符串&lt;&#x2F;strong&gt;，那就称B为A的&lt;strong&gt;前缀&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，”Harry”的前缀包括{”H”, ”Ha”, ”Har”, ”Harr”}，把所有前缀组成的集合，称为字符串的前缀集合。&lt;&#x2F;p&gt;
+&lt;p&gt;同样可以定义后缀A=SB， 其中S是任意的&lt;strong&gt;非空字符串&lt;&#x2F;strong&gt;，那就称B为A的&lt;strong&gt;后缀&lt;&#x2F;strong&gt;，&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，”Potter”的后缀包括{”otter”, ”tter”, ”ter”, ”er”, ”r”}，然后把所有后缀组成的集合，称为字符串的后缀集合。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;要注意的是，字符串本身并不是自己的后缀。&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;（通常我们讨论后缀时指的是&lt;strong&gt;真子串&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;有了这个定义，就可以说明PMT中的值的意义了。&lt;strong&gt;PMT中的值是字符串的前缀集合与后缀集合的交集中最长元素的长度&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;&#x2F;strong&gt;，对于”aba”，它的前缀集合为{”a”, ”ab”}，后缀 集合为{”ba”, ”a”}。&lt;&#x2F;p&gt;
+&lt;p&gt;两个集合的交集为{”a”}，那么长度最长的元素就是字符串”a”了，长 度为1，所以对于”aba”而言，它在PMT表中对应的值就是1。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;再比如&lt;&#x2F;strong&gt;，对于字符串”ababa”，它的前缀集合为{”a”, ”ab”, ”aba”, ”abab”}，它的后缀集合为{”baba”, ”aba”, ”ba”, ”a”}， 两个集合的交集为{”a”, ”aba”}，其中最长的元素为”aba”，长度为3。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;li-jie&quot;&gt;理解&lt;&#x2F;h2&gt;
+&lt;p&gt;如何使用这个表来加速字符串的查找，以及这样用的道理是什么。&lt;&#x2F;p&gt;
+&lt;p&gt;要在主字符串&amp;quot;ab&lt;strong&gt;abababca&lt;&#x2F;strong&gt;&amp;quot;中查找模式字符串&amp;quot;&lt;strong&gt;abababca&lt;&#x2F;strong&gt;&amp;quot;。&lt;&#x2F;p&gt;
+&lt;p&gt;如果在 j 处字符不匹配，那么由于前边所说的模式字符串 PMT 的性质，主字符串中 i 指针之前的 PMT[j −1] 位就一定与模式字符串的第 0 位至第 PMT[j−1] 位是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;这是因为主字符串在 i 位失配，也就意味着主字符串从 i−j 到 i 这一段是与模式字符串的 0 到 j 这一段是完全相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;模式字符串从 0 到 j−1 ，在这个例子中就是”ababab”，其&lt;strong&gt;前缀集合&lt;&#x2F;strong&gt;与&lt;strong&gt;后缀集合&lt;&#x2F;strong&gt;的&lt;strong&gt;交集&lt;&#x2F;strong&gt;的&lt;strong&gt;最长元素&lt;&#x2F;strong&gt;为”abab”， 长度为&lt;strong&gt;4&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;p&gt;所以就可以断言，主字符串中i指针之前的 4 位一定与模式字符串的第0位至第 4 位是相同的，即长度为 4 的后缀与前缀相同。这样一来，我们就可以将这些字符段的比较省略掉。&lt;&#x2F;p&gt;
+&lt;p&gt;具体的做法是，保持i指针不动，然后将j指针指向模式字符串的PMT[j −1]位即可&lt;&#x2F;p&gt;
+&lt;p&gt;简言之，以图中的例子来说，在 i 处失配，那么主字符串和模式字符串的前边6位就是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;又因为模式字符串的前6位，它的前4位前缀和后4位后缀是相同的，所以我们推知主字符串i之前的4位和模式字符串开头的4位是相同的。&lt;&#x2F;p&gt;
+&lt;p&gt;就是图中的灰色部分。那这部分就不用再比较了。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-223836.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;如果是在 j 位 失配，那么影响 j 指针回溯的位置的其实是第 j −1 位的 PMT 值，所以为了编程的方便， 我们不直接使用PMT数组，而是将PMT数组向后偏移一位。&lt;strong&gt;新得到的这个数组就是next数组&lt;&#x2F;strong&gt;。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;nextshu-zu&quot;&gt;next数组&lt;&#x2F;h3&gt;
+&lt;p&gt;KMP算法中的&lt;strong&gt;next数组&lt;&#x2F;strong&gt;（也称为部分匹配表或前缀函数）是算法高效性的核心。&lt;&#x2F;p&gt;
+&lt;p&gt;它通过预处理模式串（pattern），记录每个位置的最长公共前后缀长度，从而在匹配失败时快速跳过不必要的比较。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;1-nextshu-zu-de-ding-yi&quot;&gt;&lt;strong&gt;1. next数组的定义&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;对于模式串 &lt;code&gt;p&lt;&#x2F;code&gt; 的每个位置 &lt;code&gt;i&lt;&#x2F;code&gt;，&lt;code&gt;next[i]&lt;&#x2F;code&gt; 表示：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;p[0...i-1]&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt; 这个子串中，&lt;strong&gt;最长的相同前缀和后缀的长度&lt;&#x2F;strong&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;前缀&lt;&#x2F;strong&gt;：从第一个字符开始的连续子串。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;后缀&lt;&#x2F;strong&gt;：从最后一个字符向前结束的连续子串。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;&#x2F;strong&gt;：
+若 &lt;code&gt;p = &amp;quot;ABABC&amp;quot;&lt;&#x2F;code&gt;，则：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;next[4]&lt;&#x2F;code&gt; 对应子串 &lt;code&gt;&amp;quot;ABAB&amp;quot;&lt;&#x2F;code&gt;，其最长公共前后缀为 &lt;code&gt;&amp;quot;AB&amp;quot;&lt;&#x2F;code&gt;，长度为2，故 &lt;code&gt;next[4] = 2&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h4 id=&quot;2-nextshu-zu-de-ji-suan-fang-fa&quot;&gt;&lt;strong&gt;2. next数组的计算方法&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;通过双指针法（&lt;code&gt;i&lt;&#x2F;code&gt; 和 &lt;code&gt;j&lt;&#x2F;code&gt;）遍历模式串，动态计算每个位置的 &lt;code&gt;next&lt;&#x2F;code&gt; 值：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;next[0] = 0&lt;&#x2F;code&gt;（无前缀或后缀）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;j = 0&lt;&#x2F;code&gt;（前缀指针），&lt;code&gt;i = 1&lt;&#x2F;code&gt;（后缀指针）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;遍历模式串：
+&lt;ul&gt;
+&lt;li&gt;若 &lt;code&gt;p[i] == p[j]&lt;&#x2F;code&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;j++&lt;&#x2F;code&gt;（前缀长度+1）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;next[i] = j&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;i++&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;若 &lt;code&gt;p[i] != p[j]&lt;&#x2F;code&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;若 &lt;code&gt;j &amp;gt; 0&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;：&lt;code&gt;j = next[j-1]&lt;&#x2F;code&gt;（回退到前一个最长前缀的末尾）。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;若 &lt;code&gt;j == 0&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;：&lt;code&gt;next[i] = 0&lt;&#x2F;code&gt;，&lt;code&gt;i++&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h4 id=&quot;3-nextshu-zu-zai-kmpsuan-fa-zhong-de-ying-yong&quot;&gt;&lt;strong&gt;3. next数组在KMP算法中的应用&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;当主串 &lt;code&gt;s&lt;&#x2F;code&gt; 与模式串 &lt;code&gt;p&lt;&#x2F;code&gt; 匹配失败时（即 &lt;code&gt;s[i] ≠ p[j]&lt;&#x2F;code&gt;），利用 &lt;code&gt;next[j-1]&lt;&#x2F;code&gt; 调整模式串的位置：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;将模式串的起始位置移动到 &lt;code&gt;next[j-1]&lt;&#x2F;code&gt;&lt;&#x2F;strong&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;跳过已匹配的重复前缀&lt;&#x2F;strong&gt;，避免回溯主串。&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;&#x2F;strong&gt;：
+主串 &lt;code&gt;s = &amp;quot;ABABABC&amp;quot;&lt;&#x2F;code&gt;，模式串 &lt;code&gt;p = &amp;quot;ABABC&amp;quot;&lt;&#x2F;code&gt;，&lt;code&gt;next = [0,0,1,2,0]&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;当 &lt;code&gt;j=4&lt;&#x2F;code&gt;（&lt;code&gt;p[4]=&#x27;C&#x27;&lt;&#x2F;code&gt;）与主串不匹配时，回退到 &lt;code&gt;j = next[3] = 2&lt;&#x2F;code&gt;，继续匹配。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;4-nextshu-zu-de-you-hua-bian-ti&quot;&gt;&lt;strong&gt;4. next数组的优化变体&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;某些实现中，&lt;code&gt;next&lt;&#x2F;code&gt; 数组会右移一位（从索引1开始），使代码更简洁。例如：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;原 &lt;code&gt;next&lt;&#x2F;code&gt; 数组：&lt;code&gt;[0,0,0,0,1,2,0]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;优化后：&lt;code&gt;[-1,0,0,0,0,1,2]&lt;&#x2F;code&gt;（&lt;code&gt;next[0] = -1&lt;&#x2F;code&gt;，其他值右移）。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;5-nextshu-zu-de-yi-yi&quot;&gt;&lt;strong&gt;5. next数组的意义&lt;&#x2F;strong&gt;&lt;&#x2F;h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;避免主串回溯&lt;&#x2F;strong&gt;：传统暴力算法需回溯主串，而KMP通过 &lt;code&gt;next&lt;&#x2F;code&gt; 数组仅回溯模式串。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;时间复杂度优化&lt;&#x2F;strong&gt;：预处理 &lt;code&gt;next&lt;&#x2F;code&gt; 数组为 O(m)，匹配过程为 O(n)，总时间复杂度 O(n+m)。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;要注意的一个技巧是，在把PMT进行向右偏移时，第0位的值，将其设成了-1，这只是为了编程的方便，并没有其他的意义。next数组如下表所示。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225154.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;求next数组的过程完全可以看成字符串匹配的过程，即以模式字符串为主字符串，以模式字符串的前缀为目标字符串，一旦字符串匹配成功，那么当前的next值就是匹配成功的字符串的长度。&lt;&#x2F;p&gt;
+&lt;p&gt;从模式字符串的第一位(注意，不包括第0位)开始对自身进行匹配运算。&lt;&#x2F;p&gt;
+&lt;p&gt;在任一位置，能匹配的最长长度就是当前位置的next值&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225319.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225328.png&quot; alt=&quot;QQ20250316-225328&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;th1eil&#x2F;th1eil.github.io&#x2F;main&#x2F;static&#x2F;pics&#x2F;QQ20250316-225339.png&quot; alt=&quot;QQ20250316-225339&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;shi-xian&quot;&gt;实现&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;stdio.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;#include &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;lt;string.h&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 计算 next 数组
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;computeNextArray&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;next&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;m&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; length of the previous longest prefix suffix
+&lt;&#x2F;span&gt;&lt;span&gt;    next[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; next[0] is always -1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; m) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(p[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; p[len]) {
+&lt;&#x2F;span&gt;&lt;span&gt;            len&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            next[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; len;
+&lt;&#x2F;span&gt;&lt;span&gt;            i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;                len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; next[len &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;            } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;                next[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; KMP 字符串匹配函数
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;KMP&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;t&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span&gt;(t);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; m &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span&gt;(p);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(m &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; 空模式串匹配在起始位置
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; next[m];
+&lt;&#x2F;span&gt;&lt;span&gt;    computeNextArray(p, next, m);
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; index for t[]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; index for p[]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; n &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;amp;&amp;amp;&lt;&#x2F;span&gt;&lt;span&gt; j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt; m) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;== -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;||&lt;&#x2F;span&gt;&lt;span&gt; t[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; p[j]) {
+&lt;&#x2F;span&gt;&lt;span&gt;            i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;            j&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;            j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; next[j];
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(j &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span&gt; m)
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; j; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; match found, return start index
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;&#x2F;&#x2F; match not found
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt; 
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; t[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;hello world&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;char&lt;&#x2F;span&gt;&lt;span&gt; p[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;world&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; index &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;KMP(t, p);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Pattern found at index &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%d\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, index);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+</feed>
