@@ -52,13 +52,3 @@
 ```
 
     
-
----
-
-![](./4-productive-time.svg)
-
-```
-![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/profile-summary-card-output/highcontrast/4-productive-time.svg)
-```
-
-    
