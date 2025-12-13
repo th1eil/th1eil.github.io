@@ -52,13 +52,3 @@
 ```
 
     
-
----
-
-![](./4-productive-time.svg)
-
-```
-![](https://raw.githubusercontent.com/th1eil/th1eil.github.io/main/profile-summary-card-output/date_night/4-productive-time.svg)
-```
-
-    
