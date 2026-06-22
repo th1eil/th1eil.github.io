@@ -16,7 +16,7 @@ template = "about.html"
 ## 技术栈
 
 - ~~编程语言：Python, Java, Rust, C~~ 或许不需要了。
-- 前端：HTML, CSS, React
+- 前端：Vue, React
 - 后端：Node.js, Django
 - 工具：Git, Docker，Claude Code，codex
 
