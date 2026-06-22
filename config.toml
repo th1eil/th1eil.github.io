@@ -7,6 +7,9 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
+# 每页文章数（也受 content/_index.md 和 content/blog/_index.md 控制）
+# taxonomies = ...
+
 # 添加分类配置
 taxonomies = [
     {name = "tags", feed = true}, # 为标签创建 RSS feed
@@ -17,7 +20,10 @@ taxonomies = [
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = true
 # 添加高亮主题
-highlight_theme = "monokai" # 您可以选择其他主题
+highlight_theme = "monokai"
+
+# 压缩 HTML 输出（Zola 内建，无需额外配置）
+minify_html = true
 
 [extra]
 # Put all your custom variables here

@@ -1,0 +1,12 @@
+# macOS Finder metadata
+.DS_Store
+**/.DS_Store
+
+# Generated profile summary cards (CI artifact)
+profile-summary-card-output/
+
+# Private/restricted content
+**/.*.md
+
+# Build output
+public/

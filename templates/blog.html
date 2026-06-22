@@ -8,8 +8,8 @@
   </div>
 
   <div class="posts-grid">
-    {% set section = get_section(path="blog/_index.md") %}
-    {% for page in section.pages %}
+    {# 使用 paginator.pages 而不是手动 get_section，这样才能正确分页 #}
+    {% for page in paginator.pages %}
       <article class="post-card">
         <div class="post-card-content">
           <div class="post-meta">

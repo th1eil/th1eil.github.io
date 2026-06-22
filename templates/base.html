@@ -6,130 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.title }}</title>
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css">
-  <style>
-    /* 基础响应式设计 */
-    html {
-      font-size: 16px; /* 基础字体大小 */
-    }
-    
-    /* 响应式字体大小 */
-    @media (max-width: 768px) {
-      html {
-        font-size: 15px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      html {
-        font-size: 14px;
-      }
-    }
-    
-    /* 使用相对单位 */
-    body {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-    
-    h2 {
-      font-size: 2rem;
-      margin-top: 1.8rem;
-      margin-bottom: 0.8rem;
-    }
-    
-    h3 {
-      font-size: 1.5rem;
-      margin-top: 1.5rem;
-      margin-bottom: 0.6rem;
-    }
-    
-    h4 {
-      font-size: 1.25rem;
-      margin-top: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    p, ul, ol {
-      margin-bottom: 1rem;
-    }
-    
-    /* 容器响应式设计 */
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    
-    /* 导航栏响应式设计 */
-    .nav-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-    }
-    
-    .nav-brand {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    
-    @media (max-width: 768px) {
-      .nav-content {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .nav-links {
-        margin-top: 1rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-    }
-    
-    /* 博客文章响应式设计 */
-    article {
-      max-width: 100%;
-      overflow-wrap: break-word;
-    }
-    
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-    
-    /* 代码块响应式设计 */
-    pre[class*="language-"] {
-      border-radius: 5px;
-      margin: 1.5rem 0;
-      padding: 1rem;
-      overflow: auto;
-      font-size: 0.9rem;
-    }
-    
-    @media (max-width: 480px) {
-      pre[class*="language-"] {
-        font-size: 0.8rem;
-        padding: 0.8rem;
-      }
-    }
-    
-    code[class*="language-"] {
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css"
+        integrity="sha384-qTzu9jz8wpyzFe5KLoZfw0CS5iY+kCoZlBd5ByJ3f0NUT9dgYI1Mk0jQJ5GUK/N"
+        crossorigin="anonymous">
 </head>
 
 <body>
@@ -151,30 +30,47 @@
     {% block content %} {% endblock %}
   </div>
 
-  <style>
-    pre[class*="language-"] {
-      border-radius: 5px;
-      margin: 1.5em 0;
-      padding: 1em;
-      overflow: auto;
-    }
-    
-    code[class*="language-"] {
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-      font-size: 0.9em;
-    }
-  </style>
+  {# 页脚 #}
+  <footer class="site-footer">
+    <p>© {{ now() | date(format="%Y") }} Rei's Blog · Built with <a href="https://www.getzola.org/">Zola</a></p>
+  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  {# 回到顶部按钮 #}
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+  {# Prism.js 代码高亮 — 使用 autoloader 按需加载语法组件 #}
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"
+          integrity="sha384-ZM8fDxYm+GXOWeJcxDetoRImNnEAS7XwVFH5kv0pT6RXNy92Nemw/Sj7NfciXpqg"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+          integrity="sha384-Uq05+JLko69eOiPr39ta9bh7kld5PKZoU+fF7g0EXTAriEollhZ+DrN8Q/Oi8J2Q"
+          crossorigin="anonymous" defer></script>
+
+  {# 回到顶部按钮逻辑 #}
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      Prism.highlightAll();
-    });
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > 300) {
+              btn.classList.add('visible');
+            } else {
+              btn.classList.remove('visible');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
   </script>
 </body>
 

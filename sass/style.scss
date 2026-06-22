@@ -1,11 +1,26 @@
-/* 全局样式 */
+/* ============================================================
+   Rei's Blog — 统一样式表
+   所有全局样式集中于此，避免模板内联 CSS 冗余
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. CSS 变量 & 基础设置
+   ---------------------------------------------------------- */
 :root {
-  --primary-color: #6f42c1;  /* WoodWhale 使用的紫色 */
+  --primary-color: #6f42c1;
+  --primary-color-dark: #5a3396;       /* darken(#6f42c1, 10%) 的硬编码值，兼容 Zola 内置 grass 编译器 */
   --text-color: #24292e;
   --link-color: var(--primary-color);
   --border-color: #e1e4e8;
   --background-color: #ffffff;
+  --bg-light: #f6f8fa;
+  --text-muted: #666;
   --container-width: 800px;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;              /* 平滑滚动，配合 TOC 锚点跳转 */
 }
 
 body {
@@ -20,6 +35,50 @@ body {
   flex-direction: column;
 }
 
+/* ----------------------------------------------------------
+   2. 排版基础
+   ---------------------------------------------------------- */
+h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+p, ul, ol {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ----------------------------------------------------------
+   3. 布局容器
+   ---------------------------------------------------------- */
 .container {
   flex: 1;
   width: 100%;
@@ -37,192 +96,9 @@ body {
   margin: 0 auto;
 }
 
-/* 文章列表样式 */
-.posts {
-  .post {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
-    text-align: center;  /* 文章标题居中 */
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .post-title {
-      margin: 0 0 1rem;
-      
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
-        font-size: 2rem;
-        font-weight: 600;
-        transition: color 0.3s ease;
-        line-height: 1.3;
-
-        &:hover {
-          color: darken(#6f42c1, 10%);
-        }
-      }
-    }
-
-    .post-meta {
-      font-size: 0.9rem;
-      color: #666;
-      margin: 1rem 0;
-
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
-        padding: 0.2rem 0.5rem;
-        margin: 0 0.2rem;
-        border-radius: 3px;
-        background: #f6f8fa;
-        transition: all 0.3s ease;
-        
-        &:hover {
-          background: var(--primary-color);
-          color: white;
-        }
-      }
-    }
-
-    .post-description {
-      margin: 1.5rem auto;
-      color: #666;
-      font-size: 1rem;
-      line-height: 1.8;
-      max-width: 90%;
-    }
-
-    .read-more {
-      margin-top: 2rem;
-
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid var(--primary-color);
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        
-        &:hover {
-          background: var(--primary-color);
-          color: white;
-        }
-
-        &::after {
-          content: " ↩︎";
-          display: inline-block;
-        }
-      }
-    }
-  }
-}
-
-/* 标签页样式优化 */
-.taxonomy {
-  text-align: center;  /* 标题居中 */
-
-  h1 {
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-  }
-
-  .taxonomy-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 2rem 0;
-    justify-content: center;  /* 标签居中显示 */
-  }
-
-  .taxonomy-item {
-    a {
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      background: #f6f8fa;
-      border-radius: 20px;  /* 圆角增大 */
-      color: var(--primary-color);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: var(--primary-color);
-        color: white;
-      }
-
-      .count {
-        color: #666;
-        font-size: 0.8rem;
-        margin-left: 5px;
-      }
-    }
-  }
-}
-
-/* 分页样式优化 */
-.pagination {
-  display: flex;
-  justify-content: center;  /* 分页居中 */
-  gap: 2rem;  /* 按钮之间的间距 */
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
-
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--primary-color);
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-  }
-}
-
-/* 响应式设计优化 */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  .posts .post {
-    .post-title a {
-      font-size: 1.5rem;
-    }
-
-    .post-description {
-      max-width: 100%;
-    }
-  }
-
-  .taxonomy .taxonomy-list {
-    gap: 0.5rem;
-  }
-
-  .nav-container {
-    .nav-content {
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-    }
-
-    .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-  }
-}
-
-/* 在文件开头添加导航栏样式 */
+/* ----------------------------------------------------------
+   4. 导航栏 (sticky)
+   ---------------------------------------------------------- */
 .nav-container {
   background-color: var(--background-color);
   border-bottom: 1px solid var(--border-color);
@@ -230,7 +106,7 @@ body {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(5px);
-  
+
   .nav-content {
     max-width: var(--container-width);
     margin: 0 auto;
@@ -240,16 +116,14 @@ body {
     align-items: center;
   }
 
-  .nav-brand {
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: 600;
-      
-      &:hover {
-        color: darken(#6f42c1, 10%);
-      }
+  .nav-brand a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    &:hover {
+      color: var(--primary-color-dark);
     }
   }
 
@@ -268,7 +142,7 @@ body {
 
       &:hover {
         color: var(--primary-color);
-        background-color: #f6f8fa;
+        background-color: var(--bg-light);
       }
 
       &.active {
@@ -279,11 +153,97 @@ body {
   }
 }
 
-/* 博客列表页面样式 */
+/* ----------------------------------------------------------
+   5. 首页文章列表 (.posts)
+   ---------------------------------------------------------- */
+.posts {
+  .post {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .post-title a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      line-height: 1.3;
+
+      &:hover {
+        color: var(--primary-color-dark);
+      }
+    }
+
+    .post-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 1rem 0;
+
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+        padding: 0.2rem 0.5rem;
+        margin: 0 0.2rem;
+        border-radius: 3px;
+        background: var(--bg-light);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: var(--primary-color);
+          color: white;
+        }
+      }
+    }
+
+    .post-description {
+      margin: 1.5rem auto;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 90%;
+    }
+
+    .read-more {
+      margin-top: 2rem;
+
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--primary-color);
+        border-radius: 20px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: var(--primary-color);
+          color: white;
+        }
+
+        /* 注意：模板中 "Read more" 不再通过 CSS 添加 ↩︎，
+           如需保留可取消下面注释 */
+        /* &::after {
+          content: " ↩︎";
+          display: inline-block;
+        } */
+      }
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   6. 博客列表页（卡片网格）
+   ---------------------------------------------------------- */
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
-  
+
   h1 {
     color: var(--primary-color);
     font-size: 2.5rem;
@@ -291,7 +251,7 @@ body {
   }
 
   .section-description {
-    color: #666;
+    color: var(--text-muted);
     font-size: 1.1rem;
   }
 }
@@ -309,7 +269,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
-  
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
@@ -325,7 +285,7 @@ body {
     align-items: flex-start;
     margin-bottom: 1rem;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-muted);
 
     time {
       white-space: nowrap;
@@ -342,7 +302,7 @@ body {
         text-decoration: none;
         padding: 0.2rem 0.5rem;
         border-radius: 15px;
-        background: #f6f8fa;
+        background: var(--bg-light);
         font-size: 0.8rem;
         transition: all 0.3s ease;
 
@@ -356,7 +316,7 @@ body {
 
   .post-title {
     margin: 0 0 1rem;
-    
+
     a {
       color: var(--text-color);
       text-decoration: none;
@@ -372,7 +332,7 @@ body {
   }
 
   .post-description {
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.95rem;
     line-height: 1.6;
     margin-top: 0.5rem;
@@ -383,40 +343,274 @@ body {
   }
 }
 
-/* 响应式设计补充 */
-@media (max-width: 768px) {
-  .section-header {
-    h1 {
-      font-size: 2rem;
+/* ----------------------------------------------------------
+   7. 文章详情页 (.post-single)
+   ---------------------------------------------------------- */
+.post-single {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 0;
+
+  .post-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    .post-title {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .post-meta {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+
+      time {
+        margin-right: 1rem;
+      }
+
+      .tags {
+        display: inline-flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+
+        a {
+          color: var(--primary-color);
+          text-decoration: none;
+          padding: 0.2rem 0.5rem;
+          border-radius: 15px;
+          background: var(--bg-light);
+          font-size: 0.8rem;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: var(--primary-color);
+            color: white;
+          }
+        }
+      }
     }
   }
 
-  .posts-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+  .post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
 
-  .post-card {
-    .post-meta {
-      flex-direction: column;
-      gap: 0.5rem;
-      align-items: flex-start;
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-color);
+      margin: 2rem 0 1rem;
 
-      .tags {
-        justify-content: flex-start;
+      &::before {
+        content: "#";
+        color: var(--primary-color);
+        margin-right: 0.5rem;
+        opacity: 0.5;
       }
+    }
+
+    p {
+      margin: 1.5rem 0;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-bottom-color: var(--primary-color);
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 2rem auto;
+      border-radius: 8px;
+    }
+
+    code {
+      background: var(--bg-light);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+
+      code {
+        background: none;
+        padding: 0;
+      }
+    }
+
+    blockquote {
+      border-left: 4px solid var(--primary-color);
+      margin: 1.5rem 0;
+      padding: 0.5rem 0 0.5rem 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* 文章溢出保护 */
+    article {
+      max-width: 100%;
+      overflow-wrap: break-word;
     }
   }
 }
 
-/* 关于页面样式 */
+/* ----------------------------------------------------------
+   8. TOC 目录（文章侧边栏）
+   ---------------------------------------------------------- */
+.toc {
+  position: fixed;
+  right: 40px;
+  top: 120px;
+  width: 250px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #333;
+  }
+}
+
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+
+  li {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: block;
+    padding: 4px 0;
+
+    &:hover {
+      color: #000;
+    }
+
+    &.active {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   9. 代码高亮 (Prism.js 覆盖)
+   ---------------------------------------------------------- */
+pre[class*="language-"] {
+  border-radius: 5px;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  overflow: auto;
+  font-size: 0.9rem;
+}
+
+code[class*="language-"] {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+/* ----------------------------------------------------------
+   10. 标签云页
+   ---------------------------------------------------------- */
+.taxonomy {
+  text-align: center;
+
+  h1 {
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+
+  .taxonomy-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+  }
+
+  .taxonomy-item a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--bg-light);
+    border-radius: 20px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .count {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-left: 5px;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   11. 分页
+   ---------------------------------------------------------- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   12. 关于页面
+   ---------------------------------------------------------- */
 .about-page {
   padding: 2rem 0;
 
   .about-content {
     max-width: 700px;
     margin: 0 auto;
-    
+
     h1 {
       color: var(--primary-color);
       font-size: 2.5rem;
@@ -461,157 +655,146 @@ body {
       transition: all 0.3s ease;
 
       &:hover {
-        color: darken(#6f42c1, 10%);
+        color: var(--primary-color-dark);
         text-decoration: underline;
       }
     }
   }
 }
 
-/* 响应式设计补充 */
+/* ----------------------------------------------------------
+   13. Footer
+   ---------------------------------------------------------- */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+
+  a {
+    color: var(--primary-color);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ----------------------------------------------------------
+   14. 回到顶部按钮
+   ---------------------------------------------------------- */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    background: var(--primary-color-dark);
+  }
+}
+
+/* ============================================================
+   15. 响应式设计
+   ============================================================ */
+
+/* --- 平板 (≤768px) --- */
 @media (max-width: 768px) {
+  html { font-size: 15px; }
+
+  .container {
+    padding: 1rem;
+  }
+
+  /* 导航 */
+  .nav-container {
+    .nav-content {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+
+  /* 首页文章列表 */
+  .posts .post {
+    .post-title a { font-size: 1.5rem; }
+    .post-description { max-width: 100%; }
+  }
+
+  /* 卡片网格 → 单列 */
+  .posts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .post-card .post-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+
+    .tags { justify-content: flex-start; }
+  }
+
+  /* 文章详情 */
+  .post-single {
+    padding: 1rem;
+
+    .post-header .post-title { font-size: 2rem; }
+    .post-content { font-size: 1rem; }
+  }
+
+  /* TOC 隐藏 */
+  .toc { display: none; }
+
+  /* 关于页 */
   .about-page {
     padding: 1rem;
 
     .about-content {
-      h1 {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 1.3rem;
-      }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
     }
+  }
+
+  .section-header h1 { font-size: 2rem; }
+  .taxonomy .taxonomy-list { gap: 0.5rem; }
+}
+
+/* --- 手机 (≤480px) --- */
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+
+  pre[class*="language-"] {
+    font-size: 0.8rem;
+    padding: 0.8rem;
   }
 }
 
-/* 在现有的 style.scss 中添加文章页面样式 */
-.post-single {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem 0;
-
-  .post-header {
-    text-align: center;
-    margin-bottom: 3rem;
-
-    .post-title {
-      color: var(--primary-color);
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-
-    .post-meta {
-      color: #666;
-      font-size: 0.9rem;
-
-      time {
-        margin-right: 1rem;
-      }
-
-      .tags {
-        display: inline-flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-
-        a {
-          color: var(--primary-color);
-          text-decoration: none;
-          padding: 0.2rem 0.5rem;
-          border-radius: 15px;
-          background: #f6f8fa;
-          font-size: 0.8rem;
-          transition: all 0.3s ease;
-
-          &:hover {
-            background: var(--primary-color);
-            color: white;
-          }
-        }
-      }
-    }
-  }
-
-  .post-content {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--text-color);
-      margin: 2rem 0 1rem;
-      
-      &::before {
-        content: "#";
-        color: var(--primary-color);
-        margin-right: 0.5rem;
-        opacity: 0.5;
-      }
-    }
-
-    p {
-      margin: 1.5rem 0;
-    }
-
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: all 0.3s ease;
-
-      &:hover {
-        border-bottom-color: var(--primary-color);
-      }
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 2rem auto;
-      border-radius: 8px;
-    }
-
-    code {
-      background: #f6f8fa;
-      padding: 0.2rem 0.4rem;
-      border-radius: 3px;
-      font-size: 0.9em;
-    }
-
-    pre {
-      background: #f6f8fa;
-      padding: 1rem;
-      border-radius: 8px;
-      overflow-x: auto;
-
-      code {
-        background: none;
-        padding: 0;
-      }
-    }
-
-    blockquote {
-      border-left: 4px solid var(--primary-color);
-      margin: 1.5rem 0;
-      padding: 0.5rem 0 0.5rem 1rem;
-      color: #666;
-      font-style: italic;
-    }
-  }
+/* --- 宽屏 TOC 适配 --- */
+@media (max-width: 1200px) {
+  .toc { display: none; }
 }
-
-/* 响应式设计补充 */
-@media (max-width: 768px) {
-  .post-single {
-    padding: 1rem;
-
-    .post-header .post-title {
-      font-size: 2rem;
-    }
-
-    .post-content {
-      font-size: 1rem;
-    }
-  }
-} 
