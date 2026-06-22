@@ -51,13 +51,6 @@
     <h2 class="section-heading">
       <span class="heading-icon">📸</span>
       <span class="heading-text">相片墙</span>
-      <button class="shuffle-btn" id="shuffleBtn" title="换一批照片">
-        <svg class="shuffle-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <polyline points="1 20 1 14 7 14"></polyline>
-          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-        </svg>
-        换一批
       </button>
     </h2>
     <p class="section-subtitle">一些随手拍下的瞬间</p>
@@ -237,7 +230,6 @@
   var lightboxClose = document.getElementById('lightboxClose');
   var lightboxPrev = document.getElementById('lightboxPrev');
   var lightboxNext = document.getElementById('lightboxNext');
-  var shuffleBtn = document.getElementById('shuffleBtn');
   var currentIdx = 0;
   var displayedPhotos = [];
 
@@ -279,10 +271,6 @@
 
   if (wall) renderWall();
 
-  if (shuffleBtn) {
-    shuffleBtn.addEventListener('click', function() {
-      renderWall();
-    });
   }
 
   /* ----------------------------------------------------------
