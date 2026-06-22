@@ -30,8 +30,9 @@ template = "about.html"
 - 《GTO》
 
 ## 最近在玩
-- 在推壳之少女。。（不是gal佬orz
-- apex好玩喵 ovo
+- 有没有什么好玩的旮旯？
+- ~~apex好玩喵 ovo~~
+- overwatch好玩喵
 
 ## 联系我
 
@@ -43,4 +44,4 @@ template = "about.html"
 这个博客使用 [Zola](https://www.getzola.org/) 构建，主要用于：
 
 - 分享技术学习笔记
-- 记录个人成长历程
+- ~~记录个人成长历程~~

@@ -943,3 +943,410 @@ code[class*="language-"] {
 @media (max-width: 1200px) {
   .toc { display: none; }
 }
+
+/* ----------------------------------------------------------
+   19. 通用区块标题
+   ---------------------------------------------------------- */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+
+  .heading-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .heading-text {
+    font-weight: 700;
+  }
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+/* ----------------------------------------------------------
+   20. Hero 区域
+   ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 4rem 0 3rem;
+  overflow: hidden;
+}
+
+.hero-bg-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 600px 300px at 50% 0%, var(--primary-light) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+[data-theme="dark"] .hero-bg-decor {
+  opacity: 0.3;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-greeting {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: var(--text-color);
+}
+
+.greeting-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wave {
+  display: inline-block;
+  font-size: 2.2rem;
+  animation: wave-anim 2s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave-anim {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(14deg); }
+  50% { transform: rotate(-8deg); }
+  75% { transform: rotate(14deg); }
+}
+
+.typing-text {
+  display: inline;
+  color: var(--primary-color);
+}
+
+.typing-cursor {
+  display: inline;
+  color: var(--primary-color);
+  font-weight: 300;
+  animation: blink-cursor 0.8s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 0.5rem 0 2rem;
+}
+
+/* Hero 统计 */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------
+   21. 相片墙 (Masonry)
+   ---------------------------------------------------------- */
+.photo-wall-section {
+  margin: 4rem 0;
+}
+
+.photo-wall {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+[data-theme="dark"] .photo-wall {
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.photo-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: auto;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.35s ease;
+  min-height: 200px;
+}
+
+.photo-item:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-lg);
+  z-index: 2;
+}
+
+.photo-item:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: 360px;
+}
+
+.photo-item:nth-child(5) {
+  grid-row: span 2;
+  min-height: 340px;
+}
+
+.photo-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+}
+
+.photo-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.photo-img.loaded {
+  opacity: 1;
+}
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 40%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+.photo-item:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-title {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  transform: translateY(8px);
+  transition: transform 0.3s ease;
+}
+
+.photo-item:hover .photo-title {
+  transform: translateY(0);
+}
+
+/* ----------------------------------------------------------
+   22. 灯光箱 (Lightbox)
+   ---------------------------------------------------------- */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  max-width: 85vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: lightbox-in 0.3s ease;
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+  z-index: 10;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  border-radius: 8px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  line-height: 1;
+  z-index: 10;
+}
+
+.lightbox-nav:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ddd;
+  font-size: 0.95rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+/* ----------------------------------------------------------
+   23. 文章列表区（首页）
+   ---------------------------------------------------------- */
+.posts-section {
+  margin: 4rem 0;
+}
+
+.posts-section .posts .post {
+  text-align: left;
+}
+
+.posts-section .posts .post .post-title a {
+  font-size: 1.6rem;
+}
+
+.posts-section .posts .post .post-description {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+/* ----------------------------------------------------------
+   24. 响应式 — 相片墙
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero { padding: 2.5rem 0 2rem; }
+  .hero-greeting { font-size: 1.6rem; }
+  .hero-tagline { font-size: 1rem; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-number { font-size: 1.5rem; }
+
+  .photo-wall {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .photo-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 1;
+    min-height: 240px;
+  }
+
+  .photo-item:nth-child(5) {
+    grid-row: span 1;
+    min-height: 200px;
+  }
+
+  .photo-item { min-height: 150px; }
+
+  .lightbox-content {
+    max-width: 92vw;
+    max-height: 75vh;
+  }
+
+  .lightbox-nav { font-size: 2rem; padding: 0.2rem 0.5rem; }
+  .lightbox-prev { left: 10px; }
+  .lightbox-next { right: 10px; }
+}
+
+@media (max-width: 480px) {
+  .photo-wall { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .photo-item { min-height: 120px; }
+  .photo-item:nth-child(1) { min-height: 200px; }
+}

@@ -2,34 +2,283 @@
 
 {% block content %}
 <div class="content-wrapper">
-  <div class="posts">
-    {% set section = get_section(path="blog/_index.md") %}
-    {% for page in section.pages %}
-      <article class="post">
-        <h2 class="post-title">
-          <a href="{{ page.permalink }}">{{ page.title }}</a>
-        </h2>
-
-        <div class="post-meta">
-          {{ page.date | date(format="%Y-%m-%d") }} ::
+  {# ============================================================
+     1. Hero 区域 — 打字机问候 + 博客统计
+     ============================================================ #}
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-greeting">
+        <span class="greeting-line">
+          <span class="wave" aria-hidden="true">👋</span>
+          <span class="typing-text" id="typewriter"></span>
+          <span class="typing-cursor">|</span>
+        </span>
+      </h1>
+      <p class="hero-tagline">记录编程、学习和生活</p>
+      <div class="hero-stats">
+        {% set section = get_section(path="blog/_index.md") %}
+        {% set_global tag_set = [] %}
+        {% for page in section.pages %}
           {% if page.taxonomies.tags %}
             {% for tag in page.taxonomies.tags %}
-              <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+              {% set_global tag_set = tag_set | concat(with=tag) %}
             {% endfor %}
           {% endif %}
+        {% endfor %}
+        {% set_global unique_tags = tag_set | unique %}
+        <div class="stat-item">
+          <span class="stat-number" data-target="{{ section.pages | length }}">0</span>
+          <span class="stat-label">篇文章</span>
         </div>
-
-        {% if page.description %}
-          <div class="post-description">
-            {{ page.description }}
-          </div>
-        {% endif %}
-
-        <div class="read-more">
-          <a href="{{ page.permalink }}">Read more</a>
+        <div class="stat-item">
+          <span class="stat-number" data-target="{{ unique_tags | length }}">0</span>
+          <span class="stat-label">标签</span>
         </div>
-      </article>
-    {% endfor %}
+        <div class="stat-item">
+          <span class="stat-number" data-target="2025">0</span>
+          <span class="stat-label">始于</span>
+        </div>
+      </div>
+    </div>
+    {# 装饰性渐变背景 #}
+    <div class="hero-bg-decor" aria-hidden="true"></div>
+  </section>
+
+  {# ============================================================
+     2. 相片墙 — Masonry 交互画廊
+     ============================================================ #}
+  <section class="photo-wall-section">
+    <h2 class="section-heading">
+      <span class="heading-icon">📸</span>
+      <span class="heading-text">相片墙</span>
+    </h2>
+    <p class="section-subtitle">一些随手拍下的瞬间</p>
+    <div class="photo-wall" id="photoWall"></div>
+  </section>
+
+  {# 灯光箱 — 点击照片放大查看 #}
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="照片预览">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">‹</button>
+    <img class="lightbox-content" id="lightboxImg" alt="照片预览">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">›</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
+
+  {# ============================================================
+     3. 文章列表
+     ============================================================ #}
+  <section class="posts-section">
+    <h2 class="section-heading">
+      <span class="heading-icon">📝</span>
+      <span class="heading-text">最近文章</span>
+    </h2>
+
+    <div class="posts">
+      {% set section = get_section(path="blog/_index.md") %}
+      {% for page in section.pages %}
+        <article class="post">
+          <h2 class="post-title">
+            <a href="{{ page.permalink }}">{{ page.title }}</a>
+          </h2>
+
+          <div class="post-meta">
+            {{ page.date | date(format="%Y-%m-%d") }} ::
+            {% if page.taxonomies.tags %}
+              {% for tag in page.taxonomies.tags %}
+                <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          {% if page.description %}
+            <div class="post-description">
+              {{ page.description }}
+            </div>
+          {% endif %}
+
+          <div class="read-more">
+            <a href="{{ page.permalink }}">Read more</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+{# 首页交互脚本 #}
+<script>
+(function() {
+  'use strict';
+
+  /* ----------------------------------------------------------
+     a. 打字机效果
+     ---------------------------------------------------------- */
+  var el = document.getElementById('typewriter');
+  if (el) {
+    var phrases = [
+      '欢迎来到 Rei 的小站',
+      '你好，世界！',
+      '写写代码，记录生活',
+      'Stay curious, stay vibing'
+    ];
+    var phraseIdx = 0;
+    var charIdx = 0;
+    var isDeleting = false;
+    var speed = 80;
+
+    function typeLoop() {
+      var current = phrases[phraseIdx];
+      if (!isDeleting) {
+        el.textContent = current.substring(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          isDeleting = true;
+          speed = 2000;
+        } else {
+          speed = 60 + Math.random() * 60;
+        }
+      } else {
+        el.textContent = current.substring(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          isDeleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          speed = 400;
+        } else {
+          speed = 30 + Math.random() * 40;
+        }
+      }
+      setTimeout(typeLoop, speed);
+    }
+    setTimeout(typeLoop, 800);
+  }
+
+  /* ----------------------------------------------------------
+     b. 数字递增动画
+     ---------------------------------------------------------- */
+  var statNumbers = document.querySelectorAll('.stat-number');
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    if (isNaN(target)) return;
+    var current = 0;
+    var step = Math.max(1, Math.floor(target / 40));
+    var interval = setInterval(function() {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      el.textContent = current;
+    }, 30);
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNumbers.forEach(function(el) { observer.observe(el); });
+
+  /* ----------------------------------------------------------
+     c. 相片墙数据与渲染
+     ---------------------------------------------------------- */
+  var photos = [
+    { id: 1,  url: 'https://picsum.photos/id/1015/600/800',  thumb: 'https://picsum.photos/id/1015/400/500',  title: '\u5c71\u6797\u5c0f\u5f84',     color: '#5a7d5a' },
+    { id: 2,  url: 'https://picsum.photos/id/1018/800/600',  thumb: 'https://picsum.photos/id/1018/500/400',  title: '\u66ae\u8272\u5c71\u5ce6',     color: '#4a6b8a' },
+    { id: 3,  url: 'https://picsum.photos/id/1035/600/900',  thumb: 'https://picsum.photos/id/1035/400/600',  title: '\u82a6\u82c7\u8361',       color: '#8a7a5a' },
+    { id: 4,  url: 'https://picsum.photos/id/1040/800/600',  thumb: 'https://picsum.photos/id/1040/500/400',  title: '\u6797\u95f4\u5c0f\u5c4b',     color: '#6a7a6a' },
+    { id: 5,  url: 'https://picsum.photos/id/1044/600/600',  thumb: 'https://picsum.photos/id/1044/400/400',  title: '\u6e56\u9762\u5012\u5f71',     color: '#4a6a8a' },
+    { id: 6,  url: 'https://picsum.photos/id/1067/800/600',  thumb: 'https://picsum.photos/id/1067/500/400',  title: '\u57ce\u5e02\u9ec4\u660f',     color: '#6a5a4a' },
+    { id: 7,  url: 'https://picsum.photos/id/1074/600/800',  thumb: 'https://picsum.photos/id/1074/400/500',  title: '\u84b2\u516c\u82b1',       color: '#7a8a6a' },
+    { id: 8,  url: 'https://picsum.photos/id/1084/800/600',  thumb: 'https://picsum.photos/id/1084/500/400',  title: '\u51ac\u65e5\u65f7\u91ce',     color: '#8a8a9a' },
+    { id: 9,  url: 'https://picsum.photos/id/10/800/600',    thumb: 'https://picsum.photos/id/10/500/400',    title: '\u68ee\u6797\u4e0e\u8def',     color: '#3a5a3a' },
+  ];
+
+  var wall = document.getElementById('photoWall');
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var lightboxPrev = document.getElementById('lightboxPrev');
+  var lightboxNext = document.getElementById('lightboxNext');
+  var currentIdx = 0;
+
+  if (wall && photos.length) {
+    photos.forEach(function(photo, idx) {
+      var item = document.createElement('div');
+      item.className = 'photo-item';
+      item.style.setProperty('--thumb-bg', photo.color);
+      item.setAttribute('data-index', idx);
+      item.innerHTML =
+        '<div class="photo-inner">' +
+          '<div class="photo-placeholder" style="background-color:' + photo.color + '"></div>' +
+          '<img class="photo-img" src="' + photo.thumb + '" alt="' + photo.title + '" loading="lazy">' +
+          '<div class="photo-overlay">' +
+            '<span class="photo-title">' + photo.title + '</span>' +
+          '</div>' +
+        '</div>';
+      item.addEventListener('click', function() { openLightbox(idx); });
+      wall.appendChild(item);
+    });
+
+    var imgs = wall.querySelectorAll('.photo-img');
+    imgs.forEach(function(img) {
+      img.addEventListener('load', function() {
+        img.classList.add('loaded');
+      });
+      if (img.complete) img.classList.add('loaded');
+    });
+  }
+
+  /* ----------------------------------------------------------
+     d. 灯光箱控制
+     ---------------------------------------------------------- */
+  function openLightbox(idx) {
+    currentIdx = idx;
+    lightboxImg.src = photos[idx].url;
+    lightboxCaption.textContent = photos[idx].title;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function prevPhoto() {
+    currentIdx = (currentIdx - 1 + photos.length) % photos.length;
+    lightboxImg.src = photos[currentIdx].url;
+    lightboxCaption.textContent = photos[currentIdx].title;
+  }
+
+  function nextPhoto() {
+    currentIdx = (currentIdx + 1) % photos.length;
+    lightboxImg.src = photos[currentIdx].url;
+    lightboxCaption.textContent = photos[currentIdx].title;
+  }
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', prevPhoto);
+  if (lightboxNext) lightboxNext.addEventListener('click', nextPhoto);
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox || !lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevPhoto();
+    if (e.key === 'ArrowRight') nextPhoto();
+  });
+
+})();
+</script>
+{% endblock scripts %}
