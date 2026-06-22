@@ -14,6 +14,13 @@
                         {% endfor %}
                     </div>
                 {% endif %}
+
+                {# 浏览量统计 #}
+                <div class="post-views" id="post-views" data-slug="{{ page.slug }}" style="visibility:hidden">
+                    <span class="views-icon">👁</span>
+                    <span class="views-count" id="views-count">---</span>
+                    <span class="views-label">次阅读</span>
+                </div>
             </div>
         </header>
 
@@ -24,7 +31,7 @@
 
     {# TOC 目录 — 仅在大屏幕显示 #}
     <div class="toc">
-        <h3>目录</h3>
+        <h3>📑 目录</h3>
         <div id="toc-container"></div>
     </div>
 </div>
@@ -49,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     tocList.className = 'toc-list';
 
     headings.forEach(function(heading, index) {
-        // 为每个标题补上 id，便于锚点跳转
         if (!heading.id) {
             heading.id = 'heading-' + index;
         }
@@ -58,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var a = document.createElement('a');
         a.href = '#' + heading.id;
         a.textContent = heading.textContent;
-        // 根据标题级别缩进
         var level = parseInt(heading.tagName.charAt(1), 10);
         a.style.paddingLeft = (level - 2) * 1 + 'rem';
 
@@ -100,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var href = link.getAttribute('href');
             if (href === '#' + currentId) {
                 link.classList.add('active');
-                // 确保当前高亮项在 TOC 可见范围内
                 link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } else {
                 link.classList.remove('active');

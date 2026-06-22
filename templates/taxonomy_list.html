@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="taxonomy">
-    <h1>所有标签</h1>
-    <div class="taxonomy-list">
+<div class="taxonomy-cloud">
+    <h1 class="cloud-title">所有标签</h1>
+
+    {# 第一遍遍历：找出最多和最少的文章数，用于归一化权重 #}
+    {% set_global max_count = 0 %}
+    {% set_global min_count = 9999 %}
+    {% for term in terms %}
+      {% set count = term.pages | length %}
+      {% if count > max_count %}
+        {% set_global max_count = count %}
+      {% endif %}
+      {% if count < min_count %}
+        {% set_global min_count = count %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="tag-cloud">
         {% for term in terms %}
-        <div class="taxonomy-item">
-            <a href="{{ term.permalink }}" class="tag">
-                #{{ term.name }}
-                <span class="count">({{ term.pages | length }})</span>
-            </a>
-        </div>
+        {% set count = term.pages | length %}
+        {# 归一化到 1-5 权重等级，避免除零 #}
+        {% if max_count == min_count %}
+          {% set tier = 3 %}
+        {% else %}
+          {% set normalized = ((count - min_count) / (max_count - min_count) * 4) | round %}
+          {% set tier = normalized + 1 %}
+        {% endif %}
+        <a href="{{ term.permalink }}" class="tag-cloud-item tag-weight-{{ tier }}">
+            {{ term.name }}
+            <span class="tag-count">{{ count }}</span>
+        </a>
         {% endfor %}
     </div>
 </div>
-{% endblock content %} 
+{% endblock content %}

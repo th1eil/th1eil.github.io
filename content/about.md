@@ -8,25 +8,25 @@ template = "about.html"
 
 ## 关于我
 
-- 🎓 软件工程专业在读
-- 💻 热爱编程和技术
-- 🌱 正在学习 Rust、Web 开发
-- 📝 热爱文字
+- 🎓 刚刚毕业的软工学生（哭路西
+- 💻 热爱编程和技术，vibing享受者
+- 🌱 正在学习 Python、Web 开发
+- 📝 热爱汉语言文字
 
 ## 技术栈
 
-- 编程语言：Python, Java, Rust,C
+- ~~编程语言：Python, Java, Rust, C~~ 或许不需要了。
 - 前端：HTML, CSS, React
 - 后端：Node.js, Django
-- 工具：Git, Docker
-- 其他：Linux, Vim
+- 工具：Git, Docker，Claude Code，codex
 
 ## 最近在读
 - 《接受幸福的勇气》
-- 《雪国》
+- 《檀香刑》
+- 《儿童心理学》
 
 ## 最近在看
-- 《青之驱魔师》（新番连载ing 🍾
+- 《青之驱魔师》
 - 《GTO》
 
 ## 最近在玩

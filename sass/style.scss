@@ -1,43 +1,104 @@
 /* ============================================================
    Rei's Blog — 统一样式表
-   所有全局样式集中于此，避免模板内联 CSS 冗余
+   Blue-toned theme with light/dark mode support
    ============================================================ */
 
 /* ----------------------------------------------------------
-   1. CSS 变量 & 基础设置
+   1. CSS 变量 — 亮色模式（默认）
    ---------------------------------------------------------- */
 :root {
-  --primary-color: #6f42c1;
-  --primary-color-dark: #5a3396;       /* darken(#6f42c1, 10%) 的硬编码值，兼容 Zola 内置 grass 编译器 */
-  --text-color: #24292e;
-  --link-color: var(--primary-color);
-  --border-color: #e1e4e8;
-  --background-color: #ffffff;
-  --bg-light: #f6f8fa;
-  --text-muted: #666;
+  /* 品牌蓝 */
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #dbeafe;
+  --primary-dark: #1e40af;
+
+  /* 文字 */
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --link-color: #2563eb;
+
+  /* 背景 */
+  --bg-color: #ffffff;
+  --bg-light: #f8fafc;
+  --bg-code: #f1f5f9;
+
+  /* 边框 & 分割线 */
+  --border-color: #e2e8f0;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 标签 */
+  --tag-bg: #eff6ff;
+  --tag-text: #2563eb;
+  --tag-hover-bg: #2563eb;
+  --tag-hover-text: #ffffff;
+
+  /* 容器宽度 */
   --container-width: 800px;
+
+  /* Prism 亮色覆盖 */
+  --prism-bg: #f5f5f5;
+  --prism-text: #383a42;
 }
 
+/* ----------------------------------------------------------
+   2. CSS 变量 — 暗色模式
+   ---------------------------------------------------------- */
+[data-theme="dark"] {
+  --primary-color: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: #1e3a5f;
+  --primary-dark: #93bbfd;
+
+  --text-color: #e2e8f0;
+  --text-muted: #94a3b8;
+  --link-color: #3b82f6;
+
+  --bg-color: #0f172a;
+  --bg-light: #1e293b;
+  --bg-code: #1e293b;
+
+  --border-color: #334155;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --tag-bg: #1e3a5f;
+  --tag-text: #60a5fa;
+  --tag-hover-bg: #3b82f6;
+  --tag-hover-text: #ffffff;
+
+  --prism-bg: #272822;
+  --prism-text: #f8f8f2;
+}
+
+/* ----------------------------------------------------------
+   3. 基础样式
+   ---------------------------------------------------------- */
 html {
   font-size: 16px;
-  scroll-behavior: smooth;              /* 平滑滚动，配合 TOC 锚点跳转 */
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
-  background: var(--background-color);
+  background: var(--bg-color);
   margin: 0;
   padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ----------------------------------------------------------
-   2. 排版基础
-   ---------------------------------------------------------- */
+/* 排版 */
 h1 {
   font-size: 2.5rem;
   margin-top: 2rem;
@@ -77,7 +138,7 @@ img {
 }
 
 /* ----------------------------------------------------------
-   3. 布局容器
+   4. 布局容器
    ---------------------------------------------------------- */
 .container {
   flex: 1;
@@ -97,20 +158,22 @@ img {
 }
 
 /* ----------------------------------------------------------
-   4. 导航栏 (sticky)
+   5. 导航栏 (sticky)
    ---------------------------------------------------------- */
 .nav-container {
-  background-color: var(--background-color);
+  background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 
   .nav-content {
     max-width: var(--container-width);
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -120,25 +183,26 @@ img {
     color: var(--primary-color);
     text-decoration: none;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 
     &:hover {
-      color: var(--primary-color-dark);
+      color: var(--primary-hover);
     }
   }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: center;
 
     .nav-link {
       color: var(--text-color);
       text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.25s ease;
 
       &:hover {
         color: var(--primary-color);
@@ -147,14 +211,53 @@ img {
 
       &.active {
         color: var(--primary-color);
-        font-weight: 500;
+        font-weight: 600;
+        background: var(--primary-light);
       }
     }
   }
 }
 
 /* ----------------------------------------------------------
-   5. 首页文章列表 (.posts)
+   6. 主题切换按钮
+   ---------------------------------------------------------- */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 0.25rem;
+
+  &:hover {
+    background: var(--bg-light);
+  }
+
+  .theme-icon-light,
+  .theme-icon-dark {
+    line-height: 1;
+    display: inline;
+  }
+
+  /* 暗色模式下显示月亮图标，亮色模式显示太阳 */
+  .theme-icon-dark { display: none; }
+}
+
+[data-theme="dark"] .theme-toggle {
+  .theme-icon-light { display: none; }
+  .theme-icon-dark { display: inline; }
+}
+
+/* ----------------------------------------------------------
+   7. 首页文章列表 (.posts)
    ---------------------------------------------------------- */
 .posts {
   .post {
@@ -172,11 +275,11 @@ img {
       text-decoration: none;
       font-size: 2rem;
       font-weight: 600;
-      transition: color 0.3s ease;
+      transition: color 0.25s ease;
       line-height: 1.3;
 
       &:hover {
-        color: var(--primary-color-dark);
+        color: var(--primary-hover);
       }
     }
 
@@ -186,17 +289,17 @@ img {
       margin: 1rem 0;
 
       a {
-        color: var(--primary-color);
+        color: var(--tag-text);
         text-decoration: none;
         padding: 0.2rem 0.5rem;
         margin: 0 0.2rem;
-        border-radius: 3px;
-        background: var(--bg-light);
-        transition: all 0.3s ease;
+        border-radius: 4px;
+        background: var(--tag-bg);
+        transition: all 0.25s ease;
 
         &:hover {
-          background: var(--primary-color);
-          color: white;
+          background: var(--tag-hover-bg);
+          color: var(--tag-hover-text);
         }
       }
     }
@@ -216,29 +319,22 @@ img {
         color: var(--primary-color);
         text-decoration: none;
         font-size: 0.9rem;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1.25rem;
         border: 1px solid var(--primary-color);
         border-radius: 20px;
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
 
         &:hover {
           background: var(--primary-color);
-          color: white;
+          color: #fff;
         }
-
-        /* 注意：模板中 "Read more" 不再通过 CSS 添加 ↩︎，
-           如需保留可取消下面注释 */
-        /* &::after {
-          content: " ↩︎";
-          display: inline-block;
-        } */
       }
     }
   }
 }
 
 /* ----------------------------------------------------------
-   6. 博客列表页（卡片网格）
+   8. 博客列表页（卡片网格）
    ---------------------------------------------------------- */
 .section-header {
   text-align: center;
@@ -264,15 +360,17 @@ img {
 }
 
 .post-card {
-  background: white;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.4s ease;
   overflow: hidden;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
   }
 
   .post-card-content {
@@ -284,7 +382,7 @@ img {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
 
     time {
@@ -294,36 +392,36 @@ img {
     .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.4rem;
       justify-content: flex-end;
 
       a {
-        color: var(--primary-color);
+        color: var(--tag-text);
         text-decoration: none;
-        padding: 0.2rem 0.5rem;
-        border-radius: 15px;
-        background: var(--bg-light);
-        font-size: 0.8rem;
-        transition: all 0.3s ease;
+        padding: 0.15rem 0.5rem;
+        border-radius: 12px;
+        background: var(--tag-bg);
+        font-size: 0.78rem;
+        transition: all 0.25s ease;
 
         &:hover {
-          background: var(--primary-color);
-          color: white;
+          background: var(--tag-hover-bg);
+          color: var(--tag-hover-text);
         }
       }
     }
   }
 
   .post-title {
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
 
     a {
       color: var(--text-color);
       text-decoration: none;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 600;
       line-height: 1.4;
-      transition: color 0.3s ease;
+      transition: color 0.25s ease;
 
       &:hover {
         color: var(--primary-color);
@@ -333,7 +431,7 @@ img {
 
   .post-description {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
     margin-top: 0.5rem;
     display: -webkit-box;
@@ -344,7 +442,7 @@ img {
 }
 
 /* ----------------------------------------------------------
-   7. 文章详情页 (.post-single)
+   9. 文章详情页 (.post-single)
    ---------------------------------------------------------- */
 .post-single {
   max-width: 700px;
@@ -372,21 +470,21 @@ img {
 
       .tags {
         display: inline-flex;
-        gap: 0.5rem;
+        gap: 0.4rem;
         margin-top: 0.5rem;
 
         a {
-          color: var(--primary-color);
+          color: var(--tag-text);
           text-decoration: none;
-          padding: 0.2rem 0.5rem;
-          border-radius: 15px;
-          background: var(--bg-light);
+          padding: 0.15rem 0.5rem;
+          border-radius: 12px;
+          background: var(--tag-bg);
           font-size: 0.8rem;
-          transition: all 0.3s ease;
+          transition: all 0.25s ease;
 
           &:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--tag-hover-bg);
+            color: var(--tag-hover-text);
           }
         }
       }
@@ -395,7 +493,7 @@ img {
 
   .post-content {
     font-size: 1.1rem;
-    line-height: 1.8;
+    line-height: 1.85;
 
     h1, h2, h3, h4, h5, h6 {
       color: var(--text-color);
@@ -417,7 +515,7 @@ img {
       color: var(--primary-color);
       text-decoration: none;
       border-bottom: 1px solid transparent;
-      transition: all 0.3s ease;
+      transition: border-color 0.25s ease;
 
       &:hover {
         border-bottom-color: var(--primary-color);
@@ -433,10 +531,11 @@ img {
     }
 
     code {
-      background: var(--bg-light);
+      background: var(--bg-code);
       padding: 0.2rem 0.4rem;
-      border-radius: 3px;
+      border-radius: 4px;
       font-size: 0.9em;
+      color: var(--text-color);
     }
 
     pre {
@@ -444,6 +543,7 @@ img {
       padding: 1rem;
       border-radius: 8px;
       overflow-x: auto;
+      border: 1px solid var(--border-color);
 
       code {
         background: none;
@@ -457,18 +557,42 @@ img {
       padding: 0.5rem 0 0.5rem 1rem;
       color: var(--text-muted);
       font-style: italic;
-    }
-
-    /* 文章溢出保护 */
-    article {
-      max-width: 100%;
-      overflow-wrap: break-word;
+      background: var(--bg-light);
+      border-radius: 0 8px 8px 0;
     }
   }
 }
 
 /* ----------------------------------------------------------
-   8. TOC 目录（文章侧边栏）
+   10. 浏览量统计
+   ---------------------------------------------------------- */
+.post-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+
+  .views-icon {
+    font-size: 0.95rem;
+  }
+
+  .views-count {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 1.5em;
+    text-align: center;
+  }
+
+  .views-label {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+}
+
+/* ----------------------------------------------------------
+   11. TOC 目录（文章侧边栏）
    ---------------------------------------------------------- */
 .toc {
   position: fixed;
@@ -477,16 +601,18 @@ img {
   width: 250px;
   max-height: 80vh;
   overflow-y: auto;
-  background: #fff;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 
   h3 {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 1.1rem;
+    color: var(--text-color);
   }
 }
 
@@ -496,87 +622,112 @@ img {
   margin: 0;
 
   li {
-    margin: 0.5rem 0;
+    margin: 0.4rem 0;
   }
 
   a {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
+    font-size: 0.85rem;
+    transition: color 0.25s ease;
     display: block;
-    padding: 4px 0;
+    padding: 3px 0;
+    border-radius: 4px;
 
     &:hover {
-      color: #000;
+      color: var(--primary-color);
     }
 
     &.active {
       color: var(--primary-color);
-      font-weight: bold;
+      font-weight: 600;
+      background: var(--primary-light);
+      padding-left: 4px;
     }
   }
 }
 
 /* ----------------------------------------------------------
-   9. 代码高亮 (Prism.js 覆盖)
+   12. 代码高亮 (Prism.js 覆盖)
    ---------------------------------------------------------- */
 pre[class*="language-"] {
-  border-radius: 5px;
+  border-radius: 6px;
   margin: 1.5rem 0;
   padding: 1rem;
   overflow: auto;
   font-size: 0.9rem;
+  background: var(--prism-bg) !important;
 }
 
 code[class*="language-"] {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  color: var(--prism-text) !important;
+  text-shadow: none !important;
 }
 
 /* ----------------------------------------------------------
-   10. 标签云页
+   13. 标签云页
    ---------------------------------------------------------- */
-.taxonomy {
+.taxonomy-cloud {
   text-align: center;
+  padding: 2rem 0;
 
-  h1 {
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-  }
-
-  .taxonomy-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 2rem 0;
-    justify-content: center;
-  }
-
-  .taxonomy-item a {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    background: var(--bg-light);
-    border-radius: 20px;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .count {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      margin-left: 5px;
-    }
+  .cloud-title {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-color);
   }
 }
 
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  justify-content: center;
+  align-items: baseline;
+  padding: 1rem 0;
+}
+
+.tag-cloud-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  line-height: 1.4;
+
+  &:hover {
+    background: var(--tag-hover-bg);
+    color: var(--tag-hover-text);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+
+    .tag-count {
+      color: var(--tag-hover-text);
+    }
+  }
+
+  .tag-count {
+    font-size: 0.72em;
+    color: var(--text-muted);
+    font-weight: 400;
+    transition: color 0.25s ease;
+  }
+}
+
+/* 权重层级 */
+.tag-weight-1 { font-size: 0.8rem; }
+.tag-weight-2 { font-size: 0.9rem; }
+.tag-weight-3 { font-size: 1.05rem; padding: 0.4rem 1rem; }
+.tag-weight-4 { font-size: 1.2rem; padding: 0.45rem 1.1rem; font-weight: 500; }
+.tag-weight-5 { font-size: 1.35rem; padding: 0.5rem 1.2rem; font-weight: 600; }
+
 /* ----------------------------------------------------------
-   11. 分页
+   14. 分页
    ---------------------------------------------------------- */
 .pagination {
   display: flex;
@@ -589,20 +740,20 @@ code[class*="language-"] {
   a {
     color: var(--primary-color);
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.25rem;
     border: 1px solid var(--primary-color);
     border-radius: 20px;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 
     &:hover {
       background: var(--primary-color);
-      color: white;
+      color: #fff;
     }
   }
 }
 
 /* ----------------------------------------------------------
-   12. 关于页面
+   15. 关于页面
    ---------------------------------------------------------- */
 .about-page {
   padding: 2rem 0;
@@ -652,10 +803,10 @@ code[class*="language-"] {
     a {
       color: var(--primary-color);
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
 
       &:hover {
-        color: var(--primary-color-dark);
+        color: var(--primary-hover);
         text-decoration: underline;
       }
     }
@@ -663,7 +814,7 @@ code[class*="language-"] {
 }
 
 /* ----------------------------------------------------------
-   13. Footer
+   16. Footer
    ---------------------------------------------------------- */
 .site-footer {
   text-align: center;
@@ -683,7 +834,7 @@ code[class*="language-"] {
 }
 
 /* ----------------------------------------------------------
-   14. 回到顶部按钮
+   17. 回到顶部按钮
    ---------------------------------------------------------- */
 .back-to-top {
   position: fixed;
@@ -692,15 +843,15 @@ code[class*="language-"] {
   width: 44px;
   height: 44px;
   background: var(--primary-color);
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 50%;
   font-size: 1.2rem;
   cursor: pointer;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.25s ease;
+  box-shadow: var(--shadow-md);
   z-index: 99;
 
   &.visible {
@@ -709,12 +860,12 @@ code[class*="language-"] {
   }
 
   &:hover {
-    background: var(--primary-color-dark);
+    background: var(--primary-hover);
   }
 }
 
 /* ============================================================
-   15. 响应式设计
+   18. 响应式设计
    ============================================================ */
 
 /* --- 平板 (≤768px) --- */
@@ -725,27 +876,24 @@ code[class*="language-"] {
     padding: 1rem;
   }
 
-  /* 导航 */
   .nav-container {
     .nav-content {
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
       text-align: center;
     }
     .nav-links {
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
+      gap: 0.5rem;
     }
   }
 
-  /* 首页文章列表 */
   .posts .post {
     .post-title a { font-size: 1.5rem; }
     .post-description { max-width: 100%; }
   }
 
-  /* 卡片网格 → 单列 */
   .posts-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -759,7 +907,6 @@ code[class*="language-"] {
     .tags { justify-content: flex-start; }
   }
 
-  /* 文章详情 */
   .post-single {
     padding: 1rem;
 
@@ -767,10 +914,8 @@ code[class*="language-"] {
     .post-content { font-size: 1rem; }
   }
 
-  /* TOC 隐藏 */
   .toc { display: none; }
 
-  /* 关于页 */
   .about-page {
     padding: 1rem;
 
@@ -781,7 +926,7 @@ code[class*="language-"] {
   }
 
   .section-header h1 { font-size: 2rem; }
-  .taxonomy .taxonomy-list { gap: 0.5rem; }
+  .tag-cloud { gap: 0.5rem; }
 }
 
 /* --- 手机 (≤480px) --- */
@@ -794,7 +939,7 @@ code[class*="language-"] {
   }
 }
 
-/* --- 宽屏 TOC 适配 --- */
+/* --- 宽屏 TOC 隐藏 --- */
 @media (max-width: 1200px) {
   .toc { display: none; }
 }
