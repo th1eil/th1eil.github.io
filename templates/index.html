@@ -3,8 +3,8 @@
 {% block content %}
 <div class="content-wrapper">
   <div class="posts">
-    {# 使用 paginator.pages 而不是手动 get_section，这样才能正确分页 #}
-    {% for page in paginator.pages %}
+    {% set section = get_section(path="blog/_index.md") %}
+    {% for page in section.pages %}
       <article class="post">
         <h2 class="post-title">
           <a href="{{ page.permalink }}">{{ page.title }}</a>
@@ -30,15 +30,6 @@
         </div>
       </article>
     {% endfor %}
-  </div>
-
-  <div class="pagination">
-    {% if paginator.previous %}
-      <a class="prev" href="{{ paginator.previous }}">← Previous</a>
-    {% endif %}
-    {% if paginator.next %}
-      <a class="next" href="{{ paginator.next }}">Next →</a>
-    {% endif %}
   </div>
 </div>
 {% endblock content %}
