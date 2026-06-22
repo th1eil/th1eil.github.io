@@ -189,15 +189,38 @@
      c. 相片墙数据与渲染
      ---------------------------------------------------------- */
   var photos = [
-    { id: 1,  url: 'https://picsum.photos/id/1015/600/800',  thumb: 'https://picsum.photos/id/1015/400/500',  title: '\u5c71\u6797\u5c0f\u5f84',     color: '#5a7d5a' },
-    { id: 2,  url: 'https://picsum.photos/id/1018/800/600',  thumb: 'https://picsum.photos/id/1018/500/400',  title: '\u66ae\u8272\u5c71\u5ce6',     color: '#4a6b8a' },
-    { id: 3,  url: 'https://picsum.photos/id/1035/600/900',  thumb: 'https://picsum.photos/id/1035/400/600',  title: '\u82a6\u82c7\u8361',       color: '#8a7a5a' },
-    { id: 4,  url: 'https://picsum.photos/id/1040/800/600',  thumb: 'https://picsum.photos/id/1040/500/400',  title: '\u6797\u95f4\u5c0f\u5c4b',     color: '#6a7a6a' },
-    { id: 5,  url: 'https://picsum.photos/id/1044/600/600',  thumb: 'https://picsum.photos/id/1044/400/400',  title: '\u6e56\u9762\u5012\u5f71',     color: '#4a6a8a' },
-    { id: 6,  url: 'https://picsum.photos/id/1067/800/600',  thumb: 'https://picsum.photos/id/1067/500/400',  title: '\u57ce\u5e02\u9ec4\u660f',     color: '#6a5a4a' },
-    { id: 7,  url: 'https://picsum.photos/id/1074/600/800',  thumb: 'https://picsum.photos/id/1074/400/500',  title: '\u84b2\u516c\u82b1',       color: '#7a8a6a' },
-    { id: 8,  url: 'https://picsum.photos/id/1084/800/600',  thumb: 'https://picsum.photos/id/1084/500/400',  title: '\u51ac\u65e5\u65f7\u91ce',     color: '#8a8a9a' },
-    { id: 9,  url: 'https://picsum.photos/id/10/800/600',    thumb: 'https://picsum.photos/id/10/500/400',    title: '\u68ee\u6797\u4e0e\u8def',     color: '#3a5a3a' },
+    { url: '/photos/abhishek-koli-PMxTK-bHZhs-unsplash.jpg', title: 'Abhishek' },
+    { url: '/photos/andrew-small-EfhCUc_fjrU-unsplash.jpg', title: 'Andrew' },
+    { url: '/photos/anthony-delanoix-urUdKCxsTUI-unsplash.jpg', title: 'Anthony' },
+    { url: '/photos/arno-smit-sKJ7zSylUao-unsplash.jpg', title: 'Arno' },
+    { url: '/photos/aziz-acharki-tLsOA0Vlvwk-unsplash.jpg', title: 'Aziz' },
+    { url: '/photos/chi-pham-CoMCbQtTsAs-unsplash.jpg', title: 'Chi' },
+    { url: '/photos/dorne-marting-WJJ3xP5Z_vw-unsplash.jpg', title: 'Dorne' },
+    { url: '/photos/esteban-castle-MCJE6Zd0cLs-unsplash.jpg', title: 'Esteban' },
+    { url: '/photos/evie-s-bSVGnUCk4tk-unsplash.jpg', title: 'Evie' },
+    { url: '/photos/gabriela-popa-63S5u1wzlOk-unsplash.jpg', title: 'Gabriela' },
+    { url: '/photos/gaetano-cessati-CCy2UFLO1Mg-unsplash.jpg', title: 'Gaetano' },
+    { url: '/photos/gerome-bruneau-RPmWEtZLh7U-unsplash.jpg', title: 'Gerome' },
+    { url: '/photos/irina-iriser-mNz9Pa3tz34-unsplash.jpg', title: 'Irina' },
+    { url: '/photos/kevin-butz-sZj8qOt3yTU-unsplash.jpg', title: 'Kevin' },
+    { url: '/photos/marivi-pazos-4kX1uoAAohY-unsplash.jpg', title: 'Marivi' },
+    { url: '/photos/masaaki-komori-_SbeCWYjwCQ-unsplash.jpg', title: 'Masaaki' },
+    { url: '/photos/mitchel-lensink-TtP9IVxxvD0-unsplash.jpg', title: 'Mitchel' },
+    { url: '/photos/pawel-czerwinski-xnY4LcEkVZw-unsplash.jpg', title: 'Pawel' },
+    { url: '/photos/quino-al--3KfR1GVKXY-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/quino-al-BlMj6RYy3c0-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/rob-pumphrey-40Nuk5wXsoo-unsplash.jpg', title: 'Rob' },
+    { url: '/photos/rodion-kutsaiev-tcPUbu8H2c0-unsplash.jpg', title: 'Rodion' },
+    { url: '/photos/roonz-nl-ATgfRqpFfFI-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/roonz-nl-vjDbHCjHlEY-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/sergey-shmidt-koy6FlCCy5s-unsplash.jpg', title: 'Sergey' },
+    { url: '/photos/sora-sagano-F6ZzivdSQ5k-unsplash.jpg', title: 'Sora' },
+    { url: '/photos/susanne-schwarz-qUACwpVjwoM-unsplash.jpg', title: 'Susanne' },
+    { url: '/photos/tim-mossholder-78CGaGIFkzE-unsplash.jpg', title: 'Tim' },
+    { url: '/photos/tomoko-uji-kxvn1ogpTtE-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/tomoko-uji-rCJGFHCV3oQ-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/veri-ivanova-whOkVvf0_hU-unsplash.jpg', title: 'Veri' },
+    { url: '/photos/yousef-espanioly-0iOOw41DZ28-unsplash.jpg', title: 'Yousef' },
   ];
 
   var wall = document.getElementById('photoWall');
@@ -213,12 +236,12 @@
     photos.forEach(function(photo, idx) {
       var item = document.createElement('div');
       item.className = 'photo-item';
-      item.style.setProperty('--thumb-bg', photo.color);
+      
       item.setAttribute('data-index', idx);
       item.innerHTML =
         '<div class="photo-inner">' +
-          '<div class="photo-placeholder" style="background-color:' + photo.color + '"></div>' +
-          '<img class="photo-img" src="' + photo.thumb + '" alt="' + photo.title + '" loading="lazy">' +
+          '<div class="photo-placeholder" style="background-color:#8a9ab5"></div>' +
+          '<img class="photo-img" src="' + photo.url + '" alt="' + photo.title + '" loading="lazy">' +
           '<div class="photo-overlay">' +
             '<span class="photo-title">' + photo.title + '</span>' +
           '</div>' +
