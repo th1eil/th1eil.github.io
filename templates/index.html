@@ -157,22 +157,34 @@
   }
 
   /* ----------------------------------------------------------
-     b. 数字递增动画
+     b. 数字递增动画（RAF + 缓动，避免 setInterval 卡顿）
      ---------------------------------------------------------- */
   var statNumbers = document.querySelectorAll('.stat-number');
   function animateCounter(el) {
     var target = parseInt(el.getAttribute('data-target'), 10);
     if (isNaN(target)) return;
-    var current = 0;
-    var step = Math.max(1, Math.floor(target / 40));
-    var interval = setInterval(function() {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(interval);
+    var duration = 2000;       // 动画总时长 2s
+    var startTime = null;
+
+    // easeOutCubic：先快后慢，观感更流畅
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function step(now) {
+      if (!startTime) startTime = now;
+      var elapsed = now - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = easeOutCubic(progress);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target; // 确保最终值精确
       }
-      el.textContent = current;
-    }, 30);
+    }
+
+    requestAnimationFrame(step);
   }
 
   var observer = new IntersectionObserver(function(entries) {
