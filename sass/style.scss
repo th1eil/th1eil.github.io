@@ -1361,38 +1361,44 @@ code[class*="language-"] {
 /* ----------------------------------------------------------
    26. 相片墙工具栏 & 换一批按钮
    ---------------------------------------------------------- */
-.photo-wall-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-}
 
 .shuffle-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  padding: 0.45rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  background: var(--bg-color);
+  gap: 0.3rem;
+  margin-left: auto;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
   font-family: inherit;
   line-height: 1;
+  opacity: 0.7;
 }
 
 .shuffle-btn:hover {
   color: var(--primary-color);
-  border-color: var(--primary-color);
   background: var(--primary-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  opacity: 1;
+}
+
+.shuffle-btn:hover .shuffle-icon {
+  transform: rotate(180deg);
 }
 
 .shuffle-btn:active {
-  transform: translateY(0);
+  transform: scale(0.92);
+}
+
+.shuffle-icon {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
 }
 
 [data-theme="dark"] .shuffle-btn:hover {
