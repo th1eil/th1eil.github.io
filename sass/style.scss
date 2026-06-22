@@ -1108,6 +1108,8 @@ code[class*="language-"] {
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               box-shadow 0.35s ease;
   min-height: 200px;
+  animation: photo-fade-in 0.5s ease both;
+  animation-delay: var(--anim-delay, 0s);
 }
 
 .photo-item:hover {
@@ -1120,11 +1122,6 @@ code[class*="language-"] {
   grid-column: span 2;
   grid-row: span 2;
   min-height: 360px;
-}
-
-.photo-item:nth-child(5) {
-  grid-row: span 2;
-  min-height: 340px;
 }
 
 .photo-inner {
@@ -1328,10 +1325,6 @@ code[class*="language-"] {
     min-height: 240px;
   }
 
-  .photo-item:nth-child(5) {
-    grid-row: span 1;
-    min-height: 200px;
-  }
 
   .photo-item { min-height: 150px; }
 
@@ -1349,4 +1342,59 @@ code[class*="language-"] {
   .photo-wall { grid-template-columns: 1fr 1fr; gap: 6px; }
   .photo-item { min-height: 120px; }
   .photo-item:nth-child(1) { min-height: 200px; }
+}
+
+/* ----------------------------------------------------------
+   25. 相片墙动画
+   ---------------------------------------------------------- */
+@keyframes photo-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ----------------------------------------------------------
+   26. 相片墙工具栏 & 换一批按钮
+   ---------------------------------------------------------- */
+.photo-wall-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.shuffle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.shuffle-btn:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.shuffle-btn:active {
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .shuffle-btn:hover {
+  background: var(--primary-light);
 }

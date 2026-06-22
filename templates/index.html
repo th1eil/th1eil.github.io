@@ -53,7 +53,9 @@
       <span class="heading-text">相片墙</span>
     </h2>
     <p class="section-subtitle">一些随手拍下的瞬间</p>
-    <div class="photo-wall" id="photoWall"></div>
+    <div class="photo-wall-toolbar">
+      <button class="shuffle-btn" id="shuffleBtn" title="换一批照片">🎲 换一批</button>
+    </div>    <div class="photo-wall" id="photoWall"></div>
   </section>
 
   {# 灯光箱 — 点击照片放大查看 #}
@@ -186,7 +188,6 @@
   statNumbers.forEach(function(el) { observer.observe(el); });
 
   /* ----------------------------------------------------------
-     c. 相片墙数据与渲染
      ---------------------------------------------------------- */
   var photos = [
     { url: '/photos/abhishek-koli-PMxTK-bHZhs-unsplash.jpg', title: 'Abhishek' },
@@ -230,14 +231,25 @@
   var lightboxClose = document.getElementById('lightboxClose');
   var lightboxPrev = document.getElementById('lightboxPrev');
   var lightboxNext = document.getElementById('lightboxNext');
+  var shuffleBtn = document.getElementById('shuffleBtn');
   var currentIdx = 0;
+  var displayedPhotos = [];
 
-  if (wall && photos.length) {
-    photos.forEach(function(photo, idx) {
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function renderWall() {
+    displayedPhotos = shuffle(photos.slice()).slice(0, 8);
+    wall.innerHTML = '';
+    displayedPhotos.forEach(function(photo, idx) {
       var item = document.createElement('div');
       item.className = 'photo-item';
-      
-      item.setAttribute('data-index', idx);
+      item.style.setProperty('--anim-delay', (idx * 0.08) + 's');
       item.innerHTML =
         '<div class="photo-inner">' +
           '<div class="photo-placeholder" style="background-color:#8a9ab5"></div>' +
@@ -259,13 +271,21 @@
     });
   }
 
+  if (wall) renderWall();
+
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener('click', function() {
+      renderWall();
+    });
+  }
+
   /* ----------------------------------------------------------
      d. 灯光箱控制
      ---------------------------------------------------------- */
   function openLightbox(idx) {
     currentIdx = idx;
-    lightboxImg.src = photos[idx].url;
-    lightboxCaption.textContent = photos[idx].title;
+    lightboxImg.src = displayedPhotos[idx].url;
+    lightboxCaption.textContent = displayedPhotos[idx].title;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -276,15 +296,15 @@
   }
 
   function prevPhoto() {
-    currentIdx = (currentIdx - 1 + photos.length) % photos.length;
-    lightboxImg.src = photos[currentIdx].url;
-    lightboxCaption.textContent = photos[currentIdx].title;
+    currentIdx = (currentIdx - 1 + displayedPhotos.length) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
   }
 
   function nextPhoto() {
-    currentIdx = (currentIdx + 1) % photos.length;
-    lightboxImg.src = photos[currentIdx].url;
-    lightboxCaption.textContent = photos[currentIdx].title;
+    currentIdx = (currentIdx + 1) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
   }
 
   if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
