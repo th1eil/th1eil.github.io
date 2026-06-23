@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
+        crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">首页</a>
+        <a href="/blog" class="nav-link ">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+
+        
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色模式">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<div class="content-wrapper">
+  
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-greeting">
+        <span class="greeting-line">
+          <span class="wave" aria-hidden="true">👋</span>
+          <span class="typing-text" id="typewriter"></span>
+          <span class="typing-cursor">|</span>
+        </span>
+      </h1>
+      <p class="hero-tagline">记录编程、学习和生活</p>
+      <div class="hero-stats">
+        
+        
+        
+          
+            
+              
+            
+          
+        
+          
+            
+              
+            
+              
+            
+              
+            
+          
+        
+          
+            
+              
+            
+          
+        
+          
+            
+              
+            
+          
+        
+          
+            
+              
+            
+          
+        
+          
+            
+              
+            
+          
+        
+          
+            
+              
+            
+              
+            
+              
+            
+          
+        
+          
+            
+              
+            
+          
+        
+        
+        <div class="stat-item">
+          <span class="stat-number" data-target="8">0</span>
+          <span class="stat-label">篇文章</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="8">0</span>
+          <span class="stat-label">标签</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="2025">0</span>
+          <span class="stat-label">始于</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-bg-decor" aria-hidden="true"></div>
+  </section>
+
+  
+  <section class="photo-wall-section">
+    <h2 class="section-heading">
+      <span class="heading-icon">📸</span>
+      <span class="heading-text">相片墙</span>
+    </h2>
+    <p class="section-subtitle">一些随手拍下的瞬间</p>
+    <div class="photo-wall" id="photoWall"></div>
+  </section>
+
+  
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="照片预览">
+    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">‹</button>
+    <img class="lightbox-content" id="lightboxImg" alt="照片预览">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">›</button>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  
+  <section class="posts-section">
+    <h2 class="section-heading">
+      <span class="heading-icon">📝</span>
+      <span class="heading-text">最近文章</span>
+    </h2>
+
+    <div class="posts">
+      
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;ai-shi-dai-de-xiao-mo-xing-zai-kai-fa&#x2F;">【Vibe】小模型开发的一些总结 </a>
+          </h2>
+
+          <div class="post-meta">
+            2026-06-23 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/llm/">#llm</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              近期的工作。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;ai-shi-dai-de-xiao-mo-xing-zai-kai-fa&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;wei-yun-suan&#x2F;">【Learing】c和java中的位运算 </a>
+          </h2>
+
+          <div class="post-meta">
+            2025-03-25 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/c/">#C</a>
+              
+                <a href="https://th1eil.github.io/tags/java/">#Java</a>
+              
+                <a href="https://th1eil.github.io/tags/algo/">#algo</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              这两天刷题遇见很多有意思的位运算用法，发现自己几乎没有印象，遂亡羊补牢。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;wei-yun-suan&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;kmp&#x2F;">【Learning】KPM的一些理解</a>
+          </h2>
+
+          <div class="post-meta">
+            2025-03-17 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/algo/">#algo</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              kpm算法
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;kmp&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;spring-mvc-classlearning-v1&#x2F;">【Learning】JavaWeb Spring 课堂 </a>
+          </h2>
+
+          <div class="post-meta">
+            2025-03-12 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/java/">#Java</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              课堂笔记。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;spring-mvc-classlearning-v1&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;firstlua&#x2F;">【Learning】lua入门 </a>
+          </h2>
+
+          <div class="post-meta">
+            2025-03-01 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/lua/">#Lua</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              lua基础学习笔记。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;firstlua&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;creview&#x2F;">【Review】c复习随笔 </a>
+          </h2>
+
+          <div class="post-meta">
+            2025-02-25 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/c/">#C</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              复习c时的一点思考。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;creview&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;second&#x2F;">【Talk】Zola 主题装修日记</a>
+          </h2>
+
+          <div class="post-meta">
+            2024-03-21 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+              
+                <a href="https://th1eil.github.io/tags/frontend/">#Frontend</a>
+              
+                <a href="https://th1eil.github.io/tags/zola/">#Zola</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              记录使用 Zola 搭建博客并自定义主题的过程。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;second&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+        <article class="post">
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;first&#x2F;">【Talk】开始我的博客之旅</a>
+          </h2>
+
+          <div class="post-meta">
+            2024-03-20 ::
+            
+              
+                <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+              
+            
+          </div>
+
+          
+            <div class="post-description">
+              这是我的第一篇博客文章，讲述了为什么我要开始写博客。
+            </div>
+          
+
+          <div class="read-more">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;first&#x2F;">Read more</a>
+          </div>
+        </article>
+      
+    </div>
+  </section>
+</div>
+
+  </div>
+
+  
+  <footer class="site-footer">
+    <p>© 2026 Rei's Blog · Built with <a href="https://www.getzola.org/">Zola</a></p>
+  </footer>
+
+  
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+          crossorigin="anonymous" defer></script>
+
+  
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > 300) {
+              btn.classList.add('visible');
+            } else {
+              btn.classList.remove('visible');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+
+      function setTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* ----------------------------------------------------------
+     a. 打字机效果
+     ---------------------------------------------------------- */
+  var el = document.getElementById('typewriter');
+  if (el) {
+    var phrases = [
+      '欢迎来到 Rei 的小站',
+      '你好，世界！',
+      '写写代码，记录生活',
+      'Stay curious, stay vibing'
+    ];
+    var phraseIdx = 0;
+    var charIdx = 0;
+    var isDeleting = false;
+    var speed = 80;
+
+    function typeLoop() {
+      var current = phrases[phraseIdx];
+      if (!isDeleting) {
+        el.textContent = current.substring(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          isDeleting = true;
+          speed = 2000;
+        } else {
+          speed = 60 + Math.random() * 60;
+        }
+      } else {
+        el.textContent = current.substring(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          isDeleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          speed = 400;
+        } else {
+          speed = 30 + Math.random() * 40;
+        }
+      }
+      setTimeout(typeLoop, speed);
+    }
+    setTimeout(typeLoop, 800);
+  }
+
+  /* ----------------------------------------------------------
+     b. 数字递增动画（RAF + 缓动，避免 setInterval 卡顿）
+     ---------------------------------------------------------- */
+  var statNumbers = document.querySelectorAll('.stat-number');
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    if (isNaN(target)) return;
+    var duration = 2000;       // 动画总时长 2s
+    var startTime = null;
+
+    // easeOutCubic：先快后慢，观感更流畅
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function step(now) {
+      if (!startTime) startTime = now;
+      var elapsed = now - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = easeOutCubic(progress);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target; // 确保最终值精确
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  statNumbers.forEach(function(el) { observer.observe(el); });
+
+  /* ----------------------------------------------------------
+     c. 相片墙 — Masonry 布局 & 随机展示
+     ---------------------------------------------------------- */
+  var photos = [
+    { url: '/photos/abhishek-koli-PMxTK-bHZhs-unsplash.jpg', title: 'Abhishek' },
+    { url: '/photos/andrew-small-EfhCUc_fjrU-unsplash.jpg', title: 'Andrew' },
+    { url: '/photos/anthony-delanoix-urUdKCxsTUI-unsplash.jpg', title: 'Anthony' },
+    { url: '/photos/arno-smit-sKJ7zSylUao-unsplash.jpg', title: 'Arno' },
+    { url: '/photos/aziz-acharki-tLsOA0Vlvwk-unsplash.jpg', title: 'Aziz' },
+    { url: '/photos/chi-pham-CoMCbQtTsAs-unsplash.jpg', title: 'Chi' },
+    { url: '/photos/dorne-marting-WJJ3xP5Z_vw-unsplash.jpg', title: 'Dorne' },
+    { url: '/photos/esteban-castle-MCJE6Zd0cLs-unsplash.jpg', title: 'Esteban' },
+    { url: '/photos/evie-s-bSVGnUCk4tk-unsplash.jpg', title: 'Evie' },
+    { url: '/photos/gabriela-popa-63S5u1wzlOk-unsplash.jpg', title: 'Gabriela' },
+    { url: '/photos/gaetano-cessati-CCy2UFLO1Mg-unsplash.jpg', title: 'Gaetano' },
+    { url: '/photos/gerome-bruneau-RPmWEtZLh7U-unsplash.jpg', title: 'Gerome' },
+    { url: '/photos/irina-iriser-mNz9Pa3tz34-unsplash.jpg', title: 'Irina' },
+    { url: '/photos/kevin-butz-sZj8qOt3yTU-unsplash.jpg', title: 'Kevin' },
+    { url: '/photos/marivi-pazos-4kX1uoAAohY-unsplash.jpg', title: 'Marivi' },
+    { url: '/photos/masaaki-komori-_SbeCWYjwCQ-unsplash.jpg', title: 'Masaaki' },
+    { url: '/photos/mitchel-lensink-TtP9IVxxvD0-unsplash.jpg', title: 'Mitchel' },
+    { url: '/photos/pawel-czerwinski-xnY4LcEkVZw-unsplash.jpg', title: 'Pawel' },
+    { url: '/photos/quino-al--3KfR1GVKXY-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/quino-al-BlMj6RYy3c0-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/rob-pumphrey-40Nuk5wXsoo-unsplash.jpg', title: 'Rob' },
+    { url: '/photos/rodion-kutsaiev-tcPUbu8H2c0-unsplash.jpg', title: 'Rodion' },
+    { url: '/photos/roonz-nl-ATgfRqpFfFI-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/roonz-nl-vjDbHCjHlEY-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/sergey-shmidt-koy6FlCCy5s-unsplash.jpg', title: 'Sergey' },
+    { url: '/photos/sora-sagano-F6ZzivdSQ5k-unsplash.jpg', title: 'Sora' },
+    { url: '/photos/susanne-schwarz-qUACwpVjwoM-unsplash.jpg', title: 'Susanne' },
+    { url: '/photos/tim-mossholder-78CGaGIFkzE-unsplash.jpg', title: 'Tim' },
+    { url: '/photos/tomoko-uji-kxvn1ogpTtE-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/tomoko-uji-rCJGFHCV3oQ-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/veri-ivanova-whOkVvf0_hU-unsplash.jpg', title: 'Veri' },
+    { url: '/photos/yousef-espanioly-0iOOw41DZ28-unsplash.jpg', title: 'Yousef' },
+  ];
+
+  var wall = document.getElementById('photoWall');
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var lightboxPrev = document.getElementById('lightboxPrev');
+  var lightboxNext = document.getElementById('lightboxNext');
+  var currentIdx = 0;
+  var displayedPhotos = [];
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function renderWall() {
+    displayedPhotos = shuffle(photos.slice()).slice(0, 8);
+    wall.innerHTML = '';
+    displayedPhotos.forEach(function(photo, idx) {
+      var item = document.createElement('div');
+      item.className = 'photo-item';
+      item.style.setProperty('--anim-delay', (idx * 0.08) + 's');
+      item.innerHTML =
+        '<div class="photo-inner">' +
+          '<div class="photo-placeholder" style="background-color:#8a9ab5"></div>' +
+          '<img class="photo-img" src="' + photo.url + '" alt="' + photo.title + '" loading="lazy">' +
+          '<div class="photo-overlay">' +
+            '<span class="photo-title">' + photo.title + '</span>' +
+          '</div>' +
+        '</div>';
+      item.addEventListener('click', function() { openLightbox(idx); });
+      wall.appendChild(item);
+    });
+
+    var imgs = wall.querySelectorAll('.photo-img');
+    imgs.forEach(function(img) {
+      img.addEventListener('load', function() {
+        img.classList.add('loaded');
+      });
+      if (img.complete) img.classList.add('loaded');
+    });
+  }
+
+  if (wall) renderWall();
+
+  /* ----------------------------------------------------------
+     d. 灯光箱控制
+     ---------------------------------------------------------- */
+  function openLightbox(idx) {
+    currentIdx = idx;
+    lightboxImg.src = displayedPhotos[idx].url;
+    lightboxCaption.textContent = displayedPhotos[idx].title;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function prevPhoto() {
+    currentIdx = (currentIdx - 1 + displayedPhotos.length) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
+  }
+
+  function nextPhoto() {
+    currentIdx = (currentIdx + 1) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
+  }
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', prevPhoto);
+  if (lightboxNext) lightboxNext.addEventListener('click', nextPhoto);
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox || !lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevPhoto();
+    if (e.key === 'ArrowRight') nextPhoto();
+  });
+
+})();
+</script>
+
+</body>
+
+</html>

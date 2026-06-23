@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - llm</title>
+    <link rel="self" type="application/atom+xml" href="https://th1eil.github.io/tags/llm/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://th1eil.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-06-23T00:00:00+00:00</updated>
+    <id>https://th1eil.github.io/tags/llm/atom.xml</id>
+    <entry xml:lang="en">
+        <title>【Vibe】小模型开发的一些总结 </title>
+        <published>2026-06-23T00:00:00+00:00</published>
+        <updated>2026-06-23T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://th1eil.github.io/blog/ai-shi-dai-de-xiao-mo-xing-zai-kai-fa/"/>
+        <id>https://th1eil.github.io/blog/ai-shi-dai-de-xiao-mo-xing-zai-kai-fa/</id>
+        
+        <content type="html" xml:base="https://th1eil.github.io/blog/ai-shi-dai-de-xiao-mo-xing-zai-kai-fa/">&lt;h1 id=&quot;ai-shi-dai-xiao-mo-xing-xiang-mu-kai-fa-jing-yan-zhi-tan&quot;&gt;AI 时代小模型项目开发经验之谈&lt;&#x2F;h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;项目类型：实时语音识别 + 对话服务（ASR&#x2F;VAD&#x2F;LLM&#x2F;TTS 全链路）
+技术栈：Python&#x2F;FastAPI、Qwen3-ASR&#x2F;TTS、Silero VAD、Docker Compose、WebSocket
+开发周期：2026-06-08 ~ 2026-06-22（约 2 周），AI 开发&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;yi-jia-gou-she-ji-de-he-xin-jing-yan&quot;&gt;一、架构设计的核心经验&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;1-1-cha-jian-hua-wei-lai-proof&quot;&gt;1.1 插件化 = 未来proof&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;项目中最成功的决策&lt;&#x2F;strong&gt;就是 &lt;code&gt;backend&#x2F;plugins&#x2F;&lt;&#x2F;code&gt; 的抽象基类 + 注册表 + 工厂函数模式：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 四个核心能力组件的抽象接口
+&lt;&#x2F;span&gt;&lt;span&gt;BaseASRProvider   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 语音识别
+&lt;&#x2F;span&gt;&lt;span&gt;BaseVADProvider   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 语音活动检测
+&lt;&#x2F;span&gt;&lt;span&gt;BaseLLMProvider   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 大语言模型
+&lt;&#x2F;span&gt;&lt;span&gt;BaseTTSProvider   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 语音合成
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 注册表：一行切换实现
+&lt;&#x2F;span&gt;&lt;span&gt;_ASR_REGISTRY &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;qwen3&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;...Qwen3ASRProvider&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;http_asr&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;...HttpASRProvider&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;为什么这个设计在 AI 项目中尤其重要：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;场景&lt;&#x2F;th&gt;&lt;th&gt;没有插件化&lt;&#x2F;th&gt;&lt;th&gt;有插件化&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;模型从 Qwen3 换成 Whisper&lt;&#x2F;td&gt;&lt;td&gt;改几十处代码&lt;&#x2F;td&gt;&lt;td&gt;注册一行，&lt;code&gt;.env&lt;&#x2F;code&gt; 改一行&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;本地部署 → Docker 微服务&lt;&#x2F;td&gt;&lt;td&gt;重写架构&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;USE_REMOTE_PLUGINS=true&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;ASR 后端从 from_pretrained 切到 vLLM&lt;&#x2F;td&gt;&lt;td&gt;改 pipeline&lt;&#x2F;td&gt;&lt;td&gt;provider 内部封装&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;新增 LLM provider（如 Claude）&lt;&#x2F;td&gt;&lt;td&gt;改 LLM 客户端&lt;&#x2F;td&gt;&lt;td&gt;实现基类 + 注册&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 模型迭代速度极快，今天的最优模型明天就可能被替代。插件化不是&quot;过度设计&quot;，而是对不确定性的风险管理。&lt;&#x2F;strong&gt; 它让&quot;换模型&quot;这个最高频操作的成本降到最低。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-2-jian-jin-shi-jia-gou-yan-jin-dan-ti-wei-fu-wu-bu-yao-yi-bu-dao-wei&quot;&gt;1.2 渐进式架构演进：单体 → 微服务，不要一步到位&lt;&#x2F;h3&gt;
+&lt;p&gt;项目的架构演进路径非常清晰：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;阶段 1: 单体应用
+&lt;&#x2F;span&gt;&lt;span&gt;  gateway 直接加载 ASR&#x2F;VAD 模型，以本地对象调用
+&lt;&#x2F;span&gt;&lt;span&gt;  → 适合开发调试，一台机器跑通全流程
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;阶段 2: 远程插件模式
+&lt;&#x2F;span&gt;&lt;span&gt;  gateway 通过 HTTP&#x2F;WS 调用独立的 ASR&#x2F;VAD&#x2F;TTS 容器
+&lt;&#x2F;span&gt;&lt;span&gt;  → 适合生产部署，GPU 资源隔离，独立扩缩容
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;关键设计：两个阶段共用同一套代码。&lt;&#x2F;strong&gt; &lt;code&gt;server.py&lt;&#x2F;code&gt; 中只有这一行判断：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;_USE_REMOTE:
+&lt;&#x2F;span&gt;&lt;span&gt;    os.environ[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;ASR_PROVIDER&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;http_asr&amp;quot;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 切换到 HTTP 客户端
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;其余代码完全不变。&lt;code&gt;HttpASRProvider&lt;&#x2F;code&gt; 实现了和 &lt;code&gt;Qwen3ASRProvider&lt;&#x2F;code&gt; 完全相同的接口，Pipeline 层完全无感。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;经验：不要在项目初期就追求完美的微服务架构。先让单体跑通，再用插件化实现平滑过渡。&lt;&#x2F;strong&gt; 在小模型项目中，模型加载和推理是核心瓶颈——先把这些搞稳定，再谈拆分。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-3-pipeline-bian-pai-qi-jie-ou-neng-li-zu-he-yu-ju-ti-shi-xian&quot;&gt;1.3 Pipeline 编排器：解耦能力组合与具体实现&lt;&#x2F;h3&gt;
+&lt;p&gt;项目中 &lt;code&gt;ChatPipeline&lt;&#x2F;code&gt; 和 &lt;code&gt;ASRPipeline&lt;&#x2F;code&gt; 是纯编排层，不关心 ASR&#x2F;VAD&#x2F;LLM 的具体实现：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;ChatPipeline&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;__init__&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;vad&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;asr&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;llm&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;tts&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;None&lt;&#x2F;span&gt;&lt;span&gt;, ...):
+&lt;&#x2F;span&gt;&lt;span&gt;        self.vad &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;vad    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 任何 BaseVADProvider
+&lt;&#x2F;span&gt;&lt;span&gt;        self.asr &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;asr    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 任何 BaseASRProvider
+&lt;&#x2F;span&gt;&lt;span&gt;        self.llm &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;llm    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 任何 BaseLLMProvider
+&lt;&#x2F;span&gt;&lt;span&gt;        self.tts &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;tts    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 任何 BaseTTSProvider
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Pipeline 只做三件事：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;协调 VAD→ASR→LLM→TTS 的调用顺序&lt;&#x2F;li&gt;
+&lt;li&gt;管理流式状态（streaming state 的创建&#x2F;喂入&#x2F;结束&#x2F;清理）&lt;&#x2F;li&gt;
+&lt;li&gt;通过回调把事件传递出去&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;strong&gt;经验：编排器 + 插件 = 可组合的能力矩阵。&lt;&#x2F;strong&gt; 新增一个 &quot;纯 ASR 不含 LLM&quot; 的端点，只需写 267 行 &lt;code&gt;ASRPipeline&lt;&#x2F;code&gt;，复用已有的 VAD 和 ASR provider，不需要碰任何模型代码。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;er-pei-zhi-guan-li-env-shi-ai-xiang-mu-de-yi-deng-gong-min&quot;&gt;二、配置管理：&lt;code&gt;.env&lt;&#x2F;code&gt; 是 AI 项目的一等公民&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;2-1-pei-zhi-xiang-qing-dan-ji-xiang-mu-jie-kou-wen-dang&quot;&gt;2.1 配置项清单即项目接口文档&lt;&#x2F;h3&gt;
+&lt;p&gt;Pydantic Settings 的好处远超&quot;类型校验&quot;：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#a6e22e;&quot;&gt;Settings&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;font-style:italic;color:#a6e22e;&quot;&gt;BaseSettings&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    ASR_PROVIDER: &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;qwen3&amp;quot;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 不只是字符串，是架构决策
+&lt;&#x2F;span&gt;&lt;span&gt;    ASR_MODEL: &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;Qwen&#x2F;Qwen3-ASR-0.6B&amp;quot;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 不只是路径，是模型版本
+&lt;&#x2F;span&gt;&lt;span&gt;    ASR_DEVICE: &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;str &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;cpu&amp;quot;           &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 不只是设备，是成本&#x2F;延迟权衡
+&lt;&#x2F;span&gt;&lt;span&gt;    ASR_USE_VLLM: &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;bool &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;False        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 不只是开关，是流式能力开关
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;经验：对于 AI 项目，&lt;code&gt;.env&lt;&#x2F;code&gt; 文件 = 生产环境的&quot;控制面板&quot;。&lt;&#x2F;strong&gt; 换模型、切 GPU、调推理参数——都应该通过改 &lt;code&gt;.env&lt;&#x2F;code&gt; 完成，不应该改代码。Pydantic Settings 的 &lt;code&gt;env_file=&quot;.env&quot;&lt;&#x2F;code&gt; + &lt;code&gt;case_sensitive=True&lt;&#x2F;code&gt; 提供了免费的类型校验和文档。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-2-pei-zhi-de-shi-ji-wen-ti-chu-shi-hua-shun-xu-shi-bug-zhi-yuan&quot;&gt;2.2 配置的时机问题：初始化顺序是 bug 之源&lt;&#x2F;h3&gt;
+&lt;p&gt;项目踩过的坑：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# ❌ 错误：模块导入时就实例化 Settings
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# config.py 底部
+&lt;&#x2F;span&gt;&lt;span&gt;settings &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;Settings()  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 此时 USE_REMOTE_PLUGINS 还没处理
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# ✅ 正确：延迟实例化，等调用方准备好后再读
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;get_settings&lt;&#x2F;span&gt;&lt;span&gt;() -&amp;gt; Settings:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;global &lt;&#x2F;span&gt;&lt;span&gt;_settings
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;_settings &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;is &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;None&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;        _settings &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;Settings()
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;_settings
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# server.py 先修正环境变量，再调用 get_settings()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;_USE_REMOTE:
+&lt;&#x2F;span&gt;&lt;span&gt;    os.environ[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;ASR_PROVIDER&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;http_asr&amp;quot;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 先修正
+&lt;&#x2F;span&gt;&lt;span&gt;cfg &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;get_settings()  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 再读取
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 项目的配置有&quot;模式切换&quot;层级（本机&#x2F;远程、GPU&#x2F;CPU、vLLM&#x2F;from_pretrained）。&lt;&#x2F;strong&gt; 这些不是简单的 key=value，而是会触发完全不同的模块导入路径。务必确保配置读取发生在所有环境变量修正之后。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;san-ai-mo-xing-te-you-de-gong-cheng-tiao-zhan&quot;&gt;三、AI 模型特有的工程挑战&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;3-1-liu-shi-vs-fei-liu-shi-liang-chong-wan-quan-bu-tong-de-bian-cheng-mo-xing&quot;&gt;3.1 流式 vs 非流式：两种完全不同的编程模型&lt;&#x2F;h3&gt;
+&lt;p&gt;项目经历了一个重要的认知升级：&lt;strong&gt;&quot;流式 ASR&quot;远不只是&quot;逐 chunk 调用 API&quot;。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;维度&lt;&#x2F;th&gt;&lt;th&gt;非流式（batch）&lt;&#x2F;th&gt;&lt;th&gt;流式（streaming）&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;状态管理&lt;&#x2F;td&gt;&lt;td&gt;无状态&lt;&#x2F;td&gt;&lt;td&gt;需要 &lt;code&gt;ASRStreamingState&lt;&#x2F;code&gt; 生命周期管理&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;错误处理&lt;&#x2F;td&gt;&lt;td&gt;try&#x2F;except 包裹一次调用&lt;&#x2F;td&gt;&lt;td&gt;每个 chunk 都可能失败，需要降级&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;资源释放&lt;&#x2F;td&gt;&lt;td&gt;自动&lt;&#x2F;td&gt;&lt;td&gt;必须显式 &lt;code&gt;finish()&lt;&#x2F;code&gt; 或 &lt;code&gt;abort()&lt;&#x2F;code&gt;，否则 GPU 泄漏&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;并发&lt;&#x2F;td&gt;&lt;td&gt;线程池串行即可&lt;&#x2F;td&gt;&lt;td&gt;需要非阻塞 recv + 超时处理&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;延迟模型&lt;&#x2F;td&gt;&lt;td&gt;等待整句结束&lt;&#x2F;td&gt;&lt;td&gt;边说边出字，VAD 切分策略决定体验&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;&lt;strong&gt;项目实现的流式降级策略值得借鉴：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;async &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;_on_speech_start&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;vad_infer_ms&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;self.asr.supports_streaming:
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;            self._streaming_state &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= await &lt;&#x2F;span&gt;&lt;span&gt;loop.run_in_executor(
+&lt;&#x2F;span&gt;&lt;span&gt;                self._asr_executor, self.asr.init_streaming_state
+&lt;&#x2F;span&gt;&lt;span&gt;            )
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;Exception &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span&gt;e:
+&lt;&#x2F;span&gt;&lt;span&gt;            logger.warning(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;流式 ASR 初始化失败，降级到整段识别: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;%s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, e)
+&lt;&#x2F;span&gt;&lt;span&gt;            self._streaming_state &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;None  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 自动降级！
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;经验：流式能力永远应该有非流式兜底。&lt;&#x2F;strong&gt; vLLM 后端、WebSocket 连接、GPU 显存——任何一环出问题，都应该自动回退到整段识别，而不是让整个服务不可用。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;3-2-zi-yuan-xie-lou-shi-ai-fu-wu-de-di-yi-da-di-ren&quot;&gt;3.2 资源泄漏是 AI 服务的第一大敌人&lt;&#x2F;h3&gt;
+&lt;p&gt;项目中实际发生并被修复的泄漏场景：&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;泄漏类型&lt;&#x2F;th&gt;&lt;th&gt;原因&lt;&#x2F;th&gt;&lt;th&gt;修复&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;GPU 显存泄漏&lt;&#x2F;td&gt;&lt;td&gt;WS 异常断开时 vllm_state 未清理&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;finally&lt;&#x2F;code&gt; 块强制 &lt;code&gt;finish_streaming_transcribe&lt;&#x2F;code&gt; + 超时自动清理&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;WebSocket 连接泄漏&lt;&#x2F;td&gt;&lt;td&gt;gateway abort 时只设 state=None&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;abort_streaming()&lt;&#x2F;code&gt; 发送 cancel 帧 + close WS&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;TTS 磁盘泄漏&lt;&#x2F;td&gt;&lt;td&gt;每次合成都写 WAV 到磁盘&lt;&#x2F;td&gt;&lt;td&gt;改为 &lt;code&gt;TTSResult.audio_bytes&lt;&#x2F;code&gt; 内存返回，30min TTL 自动清理&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;线程池泄漏&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;asr_executor&lt;&#x2F;code&gt; 线程被阻塞&lt;&#x2F;td&gt;&lt;td&gt;finish 前先排空积压响应，非阻塞 recv(timeout=0.5)&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 模型推理是重量级资源操作。每个 &lt;code&gt;init&lt;&#x2F;code&gt; 必须有对应的 &lt;code&gt;cleanup&lt;&#x2F;code&gt;，每个资源申请必须有 TTL。&lt;&#x2F;strong&gt; 不在 finally 块里写资源释放代码的 AI 服务，迟早会在生产环境 OOM。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;3-3-docker-gou-jian-mo-xing-xia-zai-shi-ci-cd-de-zui-da-ping-jing&quot;&gt;3.3 Docker 构建：模型下载是 CI&#x2F;CD 的最大瓶颈&lt;&#x2F;h3&gt;
+&lt;p&gt;项目踩过的 Docker 坑：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;大文件缓存策略&lt;&#x2F;strong&gt;：&lt;code&gt;torch&lt;&#x2F;code&gt; wheel 很大，必须和 &lt;code&gt;torchaudio&lt;&#x2F;code&gt; 分开 &lt;code&gt;RUN&lt;&#x2F;code&gt; 层：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;dockerfile&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-dockerfile &quot;&gt;&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;&lt;span&gt;RUN pip install torch==2.5.1+cu121 --index-url https:&#x2F;&#x2F;download.pytorch.org&#x2F;whl&#x2F;cu121
+&lt;&#x2F;span&gt;&lt;span&gt;RUN pip install torchaudio==2.5.1+cu121 --index-url https:&#x2F;&#x2F;download.pytorch.org&#x2F;whl&#x2F;cu121
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 而不是 RUN pip install torch torchaudio ... （改一个重下两个）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;healthcheck 要给模型加载留足时间&lt;&#x2F;strong&gt;：Qwen3-TTS 首次启动可能下载&#x2F;加载模型 5-10 分钟：&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;healthcheck&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;start_period&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;900s  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 不是 30s！
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;runtime 补装依赖&lt;&#x2F;strong&gt;：构建缓存可能让你漏装间接依赖（如 &lt;code&gt;packaging&lt;&#x2F;code&gt;），在 runtime 最终层补装是保险做法。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;离线部署&lt;&#x2F;strong&gt;：通过 &lt;code&gt;HF_ENDPOINT&lt;&#x2F;code&gt; 环境变量指向 HuggingFace 镜像或本地缓存，避免生产环境下载模型。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 项目的 Docker 镜像动辄 10-30GB。&lt;&#x2F;strong&gt; 分层策略、缓存利用、模型挂载（volume 而非 COPY）直接决定 CI&#x2F;CD 是 2 分钟还是 2 小时。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;si-kai-fa-liu-cheng-ai-fu-zhu-kai-fa-de-shi-zhan-mo-shi&quot;&gt;四、开发流程：AI 辅助开发的实战模式&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;4-1-wen-dang-qu-dong-kai-fa&quot;&gt;4.1 文档驱动开发&lt;&#x2F;h3&gt;
+&lt;p&gt;项目的文档齐全程度远超普通项目：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;README.md                        # 项目总览 + 快速启动
+&lt;&#x2F;span&gt;&lt;span&gt;architecture.md                  # 架构深度解析（985行）
+&lt;&#x2F;span&gt;&lt;span&gt;操作手册.md                       # 部署&#x2F;更新&#x2F;排障
+&lt;&#x2F;span&gt;&lt;span&gt;asr语言服务API接口文档.md          # 接口规范
+&lt;&#x2F;span&gt;&lt;span&gt;OpenAI语音服务接口文档.md          # API 兼容性文档
+&lt;&#x2F;span&gt;&lt;span&gt;适配最低要求文档.md                # 多平台部署 checklist
+&lt;&#x2F;span&gt;&lt;span&gt;接口测试报告-2026-06-17.md         # 4 份递增测试报告
+&lt;&#x2F;span&gt;&lt;span&gt;开发文档.md                       # 14 条开发记录
+&lt;&#x2F;span&gt;&lt;span&gt;lw长期记忆.md                     # 28 条经验积累
+&lt;&#x2F;span&gt;&lt;span&gt;realtime-asr-review.md            # 代码审查报告
+&lt;&#x2F;span&gt;&lt;span&gt;review.md                         # 第二次审查（40 文件，10 个问题）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;这不是&quot;文档癖&quot;，而是 AI 辅助开发的最佳实践。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;为什么？因为 &lt;strong&gt;AI 不会记住你上周改了什么东西。&lt;&#x2F;strong&gt; 文档是给 AI（和自己）的上下文缓存：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;architecture.md&lt;&#x2F;code&gt; → 新会话中让 AI 快速理解项目结构&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;lw长期记忆.md&lt;&#x2F;code&gt; → 踩过的坑不再踩第二次（&quot;不要堵漏洞&quot;）&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;开发文档.md&lt;&#x2F;code&gt; → 每次改了什么、为什么、怎么改的（变更日志即文档）&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;适配最低要求文档.md&lt;&#x2F;code&gt; → 部署 checklist，避免遗漏环境依赖&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;经验：把文档当作&quot;给下一个会话中的 AI 看的&quot;。&lt;&#x2F;strong&gt; 写文档不是为了归档，而是让你的下一次 &lt;code&gt;帮我修复 xxx&lt;&#x2F;code&gt; 命令能直接命中要害。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;4-2-dai-ma-shen-cha-ai-shi-dai-de-zhi-liang-bao-xian&quot;&gt;4.2 代码审查 = AI 时代的质量保险&lt;&#x2F;h3&gt;
+&lt;p&gt;项目中两次正式代码审查发现的问题：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🔴 严重问题&lt;&#x2F;strong&gt;：异步任务路径分段 TTS 文件未注册（404）、TTS 全局单例 speaker 泄漏、REST 模式 TTS 阻塞 LLM 流&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;🟡 中等问题&lt;&#x2F;strong&gt;：HttpTTSProvider 缺少公开 speaker 属性（说话人切换静默失效）、API Key 非恒定时间比较&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;🟢 结构性问题&lt;&#x2F;strong&gt;：ChatPipeline 职责过重、全局状态散落、ScriptProcessor 过时&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;这些问题的共同特征&lt;&#x2F;strong&gt;：人类单独看代码看不出，但多角度交叉审查就能发现。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;经验：让 AI 做代码审查，用 5-7 个不同维度（bug 扫描、删除审计、跨文件追踪、复用简化、效率、安全、架构高度），每个维度独立审查。&lt;&#x2F;strong&gt; 这比&quot;帮我 review 一下&quot;更有效。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;4-3-ce-shi-ce-lue-cong-neng-pao-jiu-xing-dao-hui-gui-ce-shi-tao-jian&quot;&gt;4.3 测试策略：从&quot;能跑就行&quot;到&quot;回归测试套件&quot;&lt;&#x2F;h3&gt;
+&lt;p&gt;项目的测试演进：&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#272822;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;阶段 1: 手动 curl 测试（&amp;quot;这个接口能不能用？&amp;quot;）
+&lt;&#x2F;span&gt;&lt;span&gt;阶段 2: 单接口验证脚本（fortest&#x2F;test_asr_streaming.py）
+&lt;&#x2F;span&gt;&lt;span&gt;阶段 3: 完整回归测试（fortest&#x2F;test_full_streaming.py，18 项）
+&lt;&#x2F;span&gt;&lt;span&gt;阶段 4: 真实语音全链路测试（fortest&#x2F;test_gateway_real_speech.py）
+&lt;&#x2F;span&gt;&lt;span&gt;阶段 5: 批量对比测试（fortest&#x2F;batch_test.py + CSV 结果）
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 生成测试脚本极快。&lt;&#x2F;strong&gt; 在 AI 辅助下，从&quot;手动测试&quot;到&quot;18 项回归测试套件&quot;可以在一天内完成。不值得花时间手动测第二次——第一次手动确认可行后，立刻让 AI 写成自动化脚本。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;4-4-xiao-mo-xing-xiang-mu-de-te-shu-xing&quot;&gt;4.4 &quot;小模型&quot;项目的特殊性&lt;&#x2F;h3&gt;
+&lt;p&gt;realtime-asr 使用的模型：&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;模型&lt;&#x2F;th&gt;&lt;th&gt;大小&lt;&#x2F;th&gt;&lt;th&gt;定位&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Qwen3-ASR-0.6B&lt;&#x2F;td&gt;&lt;td&gt;~1.2GB&lt;&#x2F;td&gt;&lt;td&gt;轻量 ASR&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Silero VAD&lt;&#x2F;td&gt;&lt;td&gt;~1MB&lt;&#x2F;td&gt;&lt;td&gt;极轻 VAD&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Qwen3-TTS-0.6B&lt;&#x2F;td&gt;&lt;td&gt;~2GB&lt;&#x2F;td&gt;&lt;td&gt;轻量 TTS&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;DeepSeek&#x2F;Kimi&lt;&#x2F;td&gt;&lt;td&gt;外部 API&lt;&#x2F;td&gt;&lt;td&gt;大模型 LLM&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;&lt;strong&gt;这类&quot;小模型 + 大模型 API&quot;架构的特点：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地推理的小模型决定延迟和服务可用性&lt;&#x2F;li&gt;
+&lt;li&gt;外部 API 的大模型决定回复质量&lt;&#x2F;li&gt;
+&lt;li&gt;自己做 ASR→LLM→TTS 全链路编排&lt;&#x2F;li&gt;
+&lt;li&gt;不依赖大模型厂商的实时音频 API（如 GPT-4o Realtime）&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;经验：小模型项目的核心竞争力是编排和可用性，而非模型本身。&lt;&#x2F;strong&gt; ASR&#x2F;TTS 模型用开源的 0.6B 小模型，LLM 调用外部 API，自研全链路流水线——这种&quot;缝合&quot;架构在成本和可控性之间取得了最佳平衡。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;wu-ke-fu-yong-de-dai-ma-mo-shi&quot;&gt;五、可复用的代码模式&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;5-1-shuang-tong-dao-websocket-xie-yi&quot;&gt;5.1 双通道 WebSocket 协议&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# binary channel → 音频数据（低延迟，无序列化开销）
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# text channel   → JSON 控制消息（llm_config, ping, reset, hotwords）
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;data &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= await &lt;&#x2F;span&gt;&lt;span&gt;ws.receive()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;bytes&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span&gt;data:
+&lt;&#x2F;span&gt;&lt;span&gt;    pcm_bytes &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;data[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;bytes&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;]     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 16kHz PCM16
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;await &lt;&#x2F;span&gt;&lt;span&gt;pipeline.process_audio_chunk(pcm_bytes)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;elif &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;text&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span&gt;data:
+&lt;&#x2F;span&gt;&lt;span&gt;    msg &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;json.loads(data[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;text&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;])  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 控制协议
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;适用场景&lt;&#x2F;strong&gt;：实时音视频 + 信令控制。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;5-2-ji-cun-qi-mo-shi-registry-pattern&quot;&gt;5.2 寄存器模式（Registry Pattern）&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span&gt;_ASR_REGISTRY: Dict[&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;qwen3&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;backend.plugins.asr.qwen3_asr.Qwen3ASRProvider&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;http_asr&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e6db74;&quot;&gt;&amp;quot;backend.plugins.asr.http_client.HttpASRProvider&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;get_asr&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;**&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;override_kwargs&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; BaseASRProvider:
+&lt;&#x2F;span&gt;&lt;span&gt;    name &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;get_settings().ASR_PROVIDER
+&lt;&#x2F;span&gt;&lt;span&gt;    cls &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;_load_class(_ASR_REGISTRY[name])  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 动态导入
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;cls(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;**&lt;&#x2F;span&gt;&lt;span&gt;kwargs)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;适用场景&lt;&#x2F;strong&gt;：任何需要&quot;通过配置切换实现&quot;的模块。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;5-3-neng-li-jian-ce-zi-dong-jiang-ji&quot;&gt;5.3 能力检测 + 自动降级&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span&gt;@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#66d9ef;&quot;&gt;property
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#f92672;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;supports_streaming&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fd971f;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;bool&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;self._streaming_supported &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;is &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;None&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;        self._detect_streaming_capability()  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 调 &#x2F;capabilities 端点
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;self._streaming_supported
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# Pipeline 中
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;self.asr.supports_streaming:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 流式路径
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 降级到整段识别
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;适用场景&lt;&#x2F;strong&gt;：后端能力不确定时的优雅降级。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;5-4-zi-yuan-sheng-ming-zhou-qi-guan-li&quot;&gt;5.4 资源生命周期管理&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#272822;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    state &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;asr.init_streaming_state()
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# ... 使用 state ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;Exception&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 降级
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;finally&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;state &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;is not &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ae81ff;&quot;&gt;None&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;            asr.abort_streaming(state)  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# cancel + close
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#66d9ef;&quot;&gt;Exception&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;pass  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#75715e;&quot;&gt;# 资源释放失败不应阻止程序退出
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;适用场景&lt;&#x2F;strong&gt;：任何涉及 GPU 资源或网络连接的操作。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;liu-ai-shi-dai-ruan-jian-kai-fa-de-liu-cheng-si-kao&quot;&gt;六、AI 时代软件开发的流程思考&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;6-1-he-xin-zhuan-bian-cong-xie-dai-ma-dao-zuo-jue-ce&quot;&gt;6.1 核心转变：从&quot;写代码&quot;到&quot;做决策&quot;&lt;&#x2F;h3&gt;
+&lt;p&gt;这个项目 7000+ 行代码，2 周完成——但真正花费时间的不是写代码，而是：&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;架构决策&lt;&#x2F;strong&gt;：插件的抽象粒度？Pipeline 的职责边界？流式&#x2F;非流式如何共存？&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;模型选型&lt;&#x2F;strong&gt;：Qwen3-ASR-0.6B 还是 1.7B？vLLM 还是 from_pretrained？&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;接口设计&lt;&#x2F;strong&gt;：WebSocket 协议格式？OpenAI 兼容性到哪个程度？&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;错误处理&lt;&#x2F;strong&gt;：什么情况降级？什么情况报错？什么情况重试？&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;资源管理&lt;&#x2F;strong&gt;：GPU 显存分配策略？TTS 磁盘&#x2F;内存模式？连接泄漏怎么防？&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 让&quot;实现&quot;的成本趋近于零，但让&quot;决策&quot;的重要性倍增。&lt;&#x2F;strong&gt; 在 AI 能一小时写完 500 行代码的时代，开发者的核心价值是判断这 500 行代码应该做什么、边界在哪里、异常怎么处理。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;6-2-wen-dang-ji-dai-ma-ti-shi-ci-ji-gui-fan&quot;&gt;6.2 文档即代码，提示词即规范&lt;&#x2F;h3&gt;
+&lt;p&gt;项目中 &lt;code&gt;architecture.md&lt;&#x2F;code&gt; 的 985 行深度解析，完全可以作为给 AI 的系统提示词——事实上它就是。当你告诉 AI &quot;按照 architecture.md 的架构设计，新增一个 xxx 功能&quot;，AI 能产出高度一致的代码。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;经验：在 AI 时代，好的项目文档不只是给人看的——它是对齐人与 AI 认知的接口。&lt;&#x2F;strong&gt; 结构清晰的架构文档 &amp;gt; 散落的代码注释 &amp;gt; 隐式的代码习惯。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;6-3-ce-shi-cong-fu-dan-bian-cheng-jia-su-qi&quot;&gt;6.3 测试从&quot;负担&quot;变成&quot;加速器&quot;&lt;&#x2F;h3&gt;
+&lt;p&gt;在 AI 辅助下，写一个 18 项回归测试脚本的成本从&quot;半天&quot;降到&quot;10 分钟&quot;。测试不再是&quot;开发后的验证&quot;，而是&quot;开发中的护栏&quot;——每次 AI 重构后，立刻跑测试，不对就回退。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 时代的测试优先级排序：&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;端到端 API 测试（最高 ROI，一次性覆盖所有接口）&lt;&#x2F;li&gt;
+&lt;li&gt;边界条件测试（非法输入、超时、空数据）&lt;&#x2F;li&gt;
+&lt;li&gt;单元测试（只在核心算法逻辑上写）&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;6-4-duo-jiao-du-dai-ma-shen-cha-bu-ke-ti-dai&quot;&gt;6.4 多角度代码审查不可替代&lt;&#x2F;h3&gt;
+&lt;p&gt;两次正式审查发现的问题中，至少 3 个在功能测试中无法发现（跨文件状态泄漏、异步路径 404、单例属性泄漏）。这些问题只有在&quot;逐行扫描 + 删除审计 + 跨文件追踪 + 安全 + 效率 + 架构&quot;的多维度审查下才会暴露。&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;经验：AI 可以写代码，但需要另一个 AI（或不同角度的同一 AI）来审查代码。&lt;&#x2F;strong&gt; 审查的维度越多样化，发现的隐藏问题越多。&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;qi-yi-ju-hua-zong-jie&quot;&gt;七、一句话总结&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;AI 时代的小模型项目开发，核心不是&quot;用 AI 写更多代码&quot;，而是用插件化架构管理模型的不确定性，用文档建立人与 AI 的认知对齐，用多维度审查控制质量风险，让&quot;换模型&quot;和&quot;改架构&quot;成为改一行 &lt;code&gt;.env&lt;&#x2F;code&gt; 的事。&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;hr &#x2F;&gt;
+</content>
+        
+    </entry>
+</feed>

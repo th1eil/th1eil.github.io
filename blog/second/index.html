@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Talk】Zola 主题装修日记 - </title>
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
+        crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+
+        
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色模式">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<div class="content-wrapper">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">【Talk】Zola 主题装修日记</h1>
+            <div class="post-meta">
+                <time>2024-03-21</time>
+                
+                    <div class="tags">
+                        
+                            <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+                        
+                            <a href="https://th1eil.github.io/tags/frontend/">#Frontend</a>
+                        
+                            <a href="https://th1eil.github.io/tags/zola/">#Zola</a>
+                        
+                    </div>
+                
+
+                
+                <div class="post-views" id="post-views" data-slug="second" style="visibility:hidden">
+                    <span class="views-icon">👁</span>
+                    <span class="views-count" id="views-count">---</span>
+                    <span class="views-label">次阅读</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="post-content">
+            <h1 id="zola-zhu-ti-zhuang-xiu-ri-ji">Zola 主题装修日记</h1>
+<p>很长时间没有更新博客了，最近开始捣鼓起了 Zola，这个用 Rust 写的静态站点生成器。本文记录了我的主题装修过程。</p>
+<h2 id="zhu-ti-xuan-ze">主题选择</h2>
+<p>最开始我使用了 terminimal 主题，这是一个简约的终端风格主题。选择它的原因是：</p>
+<ol>
+<li>设计简洁</li>
+<li>加载速度快</li>
+<li>支持深色模式</li>
+<li>代码高亮优秀</li>
+</ol>
+<h2 id="zhu-ti-ding-zhi">主题定制</h2>
+<h3 id="1-bu-ju-diao-zheng">1. 布局调整</h3>
+<p>首先修改了首页的文章列表布局：</p>
+<ul>
+<li>添加了文章预览</li>
+<li>优化了标签显示</li>
+<li>改进了日期格式</li>
+</ul>
+<h3 id="2-yang-shi-mei-hua">2. 样式美化</h3>
+<ul>
+<li>调整了字体和颜色</li>
+<li>优化了移动端显示</li>
+<li>添加了一些过渡动画</li>
+</ul>
+<h2 id="hou-xu-ji-hua">后续计划</h2>
+<p>计划在后续文章中详细介绍：</p>
+<ul>
+<li>Zola 的主题制作详解</li>
+<li>Markdown 进阶用法</li>
+<li>评论系统的集成</li>
+<li>自动化部署方案</li>
+</ul>
+
+        </div>
+    </article>
+
+    
+    <div class="toc">
+        <h3>📑 目录</h3>
+        <div id="toc-container"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var article = document.querySelector('.post-single');
+    if (!article) return;
+
+    // 只抓取 h2-h4，避免文章标题 h1 也进入目录
+    var headings = article.querySelectorAll('h2, h3, h4');
+    var tocContainer = document.getElementById('toc-container');
+    var tocWrapper = document.querySelector('.toc');
+
+    // 如果标题不足 2 个，隐藏目录
+    if (!tocContainer || !tocWrapper || headings.length < 2) {
+        if (tocWrapper) tocWrapper.style.display = 'none';
+        return;
+    }
+
+    var tocList = document.createElement('ul');
+    tocList.className = 'toc-list';
+
+    headings.forEach(function(heading, index) {
+        if (!heading.id) {
+            heading.id = 'heading-' + index;
+        }
+
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + heading.id;
+        a.textContent = heading.textContent;
+        var level = parseInt(heading.tagName.charAt(1), 10);
+        a.style.paddingLeft = (level - 2) * 1 + 'rem';
+
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocList);
+
+    // 平滑滚动锚点
+    tocList.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.getElementById(this.getAttribute('href').slice(1));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 滚动高亮当前章节
+    var tocLinks = tocList.querySelectorAll('a');
+    var ticking = false;
+
+    function highlightToc() {
+        var triggerPoint = window.innerHeight / 3;
+        var currentId = null;
+
+        for (var i = 0; i < headings.length; i++) {
+            var rect = headings[i].getBoundingClientRect();
+            if (rect.top <= triggerPoint) {
+                currentId = headings[i].id;
+            } else {
+                break;
+            }
+        }
+
+        tocLinks.forEach(function(link) {
+            var href = link.getAttribute('href');
+            if (href === '#' + currentId) {
+                link.classList.add('active');
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                highlightToc();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // 初始化高亮
+    highlightToc();
+});
+</script>
+
+  </div>
+
+  
+  <footer class="site-footer">
+    <p>© 2026 Rei's Blog · Built with <a href="https://www.getzola.org/">Zola</a></p>
+  </footer>
+
+  
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+          crossorigin="anonymous" defer></script>
+
+  
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > 300) {
+              btn.classList.add('visible');
+            } else {
+              btn.classList.remove('visible');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+
+      function setTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

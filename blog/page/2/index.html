@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
+        crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="nav-container">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <a href="/">Rei's Blog</a>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link active">博客</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+
+        
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色模式">
+          <span class="theme-icon-light">☀️</span>
+          <span class="theme-icon-dark">🌙</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+<div class="content-wrapper">
+  <div class="section-header">
+    <h1>博客文章</h1>
+    <p class="section-description">记录学习与思考的地方</p>
+  </div>
+
+  <div class="posts-grid">
+    
+    
+      <article class="post-card">
+        <div class="post-card-content">
+          <div class="post-meta">
+            <time>2025-02-25</time>
+            
+              <div class="tags">
+                
+                  <a href="https://th1eil.github.io/tags/c/">#C</a>
+                
+              </div>
+            
+          </div>
+
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;creview&#x2F;">【Review】c复习随笔 </a>
+          </h2>
+
+          
+            <div class="post-description">
+              复习c时的一点思考。
+            </div>
+          
+        </div>
+      </article>
+    
+      <article class="post-card">
+        <div class="post-card-content">
+          <div class="post-meta">
+            <time>2024-03-21</time>
+            
+              <div class="tags">
+                
+                  <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+                
+                  <a href="https://th1eil.github.io/tags/frontend/">#Frontend</a>
+                
+                  <a href="https://th1eil.github.io/tags/zola/">#Zola</a>
+                
+              </div>
+            
+          </div>
+
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;second&#x2F;">【Talk】Zola 主题装修日记</a>
+          </h2>
+
+          
+            <div class="post-description">
+              记录使用 Zola 搭建博客并自定义主题的过程。
+            </div>
+          
+        </div>
+      </article>
+    
+      <article class="post-card">
+        <div class="post-card-content">
+          <div class="post-meta">
+            <time>2024-03-20</time>
+            
+              <div class="tags">
+                
+                  <a href="https://th1eil.github.io/tags/casual/">#Casual</a>
+                
+              </div>
+            
+          </div>
+
+          <h2 class="post-title">
+            <a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;first&#x2F;">【Talk】开始我的博客之旅</a>
+          </h2>
+
+          
+            <div class="post-description">
+              这是我的第一篇博客文章，讲述了为什么我要开始写博客。
+            </div>
+          
+        </div>
+      </article>
+    
+  </div>
+
+  <div class="pagination">
+    
+      <a class="prev" href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;">← 上一页</a>
+    
+    
+  </div>
+</div>
+
+  </div>
+
+  
+  <footer class="site-footer">
+    <p>© 2026 Rei's Blog · Built with <a href="https://www.getzola.org/">Zola</a></p>
+  </footer>
+
+  
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"
+          crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
+          crossorigin="anonymous" defer></script>
+
+  
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            if (window.scrollY > 300) {
+              btn.classList.add('visible');
+            } else {
+              btn.classList.remove('visible');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+
+      function setTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+
+</body>
+
+</html>
