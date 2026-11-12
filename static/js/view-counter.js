@@ -21,7 +21,7 @@
    */
   function showCount(n) {
     countEl.textContent = Number(n).toLocaleString();
-    viewsEl.style.visibility = 'visible';
+    viewsEl.hidden = false;
   }
 
   /**
@@ -35,14 +35,24 @@
     showCount(count);
   }
 
-  // 优先尝试 countapi.xyz
+  // countapi 经常不可用。超时就改记本机次数，避免「阅」一直不出现。
   var url = 'https://api.countapi.xyz/hit/' + NAMESPACE + '/' + encodeURIComponent(slug);
-  fetch(url, { method: 'GET', cache: 'no-cache' })
+  var controller = typeof AbortController === 'function' ? new AbortController() : null;
+  var timer = setTimeout(function () {
+    if (controller) controller.abort();
+  }, 2500);
+
+  fetch(url, {
+    method: 'GET',
+    cache: 'no-cache',
+    signal: controller ? controller.signal : undefined
+  })
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
     .then(function (data) {
+      clearTimeout(timer);
       if (data && typeof data.value === 'number') {
         showCount(data.value);
       } else {
@@ -50,6 +60,7 @@
       }
     })
     .catch(function () {
+      clearTimeout(timer);
       fallbackLocalCount();
     });
 })();

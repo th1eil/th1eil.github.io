@@ -1,0 +1,21 @@
+<li class="entry">
+  <span class="entry-index" aria-hidden="true">{% if entry_index < 10 %}0{% endif %}{{ entry_index }}</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="{{ entry_page.permalink }}">{{ entry_page.title }}</a></h3>
+    {% if entry_page.description %}
+      <p class="entry-desc">{{ entry_page.description }}</p>
+    {% endif %}
+    <p class="entry-meta">
+      {% if entry_page.date %}
+        <time datetime="{{ entry_page.date }}">{{ entry_page.date | date(format="%Y年%m月%d日") }}</time>
+      {% endif %}
+      {% if entry_page.taxonomies.tags %}
+        <span class="entry-tags">
+          {% for tag in entry_page.taxonomies.tags %}
+            <a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </p>
+  </div>
+</li>

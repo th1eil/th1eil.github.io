@@ -1,5 +1,7 @@
 # The URL the site will be built for
 base_url = "https://th1eil.github.io"
+title = "Rei's Blog"
+description = "花落水痕·风起铃升"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -16,11 +18,9 @@ taxonomies = [
 ]
 
 [markdown]
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = true
-# 添加高亮主题
-highlight_theme = "monokai"
+# 关闭 Zola 内联高亮（会把 Monokai 颜色写死在标签上）。
+# 代码块交给 Prism，方便随昼读 / 夜读切换配色。
+highlight_code = false
 
 # 压缩 HTML 输出（Zola 内建，无需额外配置）
 minify_html = true

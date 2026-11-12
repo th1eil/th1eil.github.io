@@ -1,37 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="taxonomy-cloud">
-    <h1 class="cloud-title">所有标签</h1>
+<div class="sheet sheet-narrow">
+  <header class="page-head">
+    <p class="page-kicker">检索</p>
+    <h1 class="cloud-title">标签</h1>
+    <p class="page-note">按门类翻检篇目。字号越大，收录越多。</p>
+  </header>
 
-    {# 第一遍遍历：找出最多和最少的文章数，用于归一化权重 #}
-    {% set_global max_count = 0 %}
-    {% set_global min_count = 9999 %}
+  {% set_global max_count = 0 %}
+  {% set_global min_count = 9999 %}
+  {% for term in terms %}
+    {% set count = term.pages | length %}
+    {% if count > max_count %}
+      {% set_global max_count = count %}
+    {% endif %}
+    {% if count < min_count %}
+      {% set_global min_count = count %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="tag-cloud">
     {% for term in terms %}
       {% set count = term.pages | length %}
-      {% if count > max_count %}
-        {% set_global max_count = count %}
+      {% if max_count == min_count %}
+        {% set tier = 3 %}
+      {% else %}
+        {% set normalized = ((count - min_count) / (max_count - min_count) * 4) | round %}
+        {% set tier = normalized + 1 %}
       {% endif %}
-      {% if count < min_count %}
-        {% set_global min_count = count %}
-      {% endif %}
+      <a href="{{ term.permalink }}" class="tag-cloud-item tag-weight-{{ tier }}">
+        {{ term.name }}<span class="tag-count">{{ count }}</span>
+      </a>
     {% endfor %}
-
-    <div class="tag-cloud">
-        {% for term in terms %}
-        {% set count = term.pages | length %}
-        {# 归一化到 1-5 权重等级，避免除零 #}
-        {% if max_count == min_count %}
-          {% set tier = 3 %}
-        {% else %}
-          {% set normalized = ((count - min_count) / (max_count - min_count) * 4) | round %}
-          {% set tier = normalized + 1 %}
-        {% endif %}
-        <a href="{{ term.permalink }}" class="tag-cloud-item tag-weight-{{ tier }}">
-            {{ term.name }}
-            <span class="tag-count">{{ count }}</span>
-        </a>
-        {% endfor %}
-    </div>
+  </div>
 </div>
 {% endblock content %}

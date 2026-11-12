@@ -1,39 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content-wrapper">
-  <div class="section-header">
-    <h1>#{{ term.name }}</h1>
-    <p class="section-description">共 {{ term.pages | length }} 篇文章</p>
-  </div>
+<div class="sheet sheet-narrow">
+  <header class="page-head">
+    <p class="page-kicker">门类</p>
+    <h1>{{ term.name }}</h1>
+    <p class="page-note">共 {{ term.pages | length }} 篇</p>
+  </header>
 
-  <div class="posts-grid">
+  <ol class="contents-list">
     {% for page in term.pages %}
-      <article class="post-card">
-        <div class="post-card-content">
-          <div class="post-meta">
-            <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
-            {% if page.taxonomies.tags %}
-              <div class="tags">
-                {% for tag in page.taxonomies.tags %}
-                  <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-
-          <h2 class="post-title">
-            <a href="{{ page.permalink }}">{{ page.title }}</a>
-          </h2>
-
-          {% if page.description %}
-            <div class="post-description">
-              {{ page.description }}
-            </div>
-          {% endif %}
-        </div>
-      </article>
+      {% set entry_index = loop.index %}
+      {% set entry_page = page %}
+      {% include "partials/entry.html" %}
     {% endfor %}
-  </div>
+  </ol>
 </div>
-{% endblock content %} 
+{% endblock content %}

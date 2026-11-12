@@ -1,129 +1,116 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content-wrapper">
-    <article class="post-single">
-        <header class="post-header">
-            <h1 class="post-title">{{ page.title }}</h1>
-            <div class="post-meta">
-                <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
-                {% if page.taxonomies.tags %}
-                    <div class="tags">
-                        {% for tag in page.taxonomies.tags %}
-                            <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+<div class="sheet article-sheet">
+  <article class="post-single">
+    <header class="post-header">
+      <p class="page-kicker">札记</p>
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-meta">
+        {% if page.date %}
+          <time datetime="{{ page.date }}">{{ page.date | date(format="%Y年%m月%d日") }}</time>
+        {% endif %}
+        {% if page.taxonomies.tags %}
+          <span class="entry-tags">
+            {% for tag in page.taxonomies.tags %}
+              <a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>
+            {% endfor %}
+          </span>
+        {% endif %}
+        <span class="post-views" id="post-views" data-slug="{{ page.slug }}" hidden>
+          <span class="views-label">阅</span>
+          <span class="views-count" id="views-count">—</span>
+        </span>
+      </p>
+    </header>
 
-                {# 浏览量统计 #}
-                <div class="post-views" id="post-views" data-slug="{{ page.slug }}" style="visibility:hidden">
-                    <span class="views-icon">👁</span>
-                    <span class="views-count" id="views-count">---</span>
-                    <span class="views-label">次阅读</span>
-                </div>
-            </div>
-        </header>
-
-        <div class="post-content">
-            {{ page.content | safe }}
-        </div>
-    </article>
-
-    {# TOC 目录 — 仅在大屏幕显示 #}
-    <div class="toc">
-        <h3>📑 目录</h3>
-        <div id="toc-container"></div>
+    <div class="post-content">
+      {{ page.content | safe }}
     </div>
+  </article>
+
+  <aside class="toc" aria-label="目次">
+    <h2>目次</h2>
+    <div id="toc-container"></div>
+  </aside>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var article = document.querySelector('.post-single');
-    if (!article) return;
+  var article = document.querySelector('.post-single');
+  if (!article) return;
 
-    // 只抓取 h2-h4，避免文章标题 h1 也进入目录
-    var headings = article.querySelectorAll('h2, h3, h4');
-    var tocContainer = document.getElementById('toc-container');
-    var tocWrapper = document.querySelector('.toc');
+  var lead = article.querySelector('.post-content > p');
+  if (lead && lead.textContent.trim().length >= 24) {
+    lead.classList.add('drop-cap');
+  }
 
-    // 如果标题不足 2 个，隐藏目录
-    if (!tocContainer || !tocWrapper || headings.length < 2) {
-        if (tocWrapper) tocWrapper.style.display = 'none';
-        return;
+  var headings = article.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+  var tocContainer = document.getElementById('toc-container');
+  var tocWrapper = document.querySelector('.toc');
+
+  if (!tocContainer || !tocWrapper || headings.length < 2) {
+    if (tocWrapper) tocWrapper.hidden = true;
+    return;
+  }
+
+  var tocList = document.createElement('ol');
+  tocList.className = 'toc-list';
+
+  headings.forEach(function(heading, index) {
+    if (!heading.id) heading.id = 'heading-' + index;
+
+    var li = document.createElement('li');
+    var level = parseInt(heading.tagName.charAt(1), 10);
+    li.className = 'toc-level-' + level;
+
+    var a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  tocContainer.appendChild(tocList);
+
+  tocList.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById(this.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  var tocLinks = tocList.querySelectorAll('a');
+  var ticking = false;
+
+  function highlightToc() {
+    var triggerPoint = window.innerHeight / 3;
+    var currentId = null;
+
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top <= triggerPoint) {
+        currentId = headings[i].id;
+      } else {
+        break;
+      }
     }
 
-    var tocList = document.createElement('ul');
-    tocList.className = 'toc-list';
-
-    headings.forEach(function(heading, index) {
-        if (!heading.id) {
-            heading.id = 'heading-' + index;
-        }
-
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = '#' + heading.id;
-        a.textContent = heading.textContent;
-        var level = parseInt(heading.tagName.charAt(1), 10);
-        a.style.paddingLeft = (level - 2) * 1 + 'rem';
-
-        li.appendChild(a);
-        tocList.appendChild(li);
+    tocLinks.forEach(function(link) {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + currentId);
     });
+  }
 
-    tocContainer.appendChild(tocList);
-
-    // 平滑滚动锚点
-    tocList.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.getElementById(this.getAttribute('href').slice(1));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+  window.addEventListener('scroll', function() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function() {
+      highlightToc();
+      ticking = false;
     });
+  }, { passive: true });
 
-    // 滚动高亮当前章节
-    var tocLinks = tocList.querySelectorAll('a');
-    var ticking = false;
-
-    function highlightToc() {
-        var triggerPoint = window.innerHeight / 3;
-        var currentId = null;
-
-        for (var i = 0; i < headings.length; i++) {
-            var rect = headings[i].getBoundingClientRect();
-            if (rect.top <= triggerPoint) {
-                currentId = headings[i].id;
-            } else {
-                break;
-            }
-        }
-
-        tocLinks.forEach(function(link) {
-            var href = link.getAttribute('href');
-            if (href === '#' + currentId) {
-                link.classList.add('active');
-                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            window.requestAnimationFrame(function() {
-                highlightToc();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    // 初始化高亮
-    highlightToc();
+  highlightToc();
 });
 </script>
 {% endblock content %}

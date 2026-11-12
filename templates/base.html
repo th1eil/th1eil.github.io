@@ -1,104 +1,148 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-Hans">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.title }}</title>
+  <title>{% if page is defined and page.title %}{{ page.title }} — {% endif %}{{ config.title }}</title>
+  {% if config.description %}
+  <meta name="description" content="{{ config.description }}">
+  {% endif %}
+  <meta name="theme-color" content="#f3ecdf">
 
-  {# 防止暗色模式 FOUC：在 CSS 加载前应用 data-theme #}
+  {# 防止暗色模式闪白：样式表到来之前先写上 data-theme #}
   <script>
     (function() {
       var theme = localStorage.getItem('theme');
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) {
         document.documentElement.setAttribute('data-theme', 'dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#17140f');
       }
     })();
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
-        crossorigin="anonymous">
 </head>
 
 <body>
-  <nav class="nav-container">
-    <div class="nav-content">
-      <div class="nav-brand">
-        <a href="/">Rei's Blog</a>
-      </div>
-      <div class="nav-links">
-        <a href="/" class="nav-link {% if current_path == "/" %}active{% endif %}">首页</a>
-        <a href="/blog" class="nav-link {% if current_path is starting_with("/blog") %}active{% endif %}">博客</a>
-        <a href="/tags" class="nav-link {% if current_path is starting_with("/tags") %}active{% endif %}">标签</a>
-        <a href="/about" class="nav-link {% if current_path is starting_with("/about") %}active{% endif %}">关于</a>
+  <a class="skip-link" href="#content">跳到正文</a>
 
-        {# 主题切换按钮 #}
-        <button id="theme-toggle" class="theme-toggle" aria-label="切换主题" title="切换亮色/暗色模式">
-          <span class="theme-icon-light">☀️</span>
-          <span class="theme-icon-dark">🌙</span>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="/">
+        <span class="brand-en">Rei's Blog</span>
+        <span class="brand-zh">花落水痕·风起铃升</span>
+      </a>
+
+      <nav class="nav-links" aria-label="刊内导航">
+        <a href="/" class="nav-link {% if current_path is defined and current_path == "/" %}is-active{% endif %}">首页</a>
+        <a href="/blog" class="nav-link {% if current_path is defined and current_path is starting_with("/blog") %}is-active{% endif %}">文章</a>
+        <a href="/tags" class="nav-link {% if current_path is defined and current_path is starting_with("/tags") %}is-active{% endif %}">标签</a>
+        <a href="/about" class="nav-link {% if current_path is defined and current_path is starting_with("/about") %}is-active{% endif %}">关于</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换昼读与夜读" title="切换昼读 / 夜读">
+          <span class="theme-icon-light">昼</span>
+          <span class="theme-icon-dark">夜</span>
         </button>
-      </div>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <div class="container">
-    {% block content %} {% endblock %}
-  </div>
+  <main class="container" id="content">
+    {% block content %}{% endblock %}
+  </main>
 
-  {# 页脚 #}
-  <footer class="site-footer">
-    <p>© {{ now() | date(format="%Y") }} Rei's Blog · Built with <a href="https://www.getzola.org/">Zola</a></p>
+  <footer class="colophon">
+    <p class="colophon-name">Rei's Blog</p>
+    <p>花落水痕·风起铃升</p>
+    <p>排印于 <a href="https://www.getzola.org/">Zola</a> · 寄存在 GitHub Pages</p>
+    <p class="colophon-year">© {{ now() | date(format="%Y") }}</p>
   </footer>
 
-  {# 回到顶部按钮 #}
-  <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页首" title="回到页首">上</button>
 
-  {# Prism.js 代码高亮 — 使用 autoloader 按需加载语法组件 #}
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"
-          crossorigin="anonymous" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"
-          crossorigin="anonymous" defer></script>
+  {# Prism：data-manual 避免在自动加载语言之前就高亮一次 #}
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" crossorigin="anonymous" data-manual></script>
+  <script>
+    (function() {
+      if (!window.Prism) return;
+      var langs = [];
+      document.querySelectorAll('code[class*="language-"]').forEach(function(code) {
+        var match = code.className.match(/language-([\w#+-]+)/);
+        var pre = code.parentElement;
+        if (!match || !pre) return;
+        pre.classList.add('code-block');
+        pre.setAttribute('data-lang', match[1]);
+        if (langs.indexOf(match[1]) === -1) langs.push(match[1]);
+      });
+      if (!langs.length) return;
 
-  {# 浏览量统计脚本 #}
+      var needs = { jsp: ['java'], cpp: ['c'] };
+      var order = [];
+      function add(lang) {
+        (needs[lang] || []).forEach(add);
+        if (order.indexOf(lang) === -1) order.push(lang);
+      }
+      langs.forEach(add);
+
+      function loadAt(i) {
+        if (i >= order.length) {
+          Prism.highlightAll();
+          return;
+        }
+        var lang = order[i];
+        if (Prism.languages[lang]) {
+          loadAt(i + 1);
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-' + lang + '.min.js';
+        script.onload = script.onerror = function() {
+          script.remove();
+          loadAt(i + 1);
+        };
+        document.body.appendChild(script);
+      }
+      loadAt(0);
+    })();
+  </script>
+
   <script src="{{ get_url(path='js/view-counter.js') }}" defer></script>
 
-  {# 回到顶部按钮逻辑 #}
   <script>
     (function() {
       var btn = document.getElementById('backToTop');
       if (!btn) return;
-
       var ticking = false;
       window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            if (window.scrollY > 300) {
-              btn.classList.add('visible');
-            } else {
-              btn.classList.remove('visible');
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          btn.classList.toggle('is-visible', window.scrollY > 420);
+          ticking = false;
+        });
+      }, { passive: true });
       btn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     })();
   </script>
 
-  {# 主题切换逻辑 #}
   <script>
     (function() {
       var toggle = document.getElementById('theme-toggle');
       if (!toggle) return;
+      var meta = document.querySelector('meta[name="theme-color"]');
 
-      function setTheme(t) {
-        document.documentElement.setAttribute('data-theme', t);
-        localStorage.setItem('theme', t);
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17140f' : '#f3ecdf');
       }
 
       toggle.addEventListener('click', function() {
@@ -107,7 +151,7 @@
       });
     })();
   </script>
-{% block scripts %}{% endblock %}
+  {% block scripts %}{% endblock %}
 </body>
 
 </html>

@@ -1,205 +1,116 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="content-wrapper">
-  {# ============================================================
-     1. Hero 区域 — 打字机问候 + 博客统计
-     ============================================================ #}
-  <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-greeting">
-        <span class="greeting-line">
-          <span class="wave" aria-hidden="true">👋</span>
-          <span class="typing-text" id="typewriter"></span>
-          <span class="typing-cursor">|</span>
-        </span>
-      </h1>
-      <p class="hero-tagline">记录编程、学习和生活</p>
-      <div class="hero-stats">
-        {% set section = get_section(path="blog/_index.md") %}
-        {% set_global tag_set = [] %}
-        {% for page in section.pages %}
-          {% if page.taxonomies.tags %}
-            {% for tag in page.taxonomies.tags %}
-              {% set_global tag_set = tag_set | concat(with=tag) %}
-            {% endfor %}
-          {% endif %}
-        {% endfor %}
-        {% set_global unique_tags = tag_set | unique %}
-        <div class="stat-item">
-          <span class="stat-number" data-target="{{ section.pages | length }}">0</span>
-          <span class="stat-label">篇文章</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" data-target="{{ unique_tags | length }}">0</span>
-          <span class="stat-label">标签</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" data-target="2025">0</span>
-          <span class="stat-label">始于</span>
-        </div>
+{% set section = get_section(path="blog/_index.md") %}
+{% set_global tag_set = [] %}
+{% for page in section.pages %}
+  {% if page.taxonomies.tags %}
+    {% for tag in page.taxonomies.tags %}
+      {% set_global tag_set = tag_set | concat(with=tag) %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+{% set_global unique_tags = tag_set | unique %}
+
+<div class="sheet">
+  <section class="cover" aria-label="刊首">
+    <div class="cover-head">
+      <span>Vol. {{ now() | date(format="%Y") }}</span>
+      <span class="cover-seal" aria-hidden="true">札</span>
+      <span class="cover-motto">花落水痕·风起铃升</span>
+    </div>
+    <h1 class="cover-title">Rei's Blog</h1>
+    <p class="cover-tagline">记录编程、学习和生活</p>
+    <div class="cover-stats">
+      <div class="stat-item">
+        <span class="stat-number" data-target="{{ section.pages | length }}">0</span>
+        <span class="stat-label">篇目</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="{{ unique_tags | length }}">0</span>
+        <span class="stat-label">门类</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="2024">0</span>
+        <span class="stat-label">创刊</span>
       </div>
     </div>
-    {# 装饰性渐变背景 #}
-    <div class="hero-bg-decor" aria-hidden="true"></div>
   </section>
 
-  {# ============================================================
-     2. 相片墙 — Masonry 交互画廊
-     ============================================================ #}
-  <section class="photo-wall-section">
-    <h2 class="section-heading">
-      <span class="heading-icon">📸</span>
-      <span class="heading-text">相片墙</span>
-    </h2>
-    <p class="section-subtitle">一些随手拍下的瞬间</p>
+  <section class="plates" aria-labelledby="plates-heading">
+    <h2 class="rubric" id="plates-heading"><span>图版</span></h2>
+    <p class="rubric-note">随手留下的一些影像</p>
     <div class="photo-wall" id="photoWall"></div>
   </section>
 
-  {# 灯光箱 — 点击照片放大查看 #}
-  <div class="lightbox" id="lightbox" role="dialog" aria-label="照片预览">
-    <button class="lightbox-close" id="lightboxClose" aria-label="关闭">&times;</button>
-    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">‹</button>
-    <img class="lightbox-content" id="lightboxImg" alt="照片预览">
-    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">›</button>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图版预览" hidden>
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="关闭">关闭</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="上一张">前</button>
+    <figure class="lightbox-figure">
+      <img class="lightbox-content" id="lightboxImg" alt="">
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="下一张">后</button>
   </div>
 
-  {# ============================================================
-     3. 文章列表
-     ============================================================ #}
-  <section class="posts-section">
-    <h2 class="section-heading">
-      <span class="heading-icon">📝</span>
-      <span class="heading-text">最近文章</span>
-    </h2>
-
-    <div class="posts">
-      {% set section = get_section(path="blog/_index.md") %}
+  <section class="contents" aria-labelledby="contents-heading">
+    <h2 class="rubric" id="contents-heading"><span>目录</span></h2>
+    <p class="rubric-note">近作，按时间倒序</p>
+    <ol class="contents-list">
       {% for page in section.pages %}
-        <article class="post">
-          <h2 class="post-title">
-            <a href="{{ page.permalink }}">{{ page.title }}</a>
-          </h2>
-
-          <div class="post-meta">
-            {{ page.date | date(format="%Y-%m-%d") }} ::
-            {% if page.taxonomies.tags %}
-              {% for tag in page.taxonomies.tags %}
-                <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">#{{ tag }}</a>
-              {% endfor %}
-            {% endif %}
-          </div>
-
-          {% if page.description %}
-            <div class="post-description">
-              {{ page.description }}
-            </div>
-          {% endif %}
-
-          <div class="read-more">
-            <a href="{{ page.permalink }}">Read more</a>
-          </div>
-        </article>
+        {% set entry_index = loop.index %}
+        {% set entry_page = page %}
+        {% include "partials/entry.html" %}
       {% endfor %}
-    </div>
+    </ol>
   </section>
 </div>
 {% endblock content %}
 
 {% block scripts %}
-{# 首页交互脚本 #}
 <script>
 (function() {
   'use strict';
 
-  /* ----------------------------------------------------------
-     a. 打字机效果
-     ---------------------------------------------------------- */
-  var el = document.getElementById('typewriter');
-  if (el) {
-    var phrases = [
-      '欢迎来到 Rei 的小站',
-      '你好，世界！',
-      '写写代码，记录生活',
-      'Stay curious, stay vibing'
-    ];
-    var phraseIdx = 0;
-    var charIdx = 0;
-    var isDeleting = false;
-    var speed = 80;
-
-    function typeLoop() {
-      var current = phrases[phraseIdx];
-      if (!isDeleting) {
-        el.textContent = current.substring(0, charIdx + 1);
-        charIdx++;
-        if (charIdx === current.length) {
-          isDeleting = true;
-          speed = 2000;
-        } else {
-          speed = 60 + Math.random() * 60;
-        }
-      } else {
-        el.textContent = current.substring(0, charIdx - 1);
-        charIdx--;
-        if (charIdx === 0) {
-          isDeleting = false;
-          phraseIdx = (phraseIdx + 1) % phrases.length;
-          speed = 400;
-        } else {
-          speed = 30 + Math.random() * 40;
-        }
-      }
-      setTimeout(typeLoop, speed);
-    }
-    setTimeout(typeLoop, 800);
-  }
-
-  /* ----------------------------------------------------------
-     b. 数字递增动画（RAF + 缓动，避免 setInterval 卡顿）
-     ---------------------------------------------------------- */
   var statNumbers = document.querySelectorAll('.stat-number');
+
   function animateCounter(el) {
     var target = parseInt(el.getAttribute('data-target'), 10);
     if (isNaN(target)) return;
-    var duration = 2000;       // 动画总时长 2s
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = String(target);
+      return;
+    }
+    var duration = 1100;
     var startTime = null;
 
-    // easeOutCubic：先快后慢，观感更流畅
     function easeOutCubic(t) {
       return 1 - Math.pow(1 - t, 3);
     }
 
     function step(now) {
       if (!startTime) startTime = now;
-      var elapsed = now - startTime;
-      var progress = Math.min(elapsed / duration, 1);
-      var eased = easeOutCubic(progress);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = target; // 确保最终值精确
-      }
+      var progress = Math.min((now - startTime) / duration, 1);
+      el.textContent = String(Math.round(easeOutCubic(progress) * target));
+      if (progress < 1) requestAnimationFrame(step);
     }
 
     requestAnimationFrame(step);
   }
 
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
         animateCounter(entry.target);
         observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  statNumbers.forEach(function(el) { observer.observe(el); });
+      });
+    }, { threshold: 0.6 });
+    statNumbers.forEach(function(el) { observer.observe(el); });
+  } else {
+    statNumbers.forEach(animateCounter);
+  }
 
-  /* ----------------------------------------------------------
-     c. 相片墙 — Masonry 布局 & 随机展示
-     ---------------------------------------------------------- */
   var photos = [
     { url: '/photos/abhishek-koli-PMxTK-bHZhs-unsplash.jpg', title: 'Abhishek' },
     { url: '/photos/andrew-small-EfhCUc_fjrU-unsplash.jpg', title: 'Andrew' },
@@ -232,100 +143,107 @@
     { url: '/photos/tomoko-uji-kxvn1ogpTtE-unsplash.jpg', title: 'Tomoko' },
     { url: '/photos/tomoko-uji-rCJGFHCV3oQ-unsplash.jpg', title: 'Tomoko' },
     { url: '/photos/veri-ivanova-whOkVvf0_hU-unsplash.jpg', title: 'Veri' },
-    { url: '/photos/yousef-espanioly-0iOOw41DZ28-unsplash.jpg', title: 'Yousef' },
+    { url: '/photos/yousef-espanioly-0iOOw41DZ28-unsplash.jpg', title: 'Yousef' }
   ];
 
   var wall = document.getElementById('photoWall');
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = document.getElementById('lightboxImg');
   var lightboxCaption = document.getElementById('lightboxCaption');
-  var lightboxClose = document.getElementById('lightboxClose');
-  var lightboxPrev = document.getElementById('lightboxPrev');
-  var lightboxNext = document.getElementById('lightboxNext');
   var currentIdx = 0;
   var displayedPhotos = [];
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
-      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+      var t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
     }
     return arr;
   }
 
   function renderWall() {
-    displayedPhotos = shuffle(photos.slice()).slice(0, 8);
-    wall.innerHTML = '';
+    displayedPhotos = shuffle(photos.slice()).slice(0, 7);
+    wall.replaceChildren();
     displayedPhotos.forEach(function(photo, idx) {
-      var item = document.createElement('div');
-      item.className = 'photo-item';
-      item.style.setProperty('--anim-delay', (idx * 0.08) + 's');
-      item.innerHTML =
-        '<div class="photo-inner">' +
-          '<div class="photo-placeholder" style="background-color:#8a9ab5"></div>' +
-          '<img class="photo-img" src="' + photo.url + '" alt="' + photo.title + '" loading="lazy">' +
-          '<div class="photo-overlay">' +
-            '<span class="photo-title">' + photo.title + '</span>' +
-          '</div>' +
-        '</div>';
+      var item = document.createElement('figure');
+      item.className = 'plate';
+      item.style.setProperty('--delay', (idx * 70) + 'ms');
+      item.tabIndex = 0;
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-label', '查看图版：' + photo.title);
+
+      var mat = document.createElement('div');
+      mat.className = 'plate-mat';
+      var img = document.createElement('img');
+      img.className = 'plate-img';
+      img.src = photo.url;
+      img.alt = photo.title;
+      img.loading = 'lazy';
+      mat.appendChild(img);
+
+      var cap = document.createElement('figcaption');
+      cap.className = 'plate-caption';
+      cap.textContent = '图 · ' + photo.title;
+
+      item.appendChild(mat);
+      item.appendChild(cap);
       item.addEventListener('click', function() { openLightbox(idx); });
+      item.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(idx);
+        }
+      });
       wall.appendChild(item);
     });
+  }
 
-    var imgs = wall.querySelectorAll('.photo-img');
-    imgs.forEach(function(img) {
-      img.addEventListener('load', function() {
-        img.classList.add('loaded');
-      });
-      if (img.complete) img.classList.add('loaded');
-    });
+  function openLightbox(idx) {
+    currentIdx = idx;
+    lightboxImg.src = displayedPhotos[idx].url;
+    lightboxImg.alt = displayedPhotos[idx].title;
+    lightboxCaption.textContent = '图 · ' + displayedPhotos[idx].title;
+    lightbox.hidden = false;
+    requestAnimationFrame(function() { lightbox.classList.add('is-open'); });
+    document.body.classList.add('is-locked');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function stepPhoto(delta) {
+    currentIdx = (currentIdx + delta + displayedPhotos.length) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxImg.alt = displayedPhotos[currentIdx].title;
+    lightboxCaption.textContent = '图 · ' + displayedPhotos[currentIdx].title;
   }
 
   if (wall) renderWall();
 
-  /* ----------------------------------------------------------
-     d. 灯光箱控制
-     ---------------------------------------------------------- */
-  function openLightbox(idx) {
-    currentIdx = idx;
-    lightboxImg.src = displayedPhotos[idx].url;
-    lightboxCaption.textContent = displayedPhotos[idx].title;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  var closeBtn = document.getElementById('lightboxClose');
+  var prevBtn = document.getElementById('lightboxPrev');
+  var nextBtn = document.getElementById('lightboxNext');
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  if (prevBtn) prevBtn.addEventListener('click', function() { stepPhoto(-1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { stepPhoto(1); });
+
+  if (lightbox) {
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
   }
-
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function prevPhoto() {
-    currentIdx = (currentIdx - 1 + displayedPhotos.length) % displayedPhotos.length;
-    lightboxImg.src = displayedPhotos[currentIdx].url;
-    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
-  }
-
-  function nextPhoto() {
-    currentIdx = (currentIdx + 1) % displayedPhotos.length;
-    lightboxImg.src = displayedPhotos[currentIdx].url;
-    lightboxCaption.textContent = displayedPhotos[currentIdx].title;
-  }
-
-  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-  if (lightboxPrev) lightboxPrev.addEventListener('click', prevPhoto);
-  if (lightboxNext) lightboxNext.addEventListener('click', nextPhoto);
-
-  lightbox.addEventListener('click', function(e) {
-    if (e.target === lightbox) closeLightbox();
-  });
 
   document.addEventListener('keydown', function(e) {
-    if (!lightbox || !lightbox.classList.contains('active')) return;
+    if (!lightbox || lightbox.hidden) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') prevPhoto();
-    if (e.key === 'ArrowRight') nextPhoto();
+    if (e.key === 'ArrowLeft') stepPhoto(-1);
+    if (e.key === 'ArrowRight') stepPhoto(1);
   });
-
 })();
 </script>
 {% endblock scripts %}
