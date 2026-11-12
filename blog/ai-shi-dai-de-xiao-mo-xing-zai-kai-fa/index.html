@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Vibe】小模型开发的一些总结  — Rei&#x27;s Blog</title>
+  
+  <meta name="description" content="花落水痕·风起铃升">
+  
+  <meta name="theme-color" content="#f3ecdf">
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#17140f');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="/">
+        <span class="brand-en">Rei's Blog</span>
+        <span class="brand-zh">花落水痕·风起铃升</span>
+      </a>
+
+      <nav class="nav-links" aria-label="刊内导航">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link is-active">文章</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换昼读与夜读" title="切换昼读 / 夜读">
+          <span class="theme-icon-light">昼</span>
+          <span class="theme-icon-dark">夜</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="content">
+    
+<div class="sheet article-sheet">
+  <article class="post-single">
+    <header class="post-header">
+      <p class="page-kicker">札记</p>
+      <h1 class="post-title">【Vibe】小模型开发的一些总结 </h1>
+      <p class="post-meta">
+        
+          <time datetime="2026-06-23">2026年06月23日</time>
+        
+        
+          <span class="entry-tags">
+            
+              <a class="tag" href="https://th1eil.github.io/tags/llm/">llm</a>
+            
+          </span>
+        
+        <span class="post-views" id="post-views" data-slug="ai-shi-dai-de-xiao-mo-xing-zai-kai-fa" hidden>
+          <span class="views-label">阅</span>
+          <span class="views-count" id="views-count">—</span>
+        </span>
+      </p>
+    </header>
+
+    <div class="post-content">
+      <h1 id="ai-shi-dai-xiao-mo-xing-xiang-mu-kai-fa-jing-yan-zhi-tan">AI 时代小模型项目开发经验之谈</h1>
+<blockquote>
+<p>项目类型：实时语音识别 + 对话服务（ASR/VAD/LLM/TTS 全链路）
+技术栈：Python/FastAPI、Qwen3-ASR/TTS、Silero VAD、Docker Compose、WebSocket
+开发周期：2026-06-08 ~ 2026-06-22（约 2 周），AI 开发</p>
+</blockquote>
+<hr />
+<h2 id="yi-jia-gou-she-ji-de-he-xin-jing-yan">一、架构设计的核心经验</h2>
+<h3 id="1-1-cha-jian-hua-wei-lai-proof">1.1 插件化 = 未来proof</h3>
+<p><strong>项目中最成功的决策</strong>就是 <code>backend/plugins/</code> 的抽象基类 + 注册表 + 工厂函数模式：</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python"># 四个核心能力组件的抽象接口
+BaseASRProvider   # 语音识别
+BaseVADProvider   # 语音活动检测
+BaseLLMProvider   # 大语言模型
+BaseTTSProvider   # 语音合成
+
+# 注册表：一行切换实现
+_ASR_REGISTRY = {
+    &quot;qwen3&quot;: &quot;...Qwen3ASRProvider&quot;,
+    &quot;http_asr&quot;: &quot;...HttpASRProvider&quot;,
+}
+</code></pre>
+<p><strong>为什么这个设计在 AI 项目中尤其重要：</strong></p>
+<table><thead><tr><th>场景</th><th>没有插件化</th><th>有插件化</th></tr></thead><tbody>
+<tr><td>模型从 Qwen3 换成 Whisper</td><td>改几十处代码</td><td>注册一行，<code>.env</code> 改一行</td></tr>
+<tr><td>本地部署 → Docker 微服务</td><td>重写架构</td><td><code>USE_REMOTE_PLUGINS=true</code></td></tr>
+<tr><td>ASR 后端从 from_pretrained 切到 vLLM</td><td>改 pipeline</td><td>provider 内部封装</td></tr>
+<tr><td>新增 LLM provider（如 Claude）</td><td>改 LLM 客户端</td><td>实现基类 + 注册</td></tr>
+</tbody></table>
+<p><strong>经验：AI 模型迭代速度极快，今天的最优模型明天就可能被替代。插件化不是"过度设计"，而是对不确定性的风险管理。</strong> 它让"换模型"这个最高频操作的成本降到最低。</p>
+<h3 id="1-2-jian-jin-shi-jia-gou-yan-jin-dan-ti-wei-fu-wu-bu-yao-yi-bu-dao-wei">1.2 渐进式架构演进：单体 → 微服务，不要一步到位</h3>
+<p>项目的架构演进路径非常清晰：</p>
+<pre><code>阶段 1: 单体应用
+  gateway 直接加载 ASR&#x2F;VAD 模型，以本地对象调用
+  → 适合开发调试，一台机器跑通全流程
+
+阶段 2: 远程插件模式
+  gateway 通过 HTTP&#x2F;WS 调用独立的 ASR&#x2F;VAD&#x2F;TTS 容器
+  → 适合生产部署，GPU 资源隔离，独立扩缩容
+</code></pre>
+<p><strong>关键设计：两个阶段共用同一套代码。</strong> <code>server.py</code> 中只有这一行判断：</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">if _USE_REMOTE:
+    os.environ[&quot;ASR_PROVIDER&quot;] = &quot;http_asr&quot;  # 切换到 HTTP 客户端
+</code></pre>
+<p>其余代码完全不变。<code>HttpASRProvider</code> 实现了和 <code>Qwen3ASRProvider</code> 完全相同的接口，Pipeline 层完全无感。</p>
+<p><strong>经验：不要在项目初期就追求完美的微服务架构。先让单体跑通，再用插件化实现平滑过渡。</strong> 在小模型项目中，模型加载和推理是核心瓶颈——先把这些搞稳定，再谈拆分。</p>
+<h3 id="1-3-pipeline-bian-pai-qi-jie-ou-neng-li-zu-he-yu-ju-ti-shi-xian">1.3 Pipeline 编排器：解耦能力组合与具体实现</h3>
+<p>项目中 <code>ChatPipeline</code> 和 <code>ASRPipeline</code> 是纯编排层，不关心 ASR/VAD/LLM 的具体实现：</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">class ChatPipeline:
+    def __init__(self, vad, asr, llm, tts=None, ...):
+        self.vad = vad    # 任何 BaseVADProvider
+        self.asr = asr    # 任何 BaseASRProvider
+        self.llm = llm    # 任何 BaseLLMProvider
+        self.tts = tts    # 任何 BaseTTSProvider
+</code></pre>
+<p><strong>Pipeline 只做三件事：</strong></p>
+<ol>
+<li>协调 VAD→ASR→LLM→TTS 的调用顺序</li>
+<li>管理流式状态（streaming state 的创建/喂入/结束/清理）</li>
+<li>通过回调把事件传递出去</li>
+</ol>
+<p><strong>经验：编排器 + 插件 = 可组合的能力矩阵。</strong> 新增一个 "纯 ASR 不含 LLM" 的端点，只需写 267 行 <code>ASRPipeline</code>，复用已有的 VAD 和 ASR provider，不需要碰任何模型代码。</p>
+<hr />
+<h2 id="er-pei-zhi-guan-li-env-shi-ai-xiang-mu-de-yi-deng-gong-min">二、配置管理：<code>.env</code> 是 AI 项目的一等公民</h2>
+<h3 id="2-1-pei-zhi-xiang-qing-dan-ji-xiang-mu-jie-kou-wen-dang">2.1 配置项清单即项目接口文档</h3>
+<p>Pydantic Settings 的好处远超"类型校验"：</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">class Settings(BaseSettings):
+    ASR_PROVIDER: str = &quot;qwen3&quot;       # 不只是字符串，是架构决策
+    ASR_MODEL: str = &quot;Qwen&#x2F;Qwen3-ASR-0.6B&quot;   # 不只是路径，是模型版本
+    ASR_DEVICE: str = &quot;cpu&quot;           # 不只是设备，是成本&#x2F;延迟权衡
+    ASR_USE_VLLM: bool = False        # 不只是开关，是流式能力开关
+</code></pre>
+<p><strong>经验：对于 AI 项目，<code>.env</code> 文件 = 生产环境的"控制面板"。</strong> 换模型、切 GPU、调推理参数——都应该通过改 <code>.env</code> 完成，不应该改代码。Pydantic Settings 的 <code>env_file=".env"</code> + <code>case_sensitive=True</code> 提供了免费的类型校验和文档。</p>
+<h3 id="2-2-pei-zhi-de-shi-ji-wen-ti-chu-shi-hua-shun-xu-shi-bug-zhi-yuan">2.2 配置的时机问题：初始化顺序是 bug 之源</h3>
+<p>项目踩过的坑：</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python"># ❌ 错误：模块导入时就实例化 Settings
+# config.py 底部
+settings = Settings()  # 此时 USE_REMOTE_PLUGINS 还没处理
+
+# ✅ 正确：延迟实例化，等调用方准备好后再读
+def get_settings() -&gt; Settings:
+    global _settings
+    if _settings is None:
+        _settings = Settings()
+    return _settings
+
+# server.py 先修正环境变量，再调用 get_settings()
+if _USE_REMOTE:
+    os.environ[&quot;ASR_PROVIDER&quot;] = &quot;http_asr&quot;  # 先修正
+cfg = get_settings()  # 再读取
+</code></pre>
+<p><strong>经验：AI 项目的配置有"模式切换"层级（本机/远程、GPU/CPU、vLLM/from_pretrained）。</strong> 这些不是简单的 key=value，而是会触发完全不同的模块导入路径。务必确保配置读取发生在所有环境变量修正之后。</p>
+<hr />
+<h2 id="san-ai-mo-xing-te-you-de-gong-cheng-tiao-zhan">三、AI 模型特有的工程挑战</h2>
+<h3 id="3-1-liu-shi-vs-fei-liu-shi-liang-chong-wan-quan-bu-tong-de-bian-cheng-mo-xing">3.1 流式 vs 非流式：两种完全不同的编程模型</h3>
+<p>项目经历了一个重要的认知升级：<strong>"流式 ASR"远不只是"逐 chunk 调用 API"。</strong></p>
+<table><thead><tr><th>维度</th><th>非流式（batch）</th><th>流式（streaming）</th></tr></thead><tbody>
+<tr><td>状态管理</td><td>无状态</td><td>需要 <code>ASRStreamingState</code> 生命周期管理</td></tr>
+<tr><td>错误处理</td><td>try/except 包裹一次调用</td><td>每个 chunk 都可能失败，需要降级</td></tr>
+<tr><td>资源释放</td><td>自动</td><td>必须显式 <code>finish()</code> 或 <code>abort()</code>，否则 GPU 泄漏</td></tr>
+<tr><td>并发</td><td>线程池串行即可</td><td>需要非阻塞 recv + 超时处理</td></tr>
+<tr><td>延迟模型</td><td>等待整句结束</td><td>边说边出字，VAD 切分策略决定体验</td></tr>
+</tbody></table>
+<p><strong>项目实现的流式降级策略值得借鉴：</strong></p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">async def _on_speech_start(self, vad_infer_ms):
+    if self.asr.supports_streaming:
+        try:
+            self._streaming_state = await loop.run_in_executor(
+                self._asr_executor, self.asr.init_streaming_state
+            )
+        except Exception as e:
+            logger.warning(&quot;流式 ASR 初始化失败，降级到整段识别: %s&quot;, e)
+            self._streaming_state = None  # 自动降级！
+</code></pre>
+<p><strong>经验：流式能力永远应该有非流式兜底。</strong> vLLM 后端、WebSocket 连接、GPU 显存——任何一环出问题，都应该自动回退到整段识别，而不是让整个服务不可用。</p>
+<h3 id="3-2-zi-yuan-xie-lou-shi-ai-fu-wu-de-di-yi-da-di-ren">3.2 资源泄漏是 AI 服务的第一大敌人</h3>
+<p>项目中实际发生并被修复的泄漏场景：</p>
+<table><thead><tr><th>泄漏类型</th><th>原因</th><th>修复</th></tr></thead><tbody>
+<tr><td>GPU 显存泄漏</td><td>WS 异常断开时 vllm_state 未清理</td><td><code>finally</code> 块强制 <code>finish_streaming_transcribe</code> + 超时自动清理</td></tr>
+<tr><td>WebSocket 连接泄漏</td><td>gateway abort 时只设 state=None</td><td><code>abort_streaming()</code> 发送 cancel 帧 + close WS</td></tr>
+<tr><td>TTS 磁盘泄漏</td><td>每次合成都写 WAV 到磁盘</td><td>改为 <code>TTSResult.audio_bytes</code> 内存返回，30min TTL 自动清理</td></tr>
+<tr><td>线程池泄漏</td><td><code>asr_executor</code> 线程被阻塞</td><td>finish 前先排空积压响应，非阻塞 recv(timeout=0.5)</td></tr>
+</tbody></table>
+<p><strong>经验：AI 模型推理是重量级资源操作。每个 <code>init</code> 必须有对应的 <code>cleanup</code>，每个资源申请必须有 TTL。</strong> 不在 finally 块里写资源释放代码的 AI 服务，迟早会在生产环境 OOM。</p>
+<h3 id="3-3-docker-gou-jian-mo-xing-xia-zai-shi-ci-cd-de-zui-da-ping-jing">3.3 Docker 构建：模型下载是 CI/CD 的最大瓶颈</h3>
+<p>项目踩过的 Docker 坑：</p>
+<ol>
+<li>
+<p><strong>大文件缓存策略</strong>：<code>torch</code> wheel 很大，必须和 <code>torchaudio</code> 分开 <code>RUN</code> 层：</p>
+<pre data-lang="dockerfile" class="language-dockerfile "><code class="language-dockerfile" data-lang="dockerfile">RUN pip install torch==2.5.1+cu121 --index-url https:&#x2F;&#x2F;download.pytorch.org&#x2F;whl&#x2F;cu121
+RUN pip install torchaudio==2.5.1+cu121 --index-url https:&#x2F;&#x2F;download.pytorch.org&#x2F;whl&#x2F;cu121
+# 而不是 RUN pip install torch torchaudio ... （改一个重下两个）
+</code></pre>
+</li>
+<li>
+<p><strong>healthcheck 要给模型加载留足时间</strong>：Qwen3-TTS 首次启动可能下载/加载模型 5-10 分钟：</p>
+<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">healthcheck:
+  start_period: 900s  # 不是 30s！
+</code></pre>
+</li>
+<li>
+<p><strong>runtime 补装依赖</strong>：构建缓存可能让你漏装间接依赖（如 <code>packaging</code>），在 runtime 最终层补装是保险做法。</p>
+</li>
+<li>
+<p><strong>离线部署</strong>：通过 <code>HF_ENDPOINT</code> 环境变量指向 HuggingFace 镜像或本地缓存，避免生产环境下载模型。</p>
+</li>
+</ol>
+<p><strong>经验：AI 项目的 Docker 镜像动辄 10-30GB。</strong> 分层策略、缓存利用、模型挂载（volume 而非 COPY）直接决定 CI/CD 是 2 分钟还是 2 小时。</p>
+<hr />
+<h2 id="si-kai-fa-liu-cheng-ai-fu-zhu-kai-fa-de-shi-zhan-mo-shi">四、开发流程：AI 辅助开发的实战模式</h2>
+<h3 id="4-1-wen-dang-qu-dong-kai-fa">4.1 文档驱动开发</h3>
+<p>项目的文档齐全程度远超普通项目：</p>
+<pre><code>README.md                        # 项目总览 + 快速启动
+architecture.md                  # 架构深度解析（985行）
+操作手册.md                       # 部署&#x2F;更新&#x2F;排障
+asr语言服务API接口文档.md          # 接口规范
+OpenAI语音服务接口文档.md          # API 兼容性文档
+适配最低要求文档.md                # 多平台部署 checklist
+接口测试报告-2026-06-17.md         # 4 份递增测试报告
+开发文档.md                       # 14 条开发记录
+lw长期记忆.md                     # 28 条经验积累
+realtime-asr-review.md            # 代码审查报告
+review.md                         # 第二次审查（40 文件，10 个问题）
+</code></pre>
+<p><strong>这不是"文档癖"，而是 AI 辅助开发的最佳实践。</strong></p>
+<p>为什么？因为 <strong>AI 不会记住你上周改了什么东西。</strong> 文档是给 AI（和自己）的上下文缓存：</p>
+<ul>
+<li><code>architecture.md</code> → 新会话中让 AI 快速理解项目结构</li>
+<li><code>lw长期记忆.md</code> → 踩过的坑不再踩第二次（"不要堵漏洞"）</li>
+<li><code>开发文档.md</code> → 每次改了什么、为什么、怎么改的（变更日志即文档）</li>
+<li><code>适配最低要求文档.md</code> → 部署 checklist，避免遗漏环境依赖</li>
+</ul>
+<p><strong>经验：把文档当作"给下一个会话中的 AI 看的"。</strong> 写文档不是为了归档，而是让你的下一次 <code>帮我修复 xxx</code> 命令能直接命中要害。</p>
+<h3 id="4-2-dai-ma-shen-cha-ai-shi-dai-de-zhi-liang-bao-xian">4.2 代码审查 = AI 时代的质量保险</h3>
+<p>项目中两次正式代码审查发现的问题：</p>
+<ul>
+<li><strong>🔴 严重问题</strong>：异步任务路径分段 TTS 文件未注册（404）、TTS 全局单例 speaker 泄漏、REST 模式 TTS 阻塞 LLM 流</li>
+<li><strong>🟡 中等问题</strong>：HttpTTSProvider 缺少公开 speaker 属性（说话人切换静默失效）、API Key 非恒定时间比较</li>
+<li><strong>🟢 结构性问题</strong>：ChatPipeline 职责过重、全局状态散落、ScriptProcessor 过时</li>
+</ul>
+<p><strong>这些问题的共同特征</strong>：人类单独看代码看不出，但多角度交叉审查就能发现。</p>
+<p><strong>经验：让 AI 做代码审查，用 5-7 个不同维度（bug 扫描、删除审计、跨文件追踪、复用简化、效率、安全、架构高度），每个维度独立审查。</strong> 这比"帮我 review 一下"更有效。</p>
+<h3 id="4-3-ce-shi-ce-lue-cong-neng-pao-jiu-xing-dao-hui-gui-ce-shi-tao-jian">4.3 测试策略：从"能跑就行"到"回归测试套件"</h3>
+<p>项目的测试演进：</p>
+<pre><code>阶段 1: 手动 curl 测试（&quot;这个接口能不能用？&quot;）
+阶段 2: 单接口验证脚本（fortest&#x2F;test_asr_streaming.py）
+阶段 3: 完整回归测试（fortest&#x2F;test_full_streaming.py，18 项）
+阶段 4: 真实语音全链路测试（fortest&#x2F;test_gateway_real_speech.py）
+阶段 5: 批量对比测试（fortest&#x2F;batch_test.py + CSV 结果）
+</code></pre>
+<p><strong>经验：AI 生成测试脚本极快。</strong> 在 AI 辅助下，从"手动测试"到"18 项回归测试套件"可以在一天内完成。不值得花时间手动测第二次——第一次手动确认可行后，立刻让 AI 写成自动化脚本。</p>
+<h3 id="4-4-xiao-mo-xing-xiang-mu-de-te-shu-xing">4.4 "小模型"项目的特殊性</h3>
+<p>realtime-asr 使用的模型：</p>
+<table><thead><tr><th>模型</th><th>大小</th><th>定位</th></tr></thead><tbody>
+<tr><td>Qwen3-ASR-0.6B</td><td>~1.2GB</td><td>轻量 ASR</td></tr>
+<tr><td>Silero VAD</td><td>~1MB</td><td>极轻 VAD</td></tr>
+<tr><td>Qwen3-TTS-0.6B</td><td>~2GB</td><td>轻量 TTS</td></tr>
+<tr><td>DeepSeek/Kimi</td><td>外部 API</td><td>大模型 LLM</td></tr>
+</tbody></table>
+<p><strong>这类"小模型 + 大模型 API"架构的特点：</strong></p>
+<ul>
+<li>本地推理的小模型决定延迟和服务可用性</li>
+<li>外部 API 的大模型决定回复质量</li>
+<li>自己做 ASR→LLM→TTS 全链路编排</li>
+<li>不依赖大模型厂商的实时音频 API（如 GPT-4o Realtime）</li>
+</ul>
+<p><strong>经验：小模型项目的核心竞争力是编排和可用性，而非模型本身。</strong> ASR/TTS 模型用开源的 0.6B 小模型，LLM 调用外部 API，自研全链路流水线——这种"缝合"架构在成本和可控性之间取得了最佳平衡。</p>
+<hr />
+<h2 id="wu-ke-fu-yong-de-dai-ma-mo-shi">五、可复用的代码模式</h2>
+<h3 id="5-1-shuang-tong-dao-websocket-xie-yi">5.1 双通道 WebSocket 协议</h3>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python"># binary channel → 音频数据（低延迟，无序列化开销）
+# text channel   → JSON 控制消息（llm_config, ping, reset, hotwords）
+
+data = await ws.receive()
+if &quot;bytes&quot; in data:
+    pcm_bytes = data[&quot;bytes&quot;]     # 16kHz PCM16
+    await pipeline.process_audio_chunk(pcm_bytes)
+elif &quot;text&quot; in data:
+    msg = json.loads(data[&quot;text&quot;])  # 控制协议
+</code></pre>
+<p><strong>适用场景</strong>：实时音视频 + 信令控制。</p>
+<h3 id="5-2-ji-cun-qi-mo-shi-registry-pattern">5.2 寄存器模式（Registry Pattern）</h3>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">_ASR_REGISTRY: Dict[str, str] = {
+    &quot;qwen3&quot;: &quot;backend.plugins.asr.qwen3_asr.Qwen3ASRProvider&quot;,
+    &quot;http_asr&quot;: &quot;backend.plugins.asr.http_client.HttpASRProvider&quot;,
+}
+
+def get_asr(**override_kwargs) -&gt; BaseASRProvider:
+    name = get_settings().ASR_PROVIDER
+    cls = _load_class(_ASR_REGISTRY[name])  # 动态导入
+    return cls(**kwargs)
+</code></pre>
+<p><strong>适用场景</strong>：任何需要"通过配置切换实现"的模块。</p>
+<h3 id="5-3-neng-li-jian-ce-zi-dong-jiang-ji">5.3 能力检测 + 自动降级</h3>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">@property
+def supports_streaming(self) -&gt; bool:
+    if self._streaming_supported is None:
+        self._detect_streaming_capability()  # 调 &#x2F;capabilities 端点
+    return self._streaming_supported
+
+# Pipeline 中
+if self.asr.supports_streaming:
+    # 流式路径
+else:
+    # 降级到整段识别
+</code></pre>
+<p><strong>适用场景</strong>：后端能力不确定时的优雅降级。</p>
+<h3 id="5-4-zi-yuan-sheng-ming-zhou-qi-guan-li">5.4 资源生命周期管理</h3>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">try:
+    state = asr.init_streaming_state()
+    # ... 使用 state ...
+except Exception:
+    # 降级
+finally:
+    if state is not None:
+        try:
+            asr.abort_streaming(state)  # cancel + close
+        except Exception:
+            pass  # 资源释放失败不应阻止程序退出
+</code></pre>
+<p><strong>适用场景</strong>：任何涉及 GPU 资源或网络连接的操作。</p>
+<hr />
+<h2 id="liu-ai-shi-dai-ruan-jian-kai-fa-de-liu-cheng-si-kao">六、AI 时代软件开发的流程思考</h2>
+<h3 id="6-1-he-xin-zhuan-bian-cong-xie-dai-ma-dao-zuo-jue-ce">6.1 核心转变：从"写代码"到"做决策"</h3>
+<p>这个项目 7000+ 行代码，2 周完成——但真正花费时间的不是写代码，而是：</p>
+<ol>
+<li><strong>架构决策</strong>：插件的抽象粒度？Pipeline 的职责边界？流式/非流式如何共存？</li>
+<li><strong>模型选型</strong>：Qwen3-ASR-0.6B 还是 1.7B？vLLM 还是 from_pretrained？</li>
+<li><strong>接口设计</strong>：WebSocket 协议格式？OpenAI 兼容性到哪个程度？</li>
+<li><strong>错误处理</strong>：什么情况降级？什么情况报错？什么情况重试？</li>
+<li><strong>资源管理</strong>：GPU 显存分配策略？TTS 磁盘/内存模式？连接泄漏怎么防？</li>
+</ol>
+<p><strong>经验：AI 让"实现"的成本趋近于零，但让"决策"的重要性倍增。</strong> 在 AI 能一小时写完 500 行代码的时代，开发者的核心价值是判断这 500 行代码应该做什么、边界在哪里、异常怎么处理。</p>
+<h3 id="6-2-wen-dang-ji-dai-ma-ti-shi-ci-ji-gui-fan">6.2 文档即代码，提示词即规范</h3>
+<p>项目中 <code>architecture.md</code> 的 985 行深度解析，完全可以作为给 AI 的系统提示词——事实上它就是。当你告诉 AI "按照 architecture.md 的架构设计，新增一个 xxx 功能"，AI 能产出高度一致的代码。</p>
+<p><strong>经验：在 AI 时代，好的项目文档不只是给人看的——它是对齐人与 AI 认知的接口。</strong> 结构清晰的架构文档 &gt; 散落的代码注释 &gt; 隐式的代码习惯。</p>
+<h3 id="6-3-ce-shi-cong-fu-dan-bian-cheng-jia-su-qi">6.3 测试从"负担"变成"加速器"</h3>
+<p>在 AI 辅助下，写一个 18 项回归测试脚本的成本从"半天"降到"10 分钟"。测试不再是"开发后的验证"，而是"开发中的护栏"——每次 AI 重构后，立刻跑测试，不对就回退。</p>
+<p><strong>经验：AI 时代的测试优先级排序：</strong></p>
+<ol>
+<li>端到端 API 测试（最高 ROI，一次性覆盖所有接口）</li>
+<li>边界条件测试（非法输入、超时、空数据）</li>
+<li>单元测试（只在核心算法逻辑上写）</li>
+</ol>
+<h3 id="6-4-duo-jiao-du-dai-ma-shen-cha-bu-ke-ti-dai">6.4 多角度代码审查不可替代</h3>
+<p>两次正式审查发现的问题中，至少 3 个在功能测试中无法发现（跨文件状态泄漏、异步路径 404、单例属性泄漏）。这些问题只有在"逐行扫描 + 删除审计 + 跨文件追踪 + 安全 + 效率 + 架构"的多维度审查下才会暴露。</p>
+<p><strong>经验：AI 可以写代码，但需要另一个 AI（或不同角度的同一 AI）来审查代码。</strong> 审查的维度越多样化，发现的隐藏问题越多。</p>
+<hr />
+<h2 id="qi-yi-ju-hua-zong-jie">七、一句话总结</h2>
+<blockquote>
+<p><strong>AI 时代的小模型项目开发，核心不是"用 AI 写更多代码"，而是用插件化架构管理模型的不确定性，用文档建立人与 AI 的认知对齐，用多维度审查控制质量风险，让"换模型"和"改架构"成为改一行 <code>.env</code> 的事。</strong></p>
+</blockquote>
+<hr />
+
+    </div>
+  </article>
+
+  <aside class="toc" aria-label="目次">
+    <h2>目次</h2>
+    <div id="toc-container"></div>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var article = document.querySelector('.post-single');
+  if (!article) return;
+
+  var lead = article.querySelector('.post-content > p');
+  if (lead && lead.textContent.trim().length >= 24) {
+    lead.classList.add('drop-cap');
+  }
+
+  var headings = article.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+  var tocContainer = document.getElementById('toc-container');
+  var tocWrapper = document.querySelector('.toc');
+
+  if (!tocContainer || !tocWrapper || headings.length < 2) {
+    if (tocWrapper) tocWrapper.hidden = true;
+    return;
+  }
+
+  var tocList = document.createElement('ol');
+  tocList.className = 'toc-list';
+
+  headings.forEach(function(heading, index) {
+    if (!heading.id) heading.id = 'heading-' + index;
+
+    var li = document.createElement('li');
+    var level = parseInt(heading.tagName.charAt(1), 10);
+    li.className = 'toc-level-' + level;
+
+    var a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  tocContainer.appendChild(tocList);
+
+  tocList.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById(this.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  var tocLinks = tocList.querySelectorAll('a');
+  var ticking = false;
+
+  function highlightToc() {
+    var triggerPoint = window.innerHeight / 3;
+    var currentId = null;
+
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top <= triggerPoint) {
+        currentId = headings[i].id;
+      } else {
+        break;
+      }
+    }
+
+    tocLinks.forEach(function(link) {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', function() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function() {
+      highlightToc();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  highlightToc();
+});
+</script>
+
+  </main>
+
+  <footer class="colophon">
+    <p class="colophon-name">Rei's Blog</p>
+    <p>花落水痕·风起铃升</p>
+    <p>排印于 <a href="https://www.getzola.org/">Zola</a> · 寄存在 GitHub Pages</p>
+    <p class="colophon-year">© 2026</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页首" title="回到页首">上</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" crossorigin="anonymous" data-manual></script>
+  <script>
+    (function() {
+      if (!window.Prism) return;
+      var langs = [];
+      document.querySelectorAll('code[class*="language-"]').forEach(function(code) {
+        var match = code.className.match(/language-([\w#+-]+)/);
+        var pre = code.parentElement;
+        if (!match || !pre) return;
+        pre.classList.add('code-block');
+        pre.setAttribute('data-lang', match[1]);
+        if (langs.indexOf(match[1]) === -1) langs.push(match[1]);
+      });
+      if (!langs.length) return;
+
+      var needs = { jsp: ['java'], cpp: ['c'] };
+      var order = [];
+      function add(lang) {
+        (needs[lang] || []).forEach(add);
+        if (order.indexOf(lang) === -1) order.push(lang);
+      }
+      langs.forEach(add);
+
+      function loadAt(i) {
+        if (i >= order.length) {
+          Prism.highlightAll();
+          return;
+        }
+        var lang = order[i];
+        if (Prism.languages[lang]) {
+          loadAt(i + 1);
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-' + lang + '.min.js';
+        script.onload = script.onerror = function() {
+          script.remove();
+          loadAt(i + 1);
+        };
+        document.body.appendChild(script);
+      }
+      loadAt(0);
+    })();
+  </script>
+
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          btn.classList.toggle('is-visible', window.scrollY > 420);
+          ticking = false;
+        });
+      }, { passive: true });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      var meta = document.querySelector('meta[name="theme-color"]');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17140f' : '#f3ecdf');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+  
+</body>
+
+</html>
