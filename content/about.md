@@ -4,18 +4,17 @@ path = "about"
 template = "about.html"
 +++
 
-# 你好，我是 Rei 👋
+# 你好，我是 Rei
 
 ## 关于我
 
-- 🎓 刚刚毕业的软工学生（哭路西
-- 💻 热爱编程和技术，vibing享受者
-- 🌱 正在学习 Python、Web 开发
-- 📝 热爱汉语言文字
+- 刚刚毕业的软工学生（哭路西
+- 正在学习 Python、Web 开发
+- 热爱文字
 
 ## 技术栈
 
-- ~~编程语言：Python, Java, Rust, C~~ 或许不需要了。
+- ~~编程语言：Python, Java, Rust, C~~ 或许不需要了
 - 前端：Vue, React
 - 后端：Node.js, Django
 - 工具：Git, Docker，Claude Code，codex
@@ -36,8 +35,8 @@ template = "about.html"
 
 ## 联系我
 
-- 📧 QQ: 1071920207
-- 🐱 GitHub: [th1eil](https://github.com/th1eil)
+- QQ: 1071920207
+- GitHub: [th1eil](https://github.com/th1eil)
 
 ## 关于本站
 
