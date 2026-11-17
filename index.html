@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rei&#x27;s Blog</title>
+  
+  <meta name="description" content="花落水痕·风起铃升">
+  
+  <meta name="theme-color" content="#f3ecdf">
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#17140f');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="/">
+        <span class="brand-en">Rei's Blog</span>
+        <span class="brand-zh">花落水痕·风起铃升</span>
+      </a>
+
+      <nav class="nav-links" aria-label="刊内导航">
+        <a href="/" class="nav-link is-active">首页</a>
+        <a href="/blog" class="nav-link ">文章</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换昼读与夜读" title="切换昼读 / 夜读">
+          <span class="theme-icon-light">昼</span>
+          <span class="theme-icon-dark">夜</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="content">
+    
+
+
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+    
+      
+    
+  
+
+
+
+<div class="sheet">
+  <section class="cover" aria-label="刊首">
+    <div class="cover-head">
+      <span>Vol. 2026</span>
+      <span class="cover-seal" aria-hidden="true">札</span>
+      <span class="cover-motto">花落水痕·风起铃升</span>
+    </div>
+    <h1 class="cover-title">Rei's Blog</h1>
+    <p class="cover-tagline">记录编程、学习和生活</p>
+    <div class="cover-stats">
+      <div class="stat-item">
+        <span class="stat-number" data-target="8">0</span>
+        <span class="stat-label">篇目</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="8">0</span>
+        <span class="stat-label">门类</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="2024">0</span>
+        <span class="stat-label">创刊</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="plates" aria-labelledby="plates-heading">
+    <h2 class="rubric" id="plates-heading"><span>图版</span></h2>
+    <p class="rubric-note">随手留下的一些影像</p>
+    <div class="photo-wall" id="photoWall"></div>
+  </section>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图版预览" hidden>
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="关闭">关闭</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="上一张">前</button>
+    <figure class="lightbox-figure">
+      <img class="lightbox-content" id="lightboxImg" alt="">
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="下一张">后</button>
+  </div>
+
+  <section class="contents" aria-labelledby="contents-heading">
+    <h2 class="rubric" id="contents-heading"><span>目录</span></h2>
+    <p class="rubric-note">近作，按时间倒序</p>
+    <ol class="contents-list">
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">01</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;ai-shi-dai-de-xiao-mo-xing-zai-kai-fa&#x2F;">【Vibe】小模型开发的一些总结 </a></h3>
+    
+      <p class="entry-desc">近期的工作。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2026-06-23">2026年06月23日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/llm/">llm</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">02</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;wei-yun-suan&#x2F;">【Learing】c和java中的位运算 </a></h3>
+    
+      <p class="entry-desc">这两天刷题遇见很多有意思的位运算用法，发现自己几乎没有印象，遂亡羊补牢。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2025-03-25">2025年03月25日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/c/">C</a>
+          
+            <a class="tag" href="https://th1eil.github.io/tags/java/">Java</a>
+          
+            <a class="tag" href="https://th1eil.github.io/tags/algo/">algo</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">03</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;kmp&#x2F;">【Learning】KPM的一些理解</a></h3>
+    
+      <p class="entry-desc">kpm算法</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2025-03-17">2025年03月17日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/algo/">algo</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">04</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;spring-mvc-classlearning-v1&#x2F;">【Learning】JavaWeb Spring 课堂 </a></h3>
+    
+      <p class="entry-desc">课堂笔记。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2025-03-12">2025年03月12日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/java/">Java</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">05</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;firstlua&#x2F;">【Learning】lua入门 </a></h3>
+    
+      <p class="entry-desc">lua基础学习笔记。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2025-03-01">2025年03月01日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/lua/">Lua</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">06</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;creview&#x2F;">【Review】c复习随笔 </a></h3>
+    
+      <p class="entry-desc">复习c时的一点思考。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2025-02-25">2025年02月25日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/c/">C</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">07</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;second&#x2F;">【Talk】Zola 主题装修日记</a></h3>
+    
+      <p class="entry-desc">记录使用 Zola 搭建博客并自定义主题的过程。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2024-03-21">2024年03月21日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/casual/">Casual</a>
+          
+            <a class="tag" href="https://th1eil.github.io/tags/frontend/">Frontend</a>
+          
+            <a class="tag" href="https://th1eil.github.io/tags/zola/">Zola</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+        
+        
+        <li class="entry">
+  <span class="entry-index" aria-hidden="true">08</span>
+  <div class="entry-body">
+    <h3 class="entry-title"><a href="https:&#x2F;&#x2F;th1eil.github.io&#x2F;blog&#x2F;first&#x2F;">【Talk】开始我的博客之旅</a></h3>
+    
+      <p class="entry-desc">这是我的第一篇博客文章，讲述了为什么我要开始写博客。</p>
+    
+    <p class="entry-meta">
+      
+        <time datetime="2024-03-20">2024年03月20日</time>
+      
+      
+        <span class="entry-tags">
+          
+            <a class="tag" href="https://th1eil.github.io/tags/casual/">Casual</a>
+          
+        </span>
+      
+    </p>
+  </div>
+</li>
+
+      
+    </ol>
+  </section>
+</div>
+
+  </main>
+
+  <footer class="colophon">
+    <p class="colophon-name">Rei's Blog</p>
+    <p>花落水痕·风起铃升</p>
+    <p>排印于 <a href="https://www.getzola.org/">Zola</a> · 寄存在 GitHub Pages</p>
+    <p class="colophon-year">© 2026</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页首" title="回到页首">上</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" crossorigin="anonymous" data-manual></script>
+  <script>
+    (function() {
+      if (!window.Prism) return;
+      var langs = [];
+      document.querySelectorAll('code[class*="language-"]').forEach(function(code) {
+        var match = code.className.match(/language-([\w#+-]+)/);
+        var pre = code.parentElement;
+        if (!match || !pre) return;
+        pre.classList.add('code-block');
+        pre.setAttribute('data-lang', match[1]);
+        if (langs.indexOf(match[1]) === -1) langs.push(match[1]);
+      });
+      if (!langs.length) return;
+
+      var needs = { jsp: ['java'], cpp: ['c'] };
+      var order = [];
+      function add(lang) {
+        (needs[lang] || []).forEach(add);
+        if (order.indexOf(lang) === -1) order.push(lang);
+      }
+      langs.forEach(add);
+
+      function loadAt(i) {
+        if (i >= order.length) {
+          Prism.highlightAll();
+          return;
+        }
+        var lang = order[i];
+        if (Prism.languages[lang]) {
+          loadAt(i + 1);
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-' + lang + '.min.js';
+        script.onload = script.onerror = function() {
+          script.remove();
+          loadAt(i + 1);
+        };
+        document.body.appendChild(script);
+      }
+      loadAt(0);
+    })();
+  </script>
+
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          btn.classList.toggle('is-visible', window.scrollY > 420);
+          ticking = false;
+        });
+      }, { passive: true });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      var meta = document.querySelector('meta[name="theme-color"]');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17140f' : '#f3ecdf');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+  
+<script>
+(function() {
+  'use strict';
+
+  var statNumbers = document.querySelectorAll('.stat-number');
+
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    if (isNaN(target)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = String(target);
+      return;
+    }
+    var duration = 1100;
+    var startTime = null;
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function step(now) {
+      if (!startTime) startTime = now;
+      var progress = Math.min((now - startTime) / duration, 1);
+      el.textContent = String(Math.round(easeOutCubic(progress) * target));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+    statNumbers.forEach(function(el) { observer.observe(el); });
+  } else {
+    statNumbers.forEach(animateCounter);
+  }
+
+  var photos = [
+    { url: '/photos/abhishek-koli-PMxTK-bHZhs-unsplash.jpg', title: 'Abhishek' },
+    { url: '/photos/andrew-small-EfhCUc_fjrU-unsplash.jpg', title: 'Andrew' },
+    { url: '/photos/anthony-delanoix-urUdKCxsTUI-unsplash.jpg', title: 'Anthony' },
+    { url: '/photos/arno-smit-sKJ7zSylUao-unsplash.jpg', title: 'Arno' },
+    { url: '/photos/aziz-acharki-tLsOA0Vlvwk-unsplash.jpg', title: 'Aziz' },
+    { url: '/photos/chi-pham-CoMCbQtTsAs-unsplash.jpg', title: 'Chi' },
+    { url: '/photos/dorne-marting-WJJ3xP5Z_vw-unsplash.jpg', title: 'Dorne' },
+    { url: '/photos/esteban-castle-MCJE6Zd0cLs-unsplash.jpg', title: 'Esteban' },
+    { url: '/photos/evie-s-bSVGnUCk4tk-unsplash.jpg', title: 'Evie' },
+    { url: '/photos/gabriela-popa-63S5u1wzlOk-unsplash.jpg', title: 'Gabriela' },
+    { url: '/photos/gaetano-cessati-CCy2UFLO1Mg-unsplash.jpg', title: 'Gaetano' },
+    { url: '/photos/gerome-bruneau-RPmWEtZLh7U-unsplash.jpg', title: 'Gerome' },
+    { url: '/photos/irina-iriser-mNz9Pa3tz34-unsplash.jpg', title: 'Irina' },
+    { url: '/photos/kevin-butz-sZj8qOt3yTU-unsplash.jpg', title: 'Kevin' },
+    { url: '/photos/marivi-pazos-4kX1uoAAohY-unsplash.jpg', title: 'Marivi' },
+    { url: '/photos/masaaki-komori-_SbeCWYjwCQ-unsplash.jpg', title: 'Masaaki' },
+    { url: '/photos/mitchel-lensink-TtP9IVxxvD0-unsplash.jpg', title: 'Mitchel' },
+    { url: '/photos/pawel-czerwinski-xnY4LcEkVZw-unsplash.jpg', title: 'Pawel' },
+    { url: '/photos/quino-al--3KfR1GVKXY-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/quino-al-BlMj6RYy3c0-unsplash.jpg', title: 'Quino' },
+    { url: '/photos/rob-pumphrey-40Nuk5wXsoo-unsplash.jpg', title: 'Rob' },
+    { url: '/photos/rodion-kutsaiev-tcPUbu8H2c0-unsplash.jpg', title: 'Rodion' },
+    { url: '/photos/roonz-nl-ATgfRqpFfFI-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/roonz-nl-vjDbHCjHlEY-unsplash.jpg', title: 'Roonz' },
+    { url: '/photos/sergey-shmidt-koy6FlCCy5s-unsplash.jpg', title: 'Sergey' },
+    { url: '/photos/sora-sagano-F6ZzivdSQ5k-unsplash.jpg', title: 'Sora' },
+    { url: '/photos/susanne-schwarz-qUACwpVjwoM-unsplash.jpg', title: 'Susanne' },
+    { url: '/photos/tim-mossholder-78CGaGIFkzE-unsplash.jpg', title: 'Tim' },
+    { url: '/photos/tomoko-uji-kxvn1ogpTtE-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/tomoko-uji-rCJGFHCV3oQ-unsplash.jpg', title: 'Tomoko' },
+    { url: '/photos/veri-ivanova-whOkVvf0_hU-unsplash.jpg', title: 'Veri' },
+    { url: '/photos/yousef-espanioly-0iOOw41DZ28-unsplash.jpg', title: 'Yousef' }
+  ];
+
+  var wall = document.getElementById('photoWall');
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var currentIdx = 0;
+  var displayedPhotos = [];
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
+    }
+    return arr;
+  }
+
+  function renderWall() {
+    displayedPhotos = shuffle(photos.slice()).slice(0, 7);
+    wall.replaceChildren();
+    displayedPhotos.forEach(function(photo, idx) {
+      var item = document.createElement('figure');
+      item.className = 'plate';
+      item.style.setProperty('--delay', (idx * 70) + 'ms');
+      item.tabIndex = 0;
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-label', '查看图版：' + photo.title);
+
+      var mat = document.createElement('div');
+      mat.className = 'plate-mat';
+      var img = document.createElement('img');
+      img.className = 'plate-img';
+      img.src = photo.url;
+      img.alt = photo.title;
+      img.loading = 'lazy';
+      mat.appendChild(img);
+
+      var cap = document.createElement('figcaption');
+      cap.className = 'plate-caption';
+      cap.textContent = '图 · ' + photo.title;
+
+      item.appendChild(mat);
+      item.appendChild(cap);
+      item.addEventListener('click', function() { openLightbox(idx); });
+      item.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(idx);
+        }
+      });
+      wall.appendChild(item);
+    });
+  }
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    lightboxImg.src = displayedPhotos[idx].url;
+    lightboxImg.alt = displayedPhotos[idx].title;
+    lightboxCaption.textContent = '图 · ' + displayedPhotos[idx].title;
+    lightbox.hidden = false;
+    requestAnimationFrame(function() { lightbox.classList.add('is-open'); });
+    document.body.classList.add('is-locked');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.hidden = true;
+    document.body.classList.remove('is-locked');
+  }
+
+  function stepPhoto(delta) {
+    currentIdx = (currentIdx + delta + displayedPhotos.length) % displayedPhotos.length;
+    lightboxImg.src = displayedPhotos[currentIdx].url;
+    lightboxImg.alt = displayedPhotos[currentIdx].title;
+    lightboxCaption.textContent = '图 · ' + displayedPhotos[currentIdx].title;
+  }
+
+  if (wall) renderWall();
+
+  var closeBtn = document.getElementById('lightboxClose');
+  var prevBtn = document.getElementById('lightboxPrev');
+  var nextBtn = document.getElementById('lightboxNext');
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  if (prevBtn) prevBtn.addEventListener('click', function() { stepPhoto(-1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { stepPhoto(1); });
+
+  if (lightbox) {
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox || lightbox.hidden) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') stepPhoto(-1);
+    if (e.key === 'ArrowRight') stepPhoto(1);
+  });
+})();
+</script>
+
+</body>
+
+</html>

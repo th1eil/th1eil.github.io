@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>【Learing】c和java中的位运算  — Rei&#x27;s Blog</title>
+  
+  <meta name="description" content="花落水痕·风起铃升">
+  
+  <meta name="theme-color" content="#f3ecdf">
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#17140f');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="/">
+        <span class="brand-en">Rei's Blog</span>
+        <span class="brand-zh">花落水痕·风起铃升</span>
+      </a>
+
+      <nav class="nav-links" aria-label="刊内导航">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link is-active">文章</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换昼读与夜读" title="切换昼读 / 夜读">
+          <span class="theme-icon-light">昼</span>
+          <span class="theme-icon-dark">夜</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="content">
+    
+<div class="sheet article-sheet">
+  <article class="post-single">
+    <header class="post-header">
+      <p class="page-kicker">札记</p>
+      <h1 class="post-title">【Learing】c和java中的位运算 </h1>
+      <p class="post-meta">
+        
+          <time datetime="2025-03-25">2025年03月25日</time>
+        
+        
+          <span class="entry-tags">
+            
+              <a class="tag" href="https://th1eil.github.io/tags/c/">C</a>
+            
+              <a class="tag" href="https://th1eil.github.io/tags/java/">Java</a>
+            
+              <a class="tag" href="https://th1eil.github.io/tags/algo/">algo</a>
+            
+          </span>
+        
+        <span class="post-views" id="post-views" data-slug="wei-yun-suan" hidden>
+          <span class="views-label">阅</span>
+          <span class="views-count" id="views-count">—</span>
+        </span>
+      </p>
+    </header>
+
+    <div class="post-content">
+      <h1 id="wei-yun-suan">位运算</h1>
+<p>位运算是直接对整数的二进制位进行操作的运算</p>
+<p>常见的位运算有：</p>
+<ol>
+<li><strong>与运算（AND）</strong>：<code>&amp;</code>
+<ul>
+<li>对应位都为 1 时结果为 1，否则为 0。</li>
+</ul>
+</li>
+<li><strong>或运算（OR）</strong>：<code>|</code>
+<ul>
+<li>对应位有 1 时结果为 1，否则为 0。</li>
+</ul>
+</li>
+<li><strong>异或运算（XOR）</strong>：<code>^</code>
+<ul>
+<li>对应位不同为 1，相同为 0。</li>
+</ul>
+</li>
+<li><strong>取反运算（NOT）</strong>：<code>~</code>
+<ul>
+<li>逐位取反（0 变 1，1 变 0）。</li>
+</ul>
+</li>
+<li><strong>左移运算（左移）</strong>：<code>&lt;&lt;</code>
+<ul>
+<li>将位向左移动指定的位数，低位补 0。</li>
+</ul>
+</li>
+<li><strong>右移运算（右移）</strong>：<code>&gt;&gt;</code>
+<ul>
+<li>将位向右移动指定的位数，高位填充符号位（对于无符号数，高位补 0）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="jian-dan-jie-shao-liu-chong-wei-yun-suan">简单介绍六种位运算</h2>
+<h3 id="yu-yun-suan-and">与运算（AND）</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    int b = 3;  &#x2F;&#x2F; 二进制 0011
+    printf(&quot;%d\n&quot;, a &amp; b);  &#x2F;&#x2F; 结果为 1（二进制 0001）
+    return 0;
+}
+
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        int b = 3;  &#x2F;&#x2F; 二进制 0011
+        System.out.println(a &amp; b);  &#x2F;&#x2F; 输出 1（二进制 0001）
+    }
+}
+</code></pre>
+<h3 id="huo-yun-suan-or">或运算（OR）</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    int b = 3;  &#x2F;&#x2F; 二进制 0011
+    printf(&quot;%d\n&quot;, a | b);  &#x2F;&#x2F; 结果为 7（二进制 0111）
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        int b = 3;  &#x2F;&#x2F; 二进制 0011
+        System.out.println(a | b);  &#x2F;&#x2F; 输出 7（二进制 0111）
+    }
+}
+</code></pre>
+<h3 id="yi-huo-yun-suan-xor">异或运算（XOR）</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    int b = 3;  &#x2F;&#x2F; 二进制 0011
+    printf(&quot;%d\n&quot;, a ^ b);  &#x2F;&#x2F; 结果为 6（二进制 0110）
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        int b = 3;  &#x2F;&#x2F; 二进制 0011
+        System.out.println(a ^ b);  &#x2F;&#x2F; 输出 6（二进制 0110）
+    }
+}
+</code></pre>
+<h3 id="qu-fan-yun-suan-not">取反运算（NOT）</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    printf(&quot;%d\n&quot;, ~a);  &#x2F;&#x2F; 结果为 -6（取反后变为二进制 1010）
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        System.out.println(~a);  &#x2F;&#x2F; 输出 -6（取反后变为二进制 1010）
+    }
+}
+</code></pre>
+<h3 id="zuo-yi-yun-suan">左移运算 &lt;&lt;</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    printf(&quot;%d\n&quot;, a &lt;&lt; 1);  &#x2F;&#x2F; 结果为 10（二进制 1010），左移 1 位
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        System.out.println(a &lt;&lt; 1);  &#x2F;&#x2F; 输出 10（二进制 1010）
+    }
+}
+</code></pre>
+<h3 id="you-yi-yun-suan">右移运算 &gt;&gt;</h3>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;  &#x2F;&#x2F; 二进制 0101
+    printf(&quot;%d\n&quot;, a &gt;&gt; 1);  &#x2F;&#x2F; 结果为 2（二进制 0010），右移 1 位
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void main(String[] args) {
+        int a = 5;  &#x2F;&#x2F; 二进制 0101
+        System.out.println(a &gt;&gt; 1);  &#x2F;&#x2F; 输出 2（二进制 0010）
+    }
+}
+</code></pre>
+<h2 id="chang-jian-yun-yong">常见运用</h2>
+<h3 id="1-jian-cha-yi-ge-shu-shi-fou-shi-2de-mi">1.<strong>检查一个数是否是2的幂</strong></h3>
+<p>判断一个数是否是 2 的幂（即 1, 2, 4, 8, 16, ...）。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>
+<p>一个数是 2 的幂时，它的二进制表示中只有一个 <code>1</code>，比如：</p>
+<ul>
+<li>1 的二进制是 <code>0001</code></li>
+<li>2 的二进制是 <code>0010</code></li>
+<li>4 的二进制是 <code>0100</code></li>
+<li>8 的二进制是 <code>1000</code></li>
+</ul>
+<p>2 的幂数的特点是：<code>n &amp; (n - 1) == 0</code>，这个条件成立时，<code>n</code> 就是 2 的幂。</p>
+</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int isPowerOfTwo(int n) {
+    return (n &gt; 0) &amp;&amp; (n &amp; (n - 1)) == 0;
+}
+
+int main() {
+    int n = 16;
+    if (isPowerOfTwo(n)) {
+        printf(&quot;%d is a power of 2\n&quot;, n);
+    } else {
+        printf(&quot;%d is not a power of 2\n&quot;, n);
+    }
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static boolean isPowerOfTwo(int n) {
+        return (n &gt; 0) &amp;&amp; (n &amp; (n - 1)) == 0;
+    }
+
+    public static void main(String[] args) {
+        int n = 16;
+        if (isPowerOfTwo(n)) {
+            System.out.println(n + &quot; is a power of 2&quot;);
+        } else {
+            System.out.println(n + &quot; is not a power of 2&quot;);
+        }
+    }
+}
+</code></pre>
+<h3 id="2-jiao-huan-liang-ge-shu">2.交换两个数</h3>
+<p>使用异或运算可以实现两个数的交换，避免使用临时变量。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>利用异或的性质：<code>a = a ^ b</code>, <code>b = a ^ b</code>, <code>a = a ^ b</code>，实现 <code>a</code> 和 <code>b</code> 的交换。
+<ul>
+<li><code>a ^ b</code> 相当于两个数的“差”，再通过这种“差”运算恢复原数值。</li>
+</ul>
+</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+void swap(int* a, int* b) {
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+}
+
+int main() {
+    int a = 5, b = 10;
+    printf(&quot;Before swap: a = %d, b = %d\n&quot;, a, b);
+    swap(&amp;a, &amp;b);
+    printf(&quot;After swap: a = %d, b = %d\n&quot;, a, b);
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static void swap(int[] a, int[] b) {
+        a[0] = a[0] ^ b[0];
+        b[0] = a[0] ^ b[0];
+        a[0] = a[0] ^ b[0];
+    }
+
+    public static void main(String[] args) {
+        int a = 5, b = 10;
+        System.out.println(&quot;Before swap: a = &quot; + a + &quot;, b = &quot; + b);
+        swap(new int[]{a}, new int[]{b});
+        System.out.println(&quot;After swap: a = &quot; + a + &quot;, b = &quot; + b);
+    }
+}
+</code></pre>
+<h3 id="3-qiu-yi-ge-zheng-shu-er-jin-zhi-biao-shi-zhong-1-de-ge-shu-yi-ming-zhong-liang">3.求一个整数二进制表示中 <code>1</code> 的个数（汉明重量）</h3>
+<p>使用位运算可以高效地计算一个整数的二进制中有多少个 <code>1</code>，常用于计算二进制中某个数的位数。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>每次 <code>n &amp; (n - 1)</code> 可以消除一个 <code>1</code>，直到 <code>n</code> 为 0。这个方法的时间复杂度为 <code>O(log n)</code>。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int hammingWeight(int n) {
+    int count = 0;
+    while (n) {
+        count++;
+        n = n &amp; (n - 1);  &#x2F;&#x2F; 每次消去最低位的 1
+    }
+    return count;
+}
+
+int main() {
+    int n = 29;  &#x2F;&#x2F; 二进制 11101
+    printf(&quot;Hamming weight: %d\n&quot;, hammingWeight(n));  &#x2F;&#x2F; 输出 4
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            count++;
+            n = n &amp; (n - 1);  &#x2F;&#x2F; 每次消去最低位的 1
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int n = 29;  &#x2F;&#x2F; 二进制 11101
+        System.out.println(&quot;Hamming weight: &quot; + hammingWeight(n));  &#x2F;&#x2F; 输出 4
+    }
+}
+</code></pre>
+<h3 id="4-zhao-chu-zheng-shu-shu-zu-zhong-de-wei-yi-shu-zi-mei-ge-shu-zi-chu-xian-liang-ci-zhi-you-yi-ge-shu-zi-chu-xian-yi-ci">4.找出整数数组中的唯一数字（每个数字出现两次，只有一个数字出现一次）</h3>
+<p>假设在一个数组中，除了一个数字，其余的数字都出现了两次，使用位运算可以高效地找出唯一的数字。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>使用异或运算的性质：相同的数字异或为 0，不同的数字异或为非 0。最终，数组中的唯一数字将保留下来。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int singleNumber(int* nums, int numsSize) {
+    int result = 0;
+    for (int i = 0; i &lt; numsSize; i++) {
+        result ^= nums[i];  &#x2F;&#x2F; 相同数字会被消除，剩下唯一的数字
+    }
+    return result;
+}
+
+int main() {
+    int nums[] = {4, 1, 2, 1, 2};
+    int size = sizeof(nums) &#x2F; sizeof(nums[0]);
+    printf(&quot;Single number: %d\n&quot;, singleNumber(nums, size));  &#x2F;&#x2F; 输出 4
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int singleNumber(int[] nums) {
+        int result = 0;
+        for (int num : nums) {
+            result ^= num;  &#x2F;&#x2F; 相同数字会被消除，剩下唯一的数字
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {4, 1, 2, 1, 2};
+        System.out.println(&quot;Single number: &quot; + singleNumber(nums));  &#x2F;&#x2F; 输出 4
+    }
+}
+</code></pre>
+<h3 id="5-jiao-huan-zheng-shu-de-ou-shu-wei-he-qi-shu-wei">5. <strong>交换整数的偶数位和奇数位</strong></h3>
+<p>将一个整数的偶数位和奇数位互换，可以通过位运算来实现。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>使用掩码分离出偶数位和奇数位，然后将它们左移或右移并组合起来。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+unsigned int swapEvenOddBits(unsigned int n) {
+    unsigned int evenBits = n &amp; 0xAAAAAAAA;  &#x2F;&#x2F; 获取偶数位
+    unsigned int oddBits = n &amp; 0x55555555;   &#x2F;&#x2F; 获取奇数位
+    evenBits &gt;&gt;= 1;  &#x2F;&#x2F; 偶数位右移
+    oddBits &lt;&lt;= 1;   &#x2F;&#x2F; 奇数位左移
+    return (evenBits | oddBits);
+}
+
+int main() {
+    unsigned int n = 23;  &#x2F;&#x2F; 二进制 10111
+    printf(&quot;After swapping bits: %u\n&quot;, swapEvenOddBits(n));  &#x2F;&#x2F; 输出 43（二进制 101011）
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int swapEvenOddBits(int n) {
+        int evenBits = n &amp; 0xAAAAAAAA;  &#x2F;&#x2F; 获取偶数位
+        int oddBits = n &amp; 0x55555555;   &#x2F;&#x2F; 获取奇数位
+        evenBits &gt;&gt;= 1;  &#x2F;&#x2F; 偶数位右移
+        oddBits &lt;&lt;= 1;   &#x2F;&#x2F; 奇数位左移
+        return (evenBits | oddBits);
+    }
+
+    public static void main(String[] args) {
+        int n = 23;  &#x2F;&#x2F; 二进制 10111
+        System.out.println(&quot;After swapping bits: &quot; + swapEvenOddBits(n));  &#x2F;&#x2F; 输出 43（二进制 101011）
+    }
+}
+</code></pre>
+<h3 id="6-pan-duan-yi-ge-shu-shi-fou-shi-qi-shu-huo-ou-shu">6. <strong>判断一个数是否是奇数或偶数</strong></h3>
+<p>位运算可以非常高效地判断一个整数是奇数还是偶数。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>
+<p>一个整数的二进制表示的最后一位（最低位）决定了该数是奇数还是偶数：</p>
+<ul>
+<li>如果最低位为 <code>1</code>，则该数为奇数。</li>
+<li>如果最低位为 <code>0</code>，则该数为偶数。</li>
+</ul>
+<p>通过与操作 <code>n &amp; 1</code>，如果结果是 <code>1</code>，则是奇数；如果结果是 <code>0</code>，则是偶数。</p>
+</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int isEven(int n) {
+    return (n &amp; 1) == 0;
+}
+
+int main() {
+    int n = 7;
+    if (isEven(n)) {
+        printf(&quot;%d is even\n&quot;, n);
+    } else {
+        printf(&quot;%d is odd\n&quot;, n);
+    }
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static boolean isEven(int n) {
+        return (n &amp; 1) == 0;
+    }
+
+    public static void main(String[] args) {
+        int n = 7;
+        if (isEven(n)) {
+            System.out.println(n + &quot; is even&quot;);
+        } else {
+            System.out.println(n + &quot; is odd&quot;);
+        }
+    }
+}
+</code></pre>
+<h3 id="7-qing-chu-zui-di-you-xiao-wei-lowest-set-bit">7. <strong>清除最低有效位（Lowest Set Bit）</strong></h3>
+<p>有时你需要删除一个整数中的最低有效位（第一个 <code>1</code>），可以通过位运算实现。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li><code>n &amp; (n - 1)</code> 可以清除最低有效位。例如：
+<ul>
+<li>对于 <code>n = 12</code>（二进制 <code>1100</code>），<code>n - 1 = 11</code>（二进制 <code>1011</code>），<code>n &amp; (n - 1)</code> 就是 <code>1000</code>，清除了最低有效位。</li>
+</ul>
+</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int clearLowestBit(int n) {
+    return n &amp; (n - 1);
+}
+
+int main() {
+    int n = 12;  &#x2F;&#x2F; 二进制 1100
+    printf(&quot;After clearing the lowest bit: %d\n&quot;, clearLowestBit(n));  &#x2F;&#x2F; 输出 8（二进制 1000）
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int clearLowestBit(int n) {
+        return n &amp; (n - 1);
+    }
+
+    public static void main(String[] args) {
+        int n = 12;  &#x2F;&#x2F; 二进制 1100
+        System.out.println(&quot;After clearing the lowest bit: &quot; + clearLowestBit(n));  &#x2F;&#x2F; 输出 8（二进制 1000）
+    }
+}
+</code></pre>
+<h3 id="8-jiao-huan-zheng-shu-de-fu-hao">8. <strong>交换整数的符号</strong></h3>
+<p>通过位运算，你可以改变一个整数的符号（即负数变为正数，正数变为负数）。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>通过异或操作，可以反转整数的符号位（最高位）。例如：<code>n = n ^ (1 &lt;&lt; 31)</code>，这会将 <code>n</code> 的符号位取反。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int swapSign(int n) {
+    return n ^ (1 &lt;&lt; 31);  &#x2F;&#x2F; 将符号位取反
+}
+
+int main() {
+    int n = -5;
+    printf(&quot;After swapping sign: %d\n&quot;, swapSign(n));  &#x2F;&#x2F; 输出 5
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int swapSign(int n) {
+        return n ^ (1 &lt;&lt; 31);  &#x2F;&#x2F; 将符号位取反
+    }
+
+    public static void main(String[] args) {
+        int n = -5;
+        System.out.println(&quot;After swapping sign: &quot; + swapSign(n));  &#x2F;&#x2F; 输出 5
+    }
+}
+</code></pre>
+<h3 id="9-qiu-liang-ge-shu-de-zui-da-gong-yue-shu-gcd">9. <strong>求两个数的最大公约数（GCD）</strong></h3>
+<p>可以利用位运算快速求解两个数的最大公约数（Euclid's algorithm），特别是在处理大数时，位运算可以提高效率。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>利用<strong>二进制求最大公约数</strong>的方法，可以通过 <code>n &amp; -n</code> 来去除数字的最低有效位，从而加速求 GCD。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int gcd(int a, int b) {
+    if (a == 0) return b;
+    if (b == 0) return a;
+    int shift;
+    
+    &#x2F;&#x2F; 计算 a 和 b 的二进制表示中公共的 2 的幂
+    for (shift = 0; ((a | b) &amp; 1) == 0; ++shift) {
+        a &gt;&gt;= 1;
+        b &gt;&gt;= 1;
+    }
+    
+    while ((a &amp; 1) == 0) a &gt;&gt;= 1;  &#x2F;&#x2F; 去除 a 中的所有 2 的幂
+    
+    do {
+        while ((b &amp; 1) == 0) b &gt;&gt;= 1;  &#x2F;&#x2F; 去除 b 中的所有 2 的幂
+        if (a &gt; b) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+        b = b - a;  &#x2F;&#x2F; b = b - a
+    } while (b != 0);
+    
+    return a &lt;&lt; shift;  &#x2F;&#x2F; 将公共的 2 的幂加回来
+}
+
+int main() {
+    int a = 56, b = 98;
+    printf(&quot;GCD of %d and %d is: %d\n&quot;, a, b, gcd(a, b));  &#x2F;&#x2F; 输出 GCD
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static int gcd(int a, int b) {
+        if (a == 0) return b;
+        if (b == 0) return a;
+        int shift = 0;
+        
+        &#x2F;&#x2F; 计算 a 和 b 的二进制表示中公共的 2 的幂
+        while ((a | b) % 2 == 0) {
+            a &gt;&gt;= 1;
+            b &gt;&gt;= 1;
+            shift++;
+        }
+        
+        while ((a &amp; 1) == 0) a &gt;&gt;= 1;  &#x2F;&#x2F; 去除 a 中的所有 2 的幂
+        
+        do {
+            while ((b &amp; 1) == 0) b &gt;&gt;= 1;  &#x2F;&#x2F; 去除 b 中的所有 2 的幂
+            if (a &gt; b) {
+                int temp = a;
+                a = b;
+                b = temp;
+            }
+            b = b - a;  &#x2F;&#x2F; b = b - a
+        } while (b != 0);
+        
+        return a &lt;&lt; shift;  &#x2F;&#x2F; 将公共的 2 的幂加回来
+    }
+
+    public static void main(String[] args) {
+        int a = 56, b = 98;
+        System.out.println(&quot;GCD of &quot; + a + &quot; and &quot; + b + &quot; is: &quot; + gcd(a, b));
+    }
+}
+</code></pre>
+<h3 id="10-tong-guo-wei-yun-suan-pan-duan-liang-ge-zheng-shu-shi-fou-xiang-deng">10. <strong>通过位运算判断两个整数是否相等</strong></h3>
+<p>如果两个整数相等，则它们的异或结果为 0。这可以通过 <code>a ^ b</code> 来判断两个数是否相等。</p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>如果 <code>a</code> 和 <code>b</code> 相等，<code>a ^ b == 0</code>。</li>
+</ul>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">&#x2F;&#x2F; C语言
+#include &lt;stdio.h&gt;
+
+int areEqual(int a, int b) {
+    return (a ^ b) == 0;  &#x2F;&#x2F; 如果 a 和 b 相等，则 a ^ b 为 0
+}
+
+int main() {
+    int a = 5, b = 5;
+    if (areEqual(a, b)) {
+        printf(&quot;%d and %d are equal\n&quot;, a, b);
+    } else {
+        printf(&quot;%d and %d are not equal\n&quot;, a, b);
+    }
+    return 0;
+}
+</code></pre>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">&#x2F;&#x2F; Java
+public class Main {
+    public static boolean areEqual(int a, int b) {
+        return (a ^ b) == 0;  &#x2F;&#x2F; 如果 a 和 b 相等，则 a ^ b 为 0
+    }
+
+    public static void main(String[] args) {
+        int a = 5, b = 5;
+        if (areEqual(a, b)) {
+            System.out.println(a + &quot; and &quot; + b + &quot; are equal&quot;);
+        } else {
+            System.out.println(a + &quot; and &quot; + b + &quot; are not equal&quot;);
+        }
+    }
+}
+</code></pre>
+<h2 id="javayu-cde-wei-yun-suan-qu-bie">java与c的位运算区别</h2>
+<p>在 Java 和 C 中，位运算的基本原理和操作是相同的，但它们在一些细节上有所不同，</p>
+<p>主要体现在 <strong>数据类型的处理</strong>、<strong>符号扩展</strong> 和 <strong>溢出处理</strong> 等方面。</p>
+<h3 id="1-shu-ju-lei-xing-he-wei-kuan">1. <strong>数据类型和位宽</strong></h3>
+<ul>
+<li><strong>C 语言</strong>：
+<ul>
+<li>C 语言中的整数类型如 <code>int</code>、<code>short</code>、<code>long</code> 等的位宽是由平台和编译器决定的。通常，<code>int</code> 在大多数平台上是 32 位，<code>long</code> 可能是 32 位或 64 位。</li>
+<li>C 语言对有符号类型的位运算有时会产生未定义行为，尤其是在符号扩展时。</li>
+<li>C 语言的类型也允许使用 <code>char</code>（通常是 8 位）进行位运算。</li>
+</ul>
+</li>
+<li><strong>Java</strong>：
+<ul>
+<li>在 Java 中，<code>int</code> 和 <code>long</code> 是 <strong>固定长度</strong> 的。<code>int</code> 总是 32 位，<code>long</code> 总是 64 位。</li>
+<li>Java 中的所有整数类型（包括 <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>）的位运算操作都将其转换为 32 位或 64 位的二进制表示。</li>
+<li>Java 不允许直接操作 <code>char</code> 类型的位（<code>char</code> 在 Java 中是 16 位无符号类型，不能进行位运算），但是可以通过 <code>int</code> 类型来实现相同的操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-fu-hao-kuo-zhan">2. <strong>符号扩展</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中进行右移操作时，<strong>有符号整数</strong> 右移会进行符号扩展，即将符号位（最高位）填充到左边。这意味着对于负数，右移后会填充 <code>1</code>，对于正数，右移后会填充 <code>0</code>。</li>
+<li>对于 <strong>无符号整数</strong>，右移不会进行符号扩展，而是填充 <code>0</code>。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">int a = -8;  &#x2F;&#x2F; 二进制：11111111111111111111111111111000
+printf(&quot;%d\n&quot;, a &gt;&gt; 2);  &#x2F;&#x2F; 输出 -2，二进制：11111111111111111111111111111110
+</code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的 <strong>有符号整数</strong> 右移也会进行符号扩展，但是 Java 提供了两种不同的右移操作：
+<ul>
+<li><strong>算术右移（<code>&gt;&gt;</code>）</strong>：进行符号扩展。</li>
+<li><strong>逻辑右移（<code>&gt;&gt;&gt;</code>）</strong>：无论是有符号还是无符号整数，都会填充 <code>0</code>。</li>
+</ul>
+</li>
+<li>Java 对于无符号整数的处理不同于 C，因为 Java 中的整数是 <strong>有符号</strong> 的，<code>char</code> 不是无符号类型，因此不能直接进行无符号右移。但可以通过 <code>&gt;&gt;&gt;</code> 来实现无符号右移。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">int a = -8;  &#x2F;&#x2F; 二进制：11111111111111111111111111111000
+System.out.println(a &gt;&gt; 2);   &#x2F;&#x2F; 输出 -2，二进制：11111111111111111111111111111110
+System.out.println(a &gt;&gt;&gt; 2);  &#x2F;&#x2F; 输出 1073741822，二进制：00111111111111111111111111111110
+</code></pre>
+</li>
+</ul>
+<h3 id="3-yi-chu-chu-li">3. <strong>溢出处理</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中的 <strong>溢出行为</strong> 是未定义的，特别是对于有符号整数。对有符号整数进行溢出（例如，<code>int</code> 超过其最大值或最小值）会导致未定义的行为，而对无符号整数进行溢出则会发生 <strong>模运算</strong>，即会“环绕”回 0。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">int a = 2147483647;  &#x2F;&#x2F; int 类型最大值
+a = a + 1;  &#x2F;&#x2F; 会发生溢出，结果未定义
+printf(&quot;%d\n&quot;, a);
+</code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>在 Java 中，溢出是定义好的行为。对于 <strong>有符号整数</strong>，如果超出 <code>int</code> 或 <code>long</code> 的范围，结果会回绕到最小值。例如，<code>int</code> 的最大值是 <code>2147483647</code>，当其值超过该范围时，会回绕到负数。Java 中的 <strong>整数溢出</strong> 是通过 <strong>模运算</strong> 实现的。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">int a = 2147483647;  &#x2F;&#x2F; int 类型最大值
+a = a + 1;  &#x2F;&#x2F; 溢出，结果是 -2147483648
+System.out.println(a);  &#x2F;&#x2F; 输出 -2147483648
+</code></pre>
+</li>
+</ul>
+<h3 id="4-wei-yun-suan-you-xian-ji">4. <strong>位运算优先级</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>在 C 语言中，位运算的优先级低于大多数算术运算，因此如果要确保位运算优先执行，通常需要使用括号。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">int result = 5 + 3 &lt;&lt; 2;  &#x2F;&#x2F; 先执行加法，再执行左移
+</code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的位运算优先级和 C 类似，但有时在与其他运算符结合时需要小心。例如，Java 中的位运算同样优先级较低，需要使用括号明确运算顺序。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">int result = 5 + 3 &lt;&lt; 2;  &#x2F;&#x2F; 先执行加法，再执行左移
+</code></pre>
+</li>
+</ul>
+<h3 id="5-you-fu-hao-yu-wu-fu-hao-lei-xing">5. <strong>有符号与无符号类型</strong></h3>
+<ul>
+<li>
+<p><strong>C 语言</strong>：</p>
+<ul>
+<li>C 语言中可以使用 <strong>无符号类型</strong>（如 <code>unsigned int</code>、<code>unsigned char</code>），并且对无符号整数的位运算不会涉及符号扩展。</li>
+</ul>
+<p><strong>例如：</strong></p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">unsigned int a = 4294967295;  &#x2F;&#x2F; 最大无符号整数值
+printf(&quot;%u\n&quot;, a + 1);  &#x2F;&#x2F; 输出 0（无符号溢出）
+</code></pre>
+</li>
+<li>
+<p><strong>Java</strong>：</p>
+<ul>
+<li>Java 中的整数类型都是 <strong>有符号</strong> 的，因此没有 <code>unsigned int</code> 或 <code>unsigned long</code> 类型。Java 提供了 <code>&gt;&gt;&gt;</code>（逻辑右移）来模拟无符号整数的操作，但并没有专门的无符号类型。在 Java 中处理无符号整数需要特别小心，通常需要通过 <code>long</code> 类型来处理更大的数值范围。</li>
+</ul>
+<p><strong>例如</strong>：</p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">int a = -1;
+System.out.println(a &gt;&gt;&gt; 1);  &#x2F;&#x2F; 输出 2147483647（无符号右移）
+</code></pre>
+</li>
+</ul>
+<h3 id="6-yi-chu-yu-qu-mo">6. <strong>溢出与取模</strong></h3>
+<ul>
+<li><strong>C 语言</strong>：
+<ul>
+<li>C 中对无符号整数的溢出会发生取模操作，而对有符号整数则会产生未定义行为。</li>
+</ul>
+</li>
+<li><strong>Java</strong>：
+<ul>
+<li>在 Java 中，溢出操作是严格定义的，对于整数溢出，会按照二进制取模操作进行。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="zong-jie">总结</h3>
+<ul>
+<li><strong>位运算的核心操作</strong>（与、或、非、异或、左移、右移）在 C 和 Java 中的基本原理相同，但由于两者对整数类型的处理有所不同，特别是在符号扩展、溢出行为和无符号类型支持上有所差异。</li>
+<li><strong>Java</strong> 语言提供了更为严格和一致的行为（如固定位宽、符号扩展等），但是也限制了对无符号类型的直接支持；而 <strong>C</strong> 语言则具有更大的灵活性，尤其是在平台相关的类型宽度和未定义行为方面，开发者需要更小心地处理溢出和符号扩展等问题。</li>
+</ul>
+<h2 id="yi-chu-yu-qu-mo">溢出与取模</h2>
+<p>溢出（Overflow）和取模（Modulo）是位运算和数学运算中非常重要的概念，特别是在处理整数类型时。溢出与取模的关系在不同的编程语言和不同的数值类型下会有不同的表现。</p>
+<h3 id="1-yi-chu-overflow">1. <strong>溢出 (Overflow)</strong></h3>
+<p>溢出通常是指一个数值超出了其数据类型所能表示的范围。溢出可能会导致结果变为未定义，或者是某种“环绕”行为（即从最大值回到最小值或反之）。溢出经常出现在整数计算中，特别是在加法、乘法等运算中，或者在右移、左移等位运算中。</p>
+<h4 id="yi-chu-de-lei-xing"><strong>溢出的类型：</strong></h4>
+<ul>
+<li><strong>有符号溢出</strong>：当对 <strong>有符号整数</strong> 进行运算时，如果计算结果超出了该类型的表示范围，就会发生溢出。</li>
+<li><strong>无符号溢出</strong>：对于 <strong>无符号整数</strong>，溢出通常是以 <strong>模运算</strong> 的方式处理，即结果回绕到类型的最小值（0）处。</li>
+</ul>
+<h4 id="you-fu-hao-yi-chu-de-li-zi"><strong>有符号溢出的例子：</strong></h4>
+<p>在有符号整数的运算中，如果一个值超过了该类型的最大值，通常会导致溢出，并且在 <strong>C 语言</strong> 中，溢出的行为是未定义的，可能会导致不可预期的结果。</p>
+<p><strong>C 语言中的溢出示例</strong>：</p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">#include &lt;stdio.h&gt;
+
+int main() {
+    int max = 2147483647;  &#x2F;&#x2F; 32-bit int 类型的最大值
+    printf(&quot;%d\n&quot;, max + 1);  &#x2F;&#x2F; 溢出，结果未定义
+    return 0;
+}
+</code></pre>
+<p>在上述代码中，<code>max + 1</code> 的结果会超出 <code>int</code> 类型的最大值，这会导致溢出，结果是未定义的，可能会表现为负数或某个非常不正常的数值。</p>
+<h4 id="java-zhong-de-yi-chu"><strong>Java 中的溢出：</strong></h4>
+<p>在 <strong>Java</strong> 中，溢出是有定义的。对于 <strong>有符号整数</strong>（如 <code>int</code>），如果计算超出了该类型的表示范围，结果会回绕。例如，<code>int</code> 的最大值是 <code>2147483647</code>，再加 1 就会回绕到最小值 <code>-2147483648</code>。</p>
+<p><strong>Java 中的溢出示例</strong>：</p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">public class Main {
+    public static void main(String[] args) {
+        int max = 2147483647;  &#x2F;&#x2F; int 类型的最大值
+        System.out.println(max + 1);  &#x2F;&#x2F; 输出 -2147483648，发生溢出
+    }
+}
+</code></pre>
+<p>在 Java 中，溢出的结果是 <strong>环绕</strong> 的，结果会回到整数类型的最小值。</p>
+<h3 id="2-yi-chu-yu-qu-mo">2. <strong>溢出与取模</strong></h3>
+<p>溢出和取模之间的关系主要体现在整数运算中，尤其是在处理无符号整数时。具体来说，当无符号整数超出其最大值时，运算会按 <strong>模运算</strong> 规则处理，即回绕到零或最小值。</p>
+<h4 id="wu-fu-hao-yi-chu-de-mo-yun-suan"><strong>无符号溢出的模运算：</strong></h4>
+<p>对于 <strong>无符号整数</strong>，溢出是通过模运算来处理的。无符号整数的溢出会回绕到零或最小值，而不是出现未定义行为。例如，假设有一个 8 位无符号整数，其最大值为 255。如果我们将其值加 1，就会回绕到 0。</p>
+<p><strong>C 语言中的无符号溢出示例</strong>：</p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">#include &lt;stdio.h&gt;
+
+int main() {
+    unsigned int max = 4294967295;  &#x2F;&#x2F; 32-bit unsigned int 的最大值
+    printf(&quot;%u\n&quot;, max + 1);  &#x2F;&#x2F; 输出 0，无符号溢出（模运算）
+    return 0;
+}
+</code></pre>
+<p>在这个例子中，<code>max + 1</code> 超出了 <code>unsigned int</code> 能表示的最大值 <code>4294967295</code>，因此会发生 <strong>模运算</strong>，回绕到 <code>0</code>。</p>
+<h4 id="yi-chu-yu-qu-mo-de-ben-zhi"><strong>溢出与取模的本质：</strong></h4>
+<ul>
+<li>对于 <strong>无符号整数</strong>，每当一个值超出其能表示的最大值时，它会像一个环绕计数器一样，从最大值回到最小值。这个过程可以通过取模运算来描述。
+<ul>
+<li>对于一个无符号 <code>n</code> 位整数，<code>n</code> 的最大值是 <code>2^n - 1</code>。当数值超过这个最大值时，它会回绕并重新开始计算。</li>
+<li>例如，对于一个 8 位无符号整数（最大值 255），计算 <code>256 % 256</code> 会得到 0。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-you-yi-he-yi-chu">3. <strong>右移和溢出</strong></h3>
+<p>在位运算中，<strong>右移操作</strong>常常会导致溢出，尤其是对于有符号整数。右移会将最低有效位（最右边的位）丢弃，并且根据类型的符号位决定填充的位（符号扩展或零扩展）。</p>
+<h4 id="c-yu-yan-de-you-yi-yi-chu"><strong>C 语言的右移溢出：</strong></h4>
+<p>对于有符号整数，右移操作会导致符号扩展（即用符号位填充空位），但如果是无符号整数，右移则会填充零。</p>
+<p><strong>C 语言中的右移示例</strong>：</p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">#include &lt;stdio.h&gt;
+
+int main() {
+    int a = -8;  &#x2F;&#x2F; 二进制：11111111111111111111111111111000
+    printf(&quot;%d\n&quot;, a &gt;&gt; 2);  &#x2F;&#x2F; 输出 -2，符号扩展
+    return 0;
+}
+</code></pre>
+<p>对于有符号整数，右移时，会用符号位填充空位，导致 <code>-8</code> 右移后变成 <code>-2</code>。</p>
+<h4 id="java-de-you-yi-yu-yi-chu"><strong>Java 的右移与溢出：</strong></h4>
+<p>在 Java 中，右移的行为和 C 类似，但 Java 提供了两种右移操作：</p>
+<ul>
+<li><strong>算术右移（<code>&gt;&gt;</code>）</strong>：会进行符号扩展。</li>
+<li><strong>逻辑右移（<code>&gt;&gt;&gt;</code>）</strong>：会用 <code>0</code> 填充空位，即无符号右移。</li>
+</ul>
+<p><strong>Java 中的右移示例</strong>：</p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">public class Main {
+    public static void main(String[] args) {
+        int a = -8;  &#x2F;&#x2F; 二进制：11111111111111111111111111111000
+        System.out.println(a &gt;&gt; 2);   &#x2F;&#x2F; 输出 -2，符号扩展
+        System.out.println(a &gt;&gt;&gt; 2);  &#x2F;&#x2F; 输出 1073741822，无符号右移
+    }
+}
+</code></pre>
+<p>在上面的例子中，<code>&gt;&gt;</code> 做的是算术右移，<code>&gt;&gt;&gt;</code> 做的是逻辑右移，后者无论符号如何，都会用零填充空位。</p>
+<h3 id="4-yi-chu-yu-qu-mo-zai-shi-ji-ying-yong-zhong-de-ying-yong">4. <strong>溢出与取模在实际应用中的应用</strong></h3>
+<ul>
+<li><strong>哈希算法</strong>：在哈希算法中，溢出和取模是常见的操作。通常，哈希函数会返回一个数值，然后使用取模运算（如 <code>hash % table_size</code>）来确定数据存储的索引。这个过程实际上是在使用模运算处理溢出，确保索引值在有效范围内。</li>
+<li><strong>计数器与环绕</strong>：在一些计数器或者循环中，溢出和取模通常是用来实现循环行为的。例如，计数器在达到了最大值后会从 0 开始。</li>
+<li><strong>无符号整数的应用</strong>：在处理非常大的数值时，尤其是在 <strong>图形处理</strong> 或 <strong>网络协议</strong> 中，经常会使用无符号整数，这时溢出和模运算就显得尤为重要。</li>
+</ul>
+
+    </div>
+  </article>
+
+  <aside class="toc" aria-label="目次">
+    <h2>目次</h2>
+    <div id="toc-container"></div>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var article = document.querySelector('.post-single');
+  if (!article) return;
+
+  var lead = article.querySelector('.post-content > p');
+  if (lead && lead.textContent.trim().length >= 24) {
+    lead.classList.add('drop-cap');
+  }
+
+  var headings = article.querySelectorAll('.post-content h2, .post-content h3, .post-content h4');
+  var tocContainer = document.getElementById('toc-container');
+  var tocWrapper = document.querySelector('.toc');
+
+  if (!tocContainer || !tocWrapper || headings.length < 2) {
+    if (tocWrapper) tocWrapper.hidden = true;
+    return;
+  }
+
+  var tocList = document.createElement('ol');
+  tocList.className = 'toc-list';
+
+  headings.forEach(function(heading, index) {
+    if (!heading.id) heading.id = 'heading-' + index;
+
+    var li = document.createElement('li');
+    var level = parseInt(heading.tagName.charAt(1), 10);
+    li.className = 'toc-level-' + level;
+
+    var a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  tocContainer.appendChild(tocList);
+
+  tocList.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById(this.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  var tocLinks = tocList.querySelectorAll('a');
+  var ticking = false;
+
+  function highlightToc() {
+    var triggerPoint = window.innerHeight / 3;
+    var currentId = null;
+
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top <= triggerPoint) {
+        currentId = headings[i].id;
+      } else {
+        break;
+      }
+    }
+
+    tocLinks.forEach(function(link) {
+      link.classList.toggle('is-active', link.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', function() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function() {
+      highlightToc();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  highlightToc();
+});
+</script>
+
+  </main>
+
+  <footer class="colophon">
+    <p class="colophon-name">Rei's Blog</p>
+    <p>花落水痕·风起铃升</p>
+    <p>排印于 <a href="https://www.getzola.org/">Zola</a> · 寄存在 GitHub Pages</p>
+    <p class="colophon-year">© 2026</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页首" title="回到页首">上</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" crossorigin="anonymous" data-manual></script>
+  <script>
+    (function() {
+      if (!window.Prism) return;
+      var langs = [];
+      document.querySelectorAll('code[class*="language-"]').forEach(function(code) {
+        var match = code.className.match(/language-([\w#+-]+)/);
+        var pre = code.parentElement;
+        if (!match || !pre) return;
+        pre.classList.add('code-block');
+        pre.setAttribute('data-lang', match[1]);
+        if (langs.indexOf(match[1]) === -1) langs.push(match[1]);
+      });
+      if (!langs.length) return;
+
+      var needs = { jsp: ['java'], cpp: ['c'] };
+      var order = [];
+      function add(lang) {
+        (needs[lang] || []).forEach(add);
+        if (order.indexOf(lang) === -1) order.push(lang);
+      }
+      langs.forEach(add);
+
+      function loadAt(i) {
+        if (i >= order.length) {
+          Prism.highlightAll();
+          return;
+        }
+        var lang = order[i];
+        if (Prism.languages[lang]) {
+          loadAt(i + 1);
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-' + lang + '.min.js';
+        script.onload = script.onerror = function() {
+          script.remove();
+          loadAt(i + 1);
+        };
+        document.body.appendChild(script);
+      }
+      loadAt(0);
+    })();
+  </script>
+
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          btn.classList.toggle('is-visible', window.scrollY > 420);
+          ticking = false;
+        });
+      }, { passive: true });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      var meta = document.querySelector('meta[name="theme-color"]');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17140f' : '#f3ecdf');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+  
+</body>
+
+</html>

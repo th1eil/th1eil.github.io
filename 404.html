@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rei&#x27;s Blog</title>
+  
+  <meta name="description" content="花落水痕·风起铃升">
+  
+  <meta name="theme-color" content="#f3ecdf">
+
+  
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      var dark = theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (dark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', '#17140f');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="https://th1eil.github.io/style.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="brand" href="/">
+        <span class="brand-en">Rei's Blog</span>
+        <span class="brand-zh">花落水痕·风起铃升</span>
+      </a>
+
+      <nav class="nav-links" aria-label="刊内导航">
+        <a href="/" class="nav-link ">首页</a>
+        <a href="/blog" class="nav-link ">文章</a>
+        <a href="/tags" class="nav-link ">标签</a>
+        <a href="/about" class="nav-link ">关于</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换昼读与夜读" title="切换昼读 / 夜读">
+          <span class="theme-icon-light">昼</span>
+          <span class="theme-icon-dark">夜</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="content">
+    
+<div class="sheet sheet-narrow">
+  <section class="missing">
+    <p class="page-kicker">第四〇四页</p>
+    <h1>此页未刊</h1>
+    <p>要找的文字不在这一卷里。</p>
+    <a class="text-link" href="/">回到首页</a>
+  </section>
+</div>
+
+  </main>
+
+  <footer class="colophon">
+    <p class="colophon-name">Rei's Blog</p>
+    <p>花落水痕·风起铃升</p>
+    <p>排印于 <a href="https://www.getzola.org/">Zola</a> · 寄存在 GitHub Pages</p>
+    <p class="colophon-year">© 2026</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到页首" title="回到页首">上</button>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" crossorigin="anonymous" data-manual></script>
+  <script>
+    (function() {
+      if (!window.Prism) return;
+      var langs = [];
+      document.querySelectorAll('code[class*="language-"]').forEach(function(code) {
+        var match = code.className.match(/language-([\w#+-]+)/);
+        var pre = code.parentElement;
+        if (!match || !pre) return;
+        pre.classList.add('code-block');
+        pre.setAttribute('data-lang', match[1]);
+        if (langs.indexOf(match[1]) === -1) langs.push(match[1]);
+      });
+      if (!langs.length) return;
+
+      var needs = { jsp: ['java'], cpp: ['c'] };
+      var order = [];
+      function add(lang) {
+        (needs[lang] || []).forEach(add);
+        if (order.indexOf(lang) === -1) order.push(lang);
+      }
+      langs.forEach(add);
+
+      function loadAt(i) {
+        if (i >= order.length) {
+          Prism.highlightAll();
+          return;
+        }
+        var lang = order[i];
+        if (Prism.languages[lang]) {
+          loadAt(i + 1);
+          return;
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-' + lang + '.min.js';
+        script.onload = script.onerror = function() {
+          script.remove();
+          loadAt(i + 1);
+        };
+        document.body.appendChild(script);
+      }
+      loadAt(0);
+    })();
+  </script>
+
+  <script src="https://th1eil.github.io/js/view-counter.js" defer></script>
+
+  <script>
+    (function() {
+      var btn = document.getElementById('backToTop');
+      if (!btn) return;
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          btn.classList.toggle('is-visible', window.scrollY > 420);
+          ticking = false;
+        });
+      }, { passive: true });
+      btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+  </script>
+
+  <script>
+    (function() {
+      var toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+      var meta = document.querySelector('meta[name="theme-color"]');
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#17140f' : '#f3ecdf');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+  
+</body>
+
+</html>
